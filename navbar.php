@@ -19,7 +19,7 @@
                            echo      "<li><a class='dropdown-item' href='bookmark.php'>Bookmarks</a></li>";
                            echo     " <li><a class='dropdown-item' href='#'>Change Password</a></li> ";
                            echo     " <li><hr class='dropdown-divider' /></li>";
-                           echo      "<li><a class='dropdown-item text-danger' href='index.php'>Logout</a></li>";
+                           echo      "<li><a class='dropdown-item text-danger' href='SIGNOUT.php'>Sign-out</a></li>";
                                 
                            echo  "</ul>";
                             }
@@ -30,7 +30,7 @@
                            echo      "<li><a class='dropdown-item' href='bookmark.php'>Bookmarks</a></li>";
                            echo     " <li><a class='dropdown-item' href='#'>Change Password</a></li> ";
                            echo     " <li><hr class='dropdown-divider' /></li>";
-                           echo      "<li><a class='dropdown-item text-danger' href='index.php'>Logout</a></li>";
+                           echo      "<li><a class='dropdown-item text-danger' href='SIGNOUT.php'>Sign-out</a></li>";
                                 
                            echo  "</ul>";
                            }
@@ -41,7 +41,7 @@
                             echo      "<li><a class='dropdown-item' href='profile.php'>profile</a></li>";
                             echo     " <li><a class='dropdown-item' href='#'>Change Password</a></li> ";
                             echo     " <li><hr class='dropdown-divider' /></li>";
-                            echo      "<li><a class='dropdown-item text-danger' href='index.php'>Logout</a></li>";
+                            echo      "<li><a class='dropdown-item text-danger' href='SIGNOUT.php'>Sign-out</a></li>";
                                  
                             echo  "</ul>";
                             }
@@ -52,7 +52,7 @@
                                     echo    " <li><a class='dropdown-item' href='bookmark.php'>Bookmarks</a></li>";
                                     echo      "<li><a class='dropdown-item' href='profile.php'>profile</a></li>";
                                     echo     " <li><hr class='dropdown-divider' /></li>";
-                                    echo      "<li><a class='dropdown-item text-danger' href='index.php'>Logout</a></li>";
+                                    echo      "<li><a class='dropdown-item text-danger' href='SIGNOUT.php'>Sign-out</a></li>";
                                          
                                     echo  "</ul>";
                                     }
