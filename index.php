@@ -30,7 +30,7 @@
                             <p class="lead fw-normal mb-5">A better place to start building yourself.</p>
 
                             <div class="col-auto">
-                                <a href="courses.html" class="btn btn-primary btn-lg" type="submit">Get Started</a>
+                                <a href="courses.php" class="btn btn-primary btn-lg" type="submit">Get Started</a>
                             </div>
                         </div>
                     </div>
