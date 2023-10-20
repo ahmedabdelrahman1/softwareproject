@@ -20,24 +20,76 @@
             include("navbar.php")
         ?>
 <div class="container mt-4">
-        <!-- Content for the course page goes here -->
-        <h1>Welcome to Your Course Page</h1>
-        <p>This is where you can access your lectures and assignments.</p>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Lectures</h5>
-                <p class="card-text">Click here to access your lectures.</p>
-                <a href="lectures.php" class="btn btn-primary">Go to Lectures</a>
-            </div>
-        </div>
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">Assignments</h5>
-                <p class="card-text">Click here to access your assignments.</p>
-                <a href="assignments.php" class="btn btn-primary">Go to Assignments</a>
-            </div>
+    <!-- Content for the course page goes here -->
+    <h1>Welcome to Your Course Page</h1>
+    <p>This is where you can access your lectures and assignments.</p>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Lectures</h5>
+            <p class="card-text">Click here to access your lectures.</p>
+            <a href="content.php?title=Lectures" class="btn btn-primary">Go to Lectures</a>
         </div>
     </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Assignments</h5>
+            <p class="card-text">Click here to access your assignments.</p>
+            <a href="content.php?title=Assignments" class="btn btn-primary">Go to Assignments</a>
+        </div>
+    </div>
+
+    <form method="POST" action="process_section.php" id="addSectionForm" style="display: none;">
+        <div class="form-group">
+            <label for="sectionName">Section Name:</label>
+            <input type="text" class="form-control" id="sectionName" name="sectionName" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Section</button>
+    </form>
+
+    <div id="addSectionButtonContainer">
+        <button type="button" class="btn btn-primary" id="showFormButton">Add section</button>
+    </div>
+</div>
+
+<style>
+    /* Add spacing between elements */
+    .card {
+        margin-top: 15px;
+    }
+</style>
+
+<script>
+    document.getElementById("showFormButton").addEventListener("click", function() {
+        // Hide the "Add Section" button
+        document.getElementById("addSectionButtonContainer").style.display = "none";
+        // Show the form
+        document.getElementById("addSectionForm").style.display = "block";
+    });
+
+    $('#addSectionForm').submit(function(e) {
+        e.preventDefault();
+        var sectionName = $('#sectionName').val();
+        
+        // Create a new section and append it to the container
+        var newSection = `
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${sectionName}</h5>
+                    <p class="card-text">Click here to access your ${sectionName.toLowerCase()}.</p>
+                    <a href="content.php?title=${sectionName}" class="btn btn-primary">Go to ${sectionName}</a>
+                </div>
+            </div>
+        `;
+        $('#sectionContainer').append(newSection);
+        
+        // Reset the form and show the "Add Section" button again
+        $('#sectionName').val('');
+        $('#addSectionForm').hide();
+        $('#addSectionButtonContainer').show();
+    });
+</script>
+</div>
+    
     <?php 
             include("footer.php")
         ?>
@@ -69,3 +121,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+
