@@ -1,4 +1,11 @@
 <?php
+if (isset($_GET['sectionID'])) {
+    // Retrieve the course_id from the query parameter
+    $sectionId = $_GET['sectionID'];
+     
+   
+    // Now you can use the $courseId variable in your code
+}
    require './classpdf.php';
      if (isset($_POST['buttonupload'])){
         $name=$_POST['name'];
@@ -13,7 +20,7 @@
             }
         }
         if(!empty($name)){
-            pdf::insert($name,$pdf_file);
+            pdf::insert($name,$pdf_file,$sectionId);
         }
         else{
             pdf::$alerts[]="Fill the fields";
@@ -80,10 +87,7 @@
                     echo $value;
                 }
               }
-              else
-              {
-                echo " no alerts";
-              }
+             
             ?>
     </div>
    <div class="container mt-5">

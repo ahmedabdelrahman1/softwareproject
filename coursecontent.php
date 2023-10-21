@@ -23,25 +23,34 @@
     <!-- Content for the course page goes here -->
     <h1>Welcome to Your Course Page</h1>
     <p>This is where you can access your lectures and assignments.</p>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Lectures</h5>
-            <p class="card-text">Click here to access your lectures.</p>
-            <a href="content.php?title=Lectures" class="btn btn-primary">Go to Lectures</a>
-        </div>
-    </div>
-    <div class="card mt-3">
-        <div class="card-body">
-            <h5 class="card-title">Assignments</h5>
-            <p class="card-text">Click here to access your assignments.</p>
-            <a href="content.php?title=Assignments" class="btn btn-primary">Go to Assignments</a>
-        </div>
-    </div>
+    <?php
+    if (isset($_GET['course_id'])) {
+        // Retrieve the course_id from the query parameter
+        $courseId = $_GET['course_id'];
+    
+        // Now you can use the $courseId variable in your code
+        echo "Course ID: " . $courseId;
+    }
+    require './classsection.php';
+    if(count(section::selectByCourse($courseId))>0){
+        $fetch =section::selectByCourse($courseId);
+        foreach ($fetch as $value){
+    echo '<div class="card">';
+    echo '    <div class="card-body">';
+    echo '        <h5 class="card-title">'.$value['name'].'</h5>.';
+    echo '        <p class="card-text">'.$value['detials'].'</p>';
+    echo '        <a href="content.php?title=' . $value['name'] . '&sectionID=' . $value['ID'] . '" class="btn btn-primary">Go to ' . $value['name'] . '</a>';
+    echo '    </div>';
+    echo '</div>';
+        }}
+    ?>
 
     <form method="POST" action="process_section.php" id="addSectionForm" style="display: none;">
         <div class="form-group">
             <label for="sectionName">Section Name:</label>
             <input type="text" class="form-control" id="sectionName" name="sectionName" required>
+            <label for="sectionName">Detials:</label>
+            <input type="text" class="form-control" id="sectionName" name="detials" required>
         </div>
         <button type="submit" class="btn btn-primary">Add Section</button>
     </form>
