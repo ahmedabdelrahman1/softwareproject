@@ -23,6 +23,7 @@
         ?>
 <div class="container mt-4">
 <?php
+ @include 'config.php';
  require './classpdf.php';
 if (isset($_GET['title'])) {
     $title = $_GET['title'];
@@ -44,8 +45,51 @@ if (isset($_GET['title'])) {
 }
     echo '<a href="import.php?&sectionID=' . $sectionId .' " class="btn btn-primary">+</a>';
 } else {
-    // Handle the case where the "title" parameter is not set.
+    if (isset($_GET['sectionID'])) {
+        // Retrieve the section ID from the query parameter
+        $sectionId = $_GET['sectionID'];
+       
+    
+        // Now you can use the $sectionId variable in your code
+    }
+    
+    // Prepare the SQL statement with a question mark as a placeholder
+    $sql = "SELECT name FROM section_table WHERE ID = ?";
+    $stmt = $conn->prepare($sql);
+    
+    // Bind the section ID as an integer
+    $stmt->bind_param("i", $sectionId);
+    
+    // Execute the query
+    $stmt->execute();
+    
+    // Get the result
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $sectionName = $row['name'];
+        $title = $sectionName;
+        echo "<h1>$title</h1>";
+        echo "<hr>";
+    }
+    
+    // Rest of your code to retrieve and display PDFs
+    if (count(pdf::selectBySectionID($sectionId)) > 0) {
+        $fetch = pdf::selectBySectionID($sectionId);
+        foreach ($fetch as $value) {
+            echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4">
+            <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '</a><br>';
+        }
+    }
+     else {
+        echo "Section not found.";
+    }
+    echo '<a href="import.php?&sectionID=' . $sectionId .' " class="btn btn-primary">+</a>';
 }
+   
+
+
 
 
 ?>

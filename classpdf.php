@@ -13,7 +13,7 @@ class pdf {
     $add->execute(array($name, $pdf_file, $sectionID));
     if ($add) {
       
-        pdf::$alerts[] = "Added!";
+        header("Location: content.php?&sectionID=$sectionID");
 
     } else {
        
