@@ -1,0 +1,126 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set a background color and default font for the whole page */
+body {
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+/* Styling the header */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Styling the navigation bar */
+nav {
+    background-color: #444;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 10px;
+    transition: color 0.3s; /* Add smooth color transition effect */
+}
+
+nav a:hover {
+    color: #ff8800; /* Change the link color on hover */
+}
+
+/* Create a container for your content */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the course items */
+.course {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+    transition: transform 0.3s;
+}
+
+.course:hover {
+    transform: scale(1.02); /* Add a slight scale effect on hover */
+}
+
+/* Style the "Add to Cart" button */
+.add-to-cart {
+    background-color: #ff8800;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #e57300; /* Darker orange on hover */
+}
+
+/* Style the cart */
+.cart {
+    background-color: #eee;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Center the buttons */
+.buttons-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Style the big buttons */
+.big-button {
+    display: inline-block;
+    padding: 20px 40px;
+    font-size: 24px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border: 2px solid #0077b6;
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.big-button:hover {
+    background-color: #023e8a;
+    border-color: #023e8a;
+}
+
+.student-button {
+    background-color: #0496ff;
+}
+
+.instructor-button {
+    background-color: #0496ff;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .course {
+        margin: 5px;
+    }
+}
+
+/* Add more media queries for different screen sizes as needed */
