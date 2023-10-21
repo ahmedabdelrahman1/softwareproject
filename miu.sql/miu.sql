@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2023 at 09:02 PM
+-- Generation Time: Oct 21, 2023 at 10:04 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -84,7 +84,7 @@ CREATE TABLE `section_table` (
 --
 
 INSERT INTO `section_table` (`ID`, `name`, `courseID`, `detials`) VALUES
-(1, 'Project', 1, 'Press to see the project detials');
+(1, 'Lecture', 1, 'Press to see all the lectures');
 
 -- --------------------------------------------------------
 

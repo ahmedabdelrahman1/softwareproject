@@ -26,14 +26,14 @@
     <?php
     if (isset($_GET['course_id'])) {
         // Retrieve the course_id from the query parameter
-        $courseId = $_GET['course_id'];
+        $course_id = $_GET['course_id'];
     
         // Now you can use the $courseId variable in your code
-        echo "Course ID: " . $courseId;
+        echo "Course ID: " . $course_id;
     }
     require './classsection.php';
-    if(count(section::selectByCourse($courseId))>0){
-        $fetch =section::selectByCourse($courseId);
+    if(count(section::selectByCourse($course_id))>0){
+        $fetch =section::selectByCourse($course_id);
         foreach ($fetch as $value){
     echo '<div class="card">';
     echo '    <div class="card-body">';
@@ -44,14 +44,16 @@
     echo '</div>';
         }}
     ?>
-
-    <form method="POST" action="process_section.php" id="addSectionForm" style="display: none;">
+<?php
+echo '<form method="POST" action="coursecontent.php?course_id=' . $course_id.'" id="addSectionForm" style="display: none;">';
+?>
         <div class="form-group">
             <label for="sectionName">Section Name:</label>
             <input type="text" class="form-control" id="sectionName" name="sectionName" required>
-            <label for="sectionName">Detials:</label>
-            <input type="text" class="form-control" id="sectionName" name="detials" required>
+            <label for="sectionName">Details:</label>
+            <input type="text" class="form-control" id="sectionDetails" name="sectionDetails" required>
         </div>
+        <input type="hidden" name="course_id" value="<?php echo $course_id; ?>">
         <button type="submit" class="btn btn-primary">Add Section</button>
     </form>
 
@@ -60,6 +62,18 @@
     </div>
 </div>
 
+<?php
+if (isset($_POST['sectionName']) && isset($_POST['sectionDetails']) && isset($_POST['course_id'])) {
+    $sectionName = $_POST['sectionName'];
+    $sectionDetails = $_POST['sectionDetails'];
+    $courseID = $_POST['course_id'];
+
+    section::insert($sectionName, $courseID, $sectionDetails);
+
+    // Redirect back to the page where you added the section
+    header('Location: coursecontent.php?course_id=' . $course_id);
+}
+?>
 <style>
     /* Add spacing between elements */
     .card {
@@ -75,27 +89,6 @@
         document.getElementById("addSectionForm").style.display = "block";
     });
 
-    $('#addSectionForm').submit(function(e) {
-        e.preventDefault();
-        var sectionName = $('#sectionName').val();
-        
-        // Create a new section and append it to the container
-        var newSection = `
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">${sectionName}</h5>
-                    <p class="card-text">Click here to access your ${sectionName.toLowerCase()}.</p>
-                    <a href="content.php?title=${sectionName}" class="btn btn-primary">Go to ${sectionName}</a>
-                </div>
-            </div>
-        `;
-        $('#sectionContainer').append(newSection);
-        
-        // Reset the form and show the "Add Section" button again
-        $('#sectionName').val('');
-        $('#addSectionForm').hide();
-        $('#addSectionButtonContainer').show();
-    });
 </script>
 </div>
     

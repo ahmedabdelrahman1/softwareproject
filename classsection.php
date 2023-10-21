@@ -5,16 +5,17 @@ class section {
         $conn=new PDO("mysql:host=localhost;dbname=miu","root","");
         return $conn;
     }
-    public static function insert($name,$courseID,$detail){
-        $add=section::connect()->perpare("INSERT INTO section_table() VALUE(?,?,?,?,?)");
-        $add->execute(array($name,$courseID,$detail));
-        if($add){
-            section::$alerts[]="Added!";
-         }
-         else{
-            section::$alerts[]="Not added!";
-         }
+    public static function insert($name, $courseID, $detials) {
+        $add = section::connect()->prepare("INSERT INTO section_table (name, courseID, detials) VALUES (?, ?, ?)");
+        $add->execute(array($name, $courseID, $detials));
+        if ($add) {
+            section::$alerts[] = "Added!";
+        } else {
+            section::$alerts[] = "Not added!";
+        }
     }
+    
+    
     public static function selectByCourse($courseID) {
         $conn = section::connect();
         $query = "SELECT * FROM section_table WHERE courseID = ?";
