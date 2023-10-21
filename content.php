@@ -23,14 +23,25 @@
         ?>
 <div class="container mt-4">
 <?php
+ require './classpdf.php';
 if (isset($_GET['title'])) {
     $title = $_GET['title'];
     echo "<h1>$title</h1>";
     echo "<hr>";
+    if(count(pdf::select())>0){
+    $fetch =pdf::select();
+    foreach ($fetch as $value){
+        echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4">
+        <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
+    </a><br>';
+    }
+}
     echo '<a href="import.php" class="btn btn-primary">+</a>';
 } else {
     // Handle the case where the "title" parameter is not set.
 }
+
+
 ?>
 </div>
 <?php 

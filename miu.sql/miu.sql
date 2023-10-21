@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2023 at 01:25 AM
+-- Generation Time: Oct 21, 2023 at 02:43 PM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `miu`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pdf_table`
+--
+
+CREATE TABLE `pdf_table` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `pdf_file` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pdf_table`
+--
+
+INSERT INTO `pdf_table` (`id`, `name`, `pdf_file`) VALUES
+(1, 'co', 'CO_Assignment2.pdf'),
+(2, 'math', 'Assignment1and2.pdf'),
+(3, 'lab3', 'Lab 3 – Introduction to Python - Part 2.pdf');
 
 -- --------------------------------------------------------
 
@@ -49,6 +70,12 @@ INSERT INTO `user` (`id`, `fname`, `lname`, `email`, `password`, `type`) VALUES
 --
 
 --
+-- Indexes for table `pdf_table`
+--
+ALTER TABLE `pdf_table`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -57,6 +84,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `pdf_table`
+--
+ALTER TABLE `pdf_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
