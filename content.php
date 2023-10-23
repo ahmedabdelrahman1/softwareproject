@@ -16,6 +16,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="static/css/styles.css" rel="stylesheet" /> 
+        
     </head>
 <body>
 <?php 
@@ -49,7 +50,7 @@
         }
         
         echo '<a href="import.php?&sectionID=' . $sectionId . '" class="btn btn-primary ">+</a>';
-        echo '<a  class="btn btn-primary add-pdf-btn">-</a>';
+        echo '<a style=" margin:20px" class="btn btn-primary add-pdf-btn">-</a>';
     } else {
         echo "Section not found.";
     }
@@ -101,7 +102,7 @@ else {
         echo "Section not found.";
     }
     echo '<a href="import.php?&sectionID=' . $sectionId .' " class="btn btn-primary">+</a>';
-    echo '<a  class="btn btn-primary add-pdf-btn">-</a>';
+    echo '<a style=" margin:20px"  class="btn btn-primary add-pdf-btn">-</a>';
 }
    
 
