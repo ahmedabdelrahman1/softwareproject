@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
         if ($row['type'] == 'admin') {
 
             $_SESSION['admin_name'] = $row['fname'];
-            header('location:adminlayout.php');
+            header('location:adminIndex.php');
 
         } elseif ($row['type'] == 'student') {
 

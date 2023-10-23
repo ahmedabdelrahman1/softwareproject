@@ -105,19 +105,7 @@
     </div>
   </div>
 
-  <script>
-        function loadUserManagement() {
-            // Use AJAX to load UserManagement.php into the content-container div
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("content-container").innerHTML = this.responseText;
-                }
-            };
-            xhttp.open("GET", "UserManagement.php", true);
-            xhttp.send();
-        }
-    </script>
+ 
 
 <script>
          function loadDashboard() {
@@ -132,6 +120,23 @@
             xhttp.send();
         }
     </script>
+
+
+ <script>
+        function loadUserManagement() {
+            // Use AJAX to load UserManagement.php into the content-container div
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("content-container").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "UserManagement.php", true);
+            xhttp.send();
+        }
+    </script>
+
+
 
 <script>
          function loadCourseManagement() {
