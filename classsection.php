@@ -24,7 +24,38 @@ class section {
         $fetch = $list->fetchAll(PDO::FETCH_ASSOC);
         return $fetch;
     }
+    
 
+    public static function delete($sectionID) {
+        $conn = section::connect();
+    
+        // Check if the section exists
+        $checkQuery = $conn->prepare("SELECT * FROM section_table WHERE ID = ?");
+        $checkQuery->execute(array($sectionID));
+    
+        if ($checkQuery->rowCount() > 0) {
+            // Section found, proceed with deletion
+    
+            // Delete associated PDFs
+            $deletePdfQuery = $conn->prepare("DELETE FROM pdf_table WHERE sectionID = ?");
+            if ($deletePdfQuery->execute(array($sectionID))) {
+                // PDFs deleted successfully
+    
+                // Delete the section record from section_table
+                $deleteQuery = $conn->prepare("DELETE FROM section_table WHERE ID = ?");
+                if ($deleteQuery->execute(array($sectionID))) {
+                    section::$alerts[] = "Section and associated PDFs deleted successfully.";
+                } else {
+                    section::$alerts[] = "Failed to delete the section.";
+                }
+            } else {
+                section::$alerts[] = "Failed to delete associated PDFs.";
+            }
+        } else {
+            // Section not found
+            section::$alerts[] = "Section not found.";
+        }
+    }
 
 }
 ?>
