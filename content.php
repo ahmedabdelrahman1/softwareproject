@@ -25,26 +25,36 @@
 <?php
  @include 'config.php';
  require './classpdf.php';
-if (isset($_GET['title'])) {
+ if (isset($_GET['title'])) {
     $title = $_GET['title'];
     echo "<h1>$title</h1>";
     echo "<hr>";
-    if (isset($_GET['sectionID'])) {
-        // Retrieve the course_id from the query parameter
-        $sectionId = $_GET['sectionID'];
-    
-        // Now you can use the $courseId variable in your code
+
+    if (isset($_GET['pdfID'])) {
+        $pdfId = $_GET['pdfID'];
+        pdf::delete($pdfId);
     }
-    if(count(pdf::selectBySectionID($sectionId))>0){
-    $fetch =pdf::selectBySectionID($sectionId);
-    foreach ($fetch as $value){
-        echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4">
-        <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
-    </a><br>';
+
+    if (isset($_GET['sectionID'])) {
+        $sectionId = $_GET['sectionID'];
+
+        if (count(pdf::selectBySectionID($sectionId)) > 0) {
+            $fetch = pdf::selectBySectionID($sectionId);
+            foreach ($fetch as $value) {
+                echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4 pdf-link">
+                    <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
+                </a>
+                <a href="content.php?pdfID=' . $value['id'] . '&sectionID=' . $sectionId . '" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</a><br>';
+            }
+        }
+        
+        echo '<a href="import.php?&sectionID=' . $sectionId . '" class="btn btn-primary ">+</a>';
+        echo '<a  class="btn btn-primary add-pdf-btn">-</a>';
+    } else {
+        echo "Section not found.";
     }
 }
-    echo '<a href="import.php?&sectionID=' . $sectionId .' " class="btn btn-primary">+</a>';
-} else {
+else {
     if (isset($_GET['sectionID'])) {
         // Retrieve the section ID from the query parameter
         $sectionId = $_GET['sectionID'];
@@ -52,7 +62,10 @@ if (isset($_GET['title'])) {
     
         // Now you can use the $sectionId variable in your code
     }
-    
+    if (isset($_GET['pdfID'])) {
+        $pdfId = $_GET['pdfID'];
+        pdf::delete($pdfId);
+    }
     // Prepare the SQL statement with a question mark as a placeholder
     $sql = "SELECT name FROM section_table WHERE ID = ?";
     $stmt = $conn->prepare($sql);
@@ -78,14 +91,17 @@ if (isset($_GET['title'])) {
     if (count(pdf::selectBySectionID($sectionId)) > 0) {
         $fetch = pdf::selectBySectionID($sectionId);
         foreach ($fetch as $value) {
-            echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4">
-            <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '</a><br>';
+            echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4 pdf-link">
+            <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
+        </a>
+        <a href="content.php?pdfID=' . $value['id'] . '&sectionID=' . $sectionId . '" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</a><br>';
         }
     }
      else {
         echo "Section not found.";
     }
     echo '<a href="import.php?&sectionID=' . $sectionId .' " class="btn btn-primary">+</a>';
+    echo '<a  class="btn btn-primary add-pdf-btn">-</a>';
 }
    
 
@@ -94,6 +110,19 @@ if (isset($_GET['title'])) {
 
 ?>
 </div>
+<script>
+    // Function to toggle the visibility of "Delete" anchors
+    function toggleDeleteAnchors() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(button => {
+            button.style.display = button.style.display === 'none' ? 'inline' : 'none';
+        });
+    }
+
+    // Add an event listener to the button that triggers the visibility toggle
+    const addButton = document.querySelector('.add-pdf-btn');
+    addButton.addEventListener('click', toggleDeleteAnchors);
+</script>
 <?php 
             include("footer.php")
         ?>
@@ -123,5 +152,6 @@ if (isset($_GET['title'])) {
     <!-- Include Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    
 </body>
 </html>
