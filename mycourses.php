@@ -25,7 +25,7 @@
         
 
             <div class="text-sm-start text-lg-center my-5">
-                <h1>your Courses </h1>
+                <h1>Your Courses </h1>
             </div>
 
             <div  d="gallery" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 gallery">

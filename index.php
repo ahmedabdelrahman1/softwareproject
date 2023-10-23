@@ -129,7 +129,7 @@
                             Ready to get started?
                         </h2>
                         <div class="col-auto">
-                            <a href="courses.html" class="btn btn-primary btn-lg" type="submit">Explore Our Courses!</a>
+                            <a href="courses.php" class="btn btn-primary btn-lg" type="submit">Explore Our Courses!</a>
                         </div>
                     </div>
                 </div>
