@@ -10,6 +10,7 @@
 
         <div class="row">
             <?php
+            include_once 'adminlayout.php';
             // Database connection code (similar to previous examples)
 
             @include 'config.php';
