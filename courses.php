@@ -41,32 +41,39 @@
             <div  d="gallery" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 gallery">
                 <div class="col-md-9">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5">
-                        <div class="col gallery-item">
-                            <div class="card shadow-sm border-bottom border-5">
-                                <a href="detail.php" class="card-img">
-                                    <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/python.jpg">
-                                </a>
-                                <div class="card-body">
-                                    <h3 class="card-title h4">
-                                        Introduction to Python programming
-                                    </h3>
-                                    <p class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero et orci fringilla, eu varius neque eleifend.</p>
+                        <?php
+                    require './classcourse.php';
 
-                                    <p class="card-text h6 mb-3">
-                                        <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="detail.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-
-                                            <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
-                                        </div>
-                                        <small class="badge rounded-pill text-light bg-success p-2 h6">Free</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+if (count(course::select()) > 0) {
+    $fetch = course::select();
+    foreach ($fetch as $value) {
+        echo '<div class="col gallery-item">';
+        echo '    <div class="card shadow-sm border-bottom border-5">';
+        echo '        <a href="coursecontent.php?course_id=' . $value['ID'] . '" class="card-img">';
+        echo '            <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/python.jpg">';
+        echo '        </a>';
+        echo '        <div class="card-body">';
+        echo '            <h3 class="card-title h4">';
+        echo '                Introduction to ' . $value['name'];
+        echo '            </h3>';
+        echo '            <p class="card-text text-muted">' . $value['preview'] . '</p>';
+        echo '';
+        echo '            <p class="card-text h6 mb-3">';
+        echo '                <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>';
+        echo '            </p>';
+        echo '';
+        echo '            <div class="d-flex justify-content-between align-items-center">';
+        echo '                <div class="btn-group">';
+        echo '                    <a href="detail.php?course_id=' . $value['ID'] . '&detailsID=' . $value['detailsID'] . '" type="button" class="btn btn-sm btn-outline-secondary">View</a>';
+        echo '                    <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>';
+        echo '                </div>';
+        echo '            </div>';
+        echo '        </div>';
+        echo '    </div>';
+        echo '</div>';
+    }
+}
+?>
                         <div class="col gallery-item">
                             <div class="card shadow-sm border-bottom border-5">
                                 <a href="detail.php" class="card-img">
