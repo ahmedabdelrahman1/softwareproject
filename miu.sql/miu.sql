@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2023 at 10:04 PM
+-- Generation Time: Oct 24, 2023 at 06:01 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,24 +24,45 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `coursedetails_table`
+--
+
+CREATE TABLE `coursedetails_table` (
+  `ID` int(11) NOT NULL,
+  `Category` varchar(100) NOT NULL,
+  `level` varchar(100) NOT NULL,
+  `Duration` varchar(100) NOT NULL,
+  `courseinfo` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `coursedetails_table`
+--
+
+INSERT INTO `coursedetails_table` (`ID`, `Category`, `level`, `Duration`, `courseinfo`) VALUES
+(1, 'Programming', 'Beginner level', '2 Hours', 'An introductory course for C++ is designed to provide a solid foundation for beginners in the world of programming. C++ is a versatile and powerful programming language often used for software development, game development, and systems programming. In this course, students typically learn the fundamentals of C++ syntax, data types, control structures, and functions. They are introduced to object-oriented programming (OOP) principles, which are central to C++, and gain an understanding of classes, objects, inheritance, and polymorphism.');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `course_table`
 --
 
 CREATE TABLE `course_table` (
   `ID` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `detials` varchar(200) NOT NULL,
+  `preview` varchar(200) NOT NULL,
   `instructorID` int(11) NOT NULL,
   `price` int(11) NOT NULL,
-  `sectionID` int(11) NOT NULL
+  `detailsID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `course_table`
 --
 
-INSERT INTO `course_table` (`ID`, `name`, `detials`, `instructorID`, `price`, `sectionID`) VALUES
-(1, 'c++', 'this is a course that teches you about the c++', 2, 200, 0);
+INSERT INTO `course_table` (`ID`, `name`, `preview`, `instructorID`, `price`, `detailsID`) VALUES
+(1, 'c++', 'this is a course that teches you about the c++', 2, 200, 1);
 
 -- --------------------------------------------------------
 
@@ -61,10 +82,8 @@ CREATE TABLE `pdf_table` (
 --
 
 INSERT INTO `pdf_table` (`id`, `name`, `pdf_file`, `sectionID`) VALUES
-(1, 'co', 'CO_Assignment2.pdf', 0),
-(2, 'math', 'Assignment1and2.pdf', 1),
-(3, 'lab3', 'Lab 3 – Introduction to Python - Part 2.pdf', 0),
-(4, 'lab1', 'Fall23_CSC360_Lab 1 Pt. 2.pdf', 1);
+(4, 'lab1', 'Fall23_CSC360_Lab 1 Pt. 2.pdf', 1),
+(11, 'co2', 'CO_Assignment2 (1).pdf', 1);
 
 -- --------------------------------------------------------
 
@@ -107,11 +126,18 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `fname`, `lname`, `email`, `password`, `type`) VALUES
 (1, 'Bassel', 'AbdelRahim', 'basselshaaban1@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student'),
-(2, 'Ahmed', 'Gaber', 'Ahmed123@gmail', 'd93591bdf7860e1e4ee2fca799911215', 'instructor');
+(2, 'Ahmed', 'Gaber', 'Ahmed123@gmail', 'd93591bdf7860e1e4ee2fca799911215', 'instructor'),
+(3, 'admin', 'admin', 'admin12@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 'admin');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `coursedetails_table`
+--
+ALTER TABLE `coursedetails_table`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `course_table`
@@ -142,28 +168,34 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `coursedetails_table`
+--
+ALTER TABLE `coursedetails_table`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `course_table`
 --
 ALTER TABLE `course_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pdf_table`
 --
 ALTER TABLE `pdf_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `section_table`
 --
 ALTER TABLE `section_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
