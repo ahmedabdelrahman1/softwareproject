@@ -18,38 +18,22 @@
     <body>
         <!-- Responsive navbar-->
         <?php 
-            include("navbar.php")
+            include("navbar.php");
+            require './classdetails.php';
+            require './classcourse.php';
+
+            if (isset($_GET['course_id'])) {
+                $course_id = $_GET['course_id'];
+                echo "Course ID: " . $course_id;
+                $selectedCourse = course::selectByID($course_id);
+                $Coursedetails = coursedetails::selectByCourseDetailsID($course_id);
+                echo $Coursedetails['ID'];
+            }
         ?>
         <!-- Page content-->
 
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Introduction to Python programming</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body"> 
-                        <!-- <video class="object-fit-cover mb-3" style="height: 300px;width: 100%;" controls autoplay>
-                            <source src="static/assets/video/video.mp4" type="video/mp4">
-                        </video> -->
 
-                        <div class="embed-responsive embed-responsive-16by9 mb-3">
-                            <iframe style="height: 300px;width: 100%;" class="embed-responsive-item object-fit-md-contain border rounded" src="static/assets/video/video.mp4" allowfullscreen></iframe>
-                        </div>
-
-                        <h5 class="card-title mb-3">Python - Overview</h5>
-                        <p class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        
 
         <div class="container py-5 bg-body-tertiary"> 
             <nav aria-label="breadcrumb">
@@ -64,59 +48,57 @@
             <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 mt-3">
                 <div class="col-md-8">
                     <div class="col">
-                        <div class="card shadow-sm border-bottom border-5">
-                            <img class="img-thumbnail" style="height: 300px;width: 100%;" src="static/assets/img/py.jpg">
+                    <?php echo '<div class="card shadow-sm border-bottom border-5">
+    <img class="img-thumbnail" style="height: 300px;width: 100%;" src="static/assets/img/py.jpg">
+    <div class="card-body bg-light">
+        <h3 class="card-title h4 mb-3">
+         '. $selectedCourse['preview'].'
+        </h3>
+        
+        <!-- Category -->
+        <p class="card-text h6 mb-3">
+            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/category.png">
+            <span class="text-muted">Category:</span> '. $Coursedetails['Category'].'
+        </p>
+        
+        <!-- Instructor -->
+        <p class="card-text h6 mb-3">
+            <img style="height: 24px;width: 24px;" class a="rounded-circle me-1" src="static/assets/img/instructor.png">
+            <span class="text-muted">Instructor:</span> Denamse Derkos
+        </p>
+        
+        <!-- Level -->
+        <p class="card-text h6 mb-3">
+            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/level.png">
+            <span class="text-muted">Level:</span> '. $Coursedetails['level'].'
+        </p>
+        
+        
+        <!-- Duration -->
+        <p class="card-text h6 mb-3">
+            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/clock.png">
+            <span class="text-muted">Duration:</span> '. $Coursedetails['Duration'].'
+        </p>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- Price -->
+            <small class="badge rounded-pill text-light bg-success p-2 h6">'. $selectedCourse['price'].'</small>
+            
+            <div class="btn-group">
+                <!-- Bookmarks Button -->
+                <a href="bookmarks.html" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Course Description -->
+    <div class="card-body">
+        <h5 class="card-title">What You will learn in this course</h5>
+        <p class="card-text text-muted">'. $Coursedetails['courseinfo'].'</p>
+    </div>
+</div>';
+?>
 
-                            <div class="card-body bg-light">
-                                <h3 class="card-title h4 mb-3">
-                                    Introduction to Python programming
-                                </h3>
-
-                                <p class="card-text h6 mb-3">
-                                    <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/category.png">
-                                    <span class="text-muted">Category:</span> Programming
-                                </p>
-
-                                <p class="card-text h6 mb-3">
-                                    <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/instructor.png">
-                                    <span class="text-muted">Instructor:</span> Denamse Derkos
-                                </p>
-
-                                <p class="card-text h6 mb-3">
-                                    <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/level.png">
-                                    <span class="text-muted">Level:</span> Beginner level
-                                </p>
-
-                                <p class="card-text h6 mb-3">
-                                    <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/language.png">
-                                    <span class="text-muted">Language:</span> English
-                                </p>
-
-                                <p class="card-text h6 mb-3">
-                                    <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/date.png">
-                                    <span class="text-muted">Posted:</span> July 12, 2023
-                                </p>
-
-                                <p class="card-text h6 mb-3">
-                                    <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/clock.png">
-                                    <span class="text-muted">Duration:</span> 2 Hours
-                                </p>
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <small class="badge rounded-pill text-light bg-success p-2 h6">Free</small>
-
-                                    <div class="btn-group">
-                                        <a href="bookmarks.html" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-body">
-                                <h5 class="card-title">What You will learn in this course</h5>
-                                <p class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <p class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
