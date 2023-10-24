@@ -46,7 +46,7 @@ if (count(course::select()) > 0) {
         echo '            <h3 class="card-title h4">';
         echo '                Introduction to ' . $value['name'];
         echo '            </h3>';
-        echo '            <p class="card-text text-muted">' . $value['detials'] . '</p>';
+        echo '            <p class="card-text text-muted">' . $value['preview'] . '</p>';
         echo '';
         echo '            <p class="card-text h6 mb-3">';
         echo '                <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>';
