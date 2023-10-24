@@ -12,7 +12,20 @@
             border-bottom: 1px solid #ddd;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+    .button-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .button-container .btn {
+        margin-right: 10px; /* Adjust the margin as needed */
+    }
+</style>
+
 </head>
 <body>
 <div class="container-fluid px-4">
@@ -34,14 +47,7 @@
 
             <?php
             include 'config.php';
-
-            if (isset($_GET['delete_id'])) {
-                $deleteId = $_GET['delete_id'];
-                echo "<script>
-                        window.location.href = 'delete.php?id=$deleteId';
-                </script>";
-            }
-
+           
             $sql = "SELECT * FROM course_table"; // Replace 'course_table' with your table name
             $result = $conn->query($sql);
 
@@ -50,17 +56,27 @@
                     echo "<tr>";
                     echo "<td>" . $row["ID"] . "</td>";
                     echo "<td>" . $row["name"] . "</td>";
-                    echo "<td>" . $row["details"] . "</td>";
+                    echo "<td>" . $row["detials"] . "</td>";
                     echo "<td>" . $row["instructorID"] . "</td>";
                     echo "<td>" . $row["price"] . "</td>";
                     echo "<td>" . $row["sectionID"] . "</td>";
-                    echo "<td>
-                            <button class='btn btn-primary edit' data-id='{$row['ID']}' data-name='{$row['name']}' data-details='{$row['details']}' data-instructor='{$row['instructorID']}' data-price='{$row['price']}' data-section='{$row['sectionID']}'>
-                                Edit
+                    echo '<td>
+                    <div class="button-container">
+                        <button class="btn btn-primary edit" data-toggle="modal" data-target="#editModal" data-id="' . $row['ID'] . '" data-name="' . $row['name'] . '" data-detials="' . $row['detials'] . '" data-instructor="' . $row['instructorID'] . '" data-price="' . $row['price'] . '" data-section="' . $row['sectionID'] . '">
+                            Edit
+                        </button>
+                        
+                        <form method="POST" action="adminIndex.php">
+                            <input type="hidden" name="course_id" value="' . $row['ID'] . '">
+                            <button class="btn btn-danger delete" type="submit">
+                                <i class="fas fa-trash"></i> <!-- Trash can icon -->
                             </button>
-                        </td>";
+                        </form>
+                    </div>
+                </td>';
                     echo "</tr>";
                 }
+            
             } else {
                 echo "No records found.";
             }
@@ -70,9 +86,6 @@
         </table>
     </div>
 </div>
-</body>
-</html>
-
 <!-- Edit Course Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -169,3 +182,37 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+$(document).ready(function() {
+    // Delete button click event
+    $('.delete').click(function() {
+        var courseId = $(this).data('id');
+        var courseName = $(this).data('name');
+        var sectionId = $(this).data('section');
+
+        // Display a confirmation dialog
+        if (confirm('Are you sure you want to delete course: ' + courseName + '?')) {
+            // Send an AJAX request to delete the course
+            $.ajax({
+                url: 'delete_course.php', // Replace with the URL to your delete course PHP script
+                type: 'POST',
+                data: { course_id: courseId },
+                success: function(response) {
+                    if (response == 'success') {
+                        // Reload the page or handle the success as needed
+                        location.reload();
+                    } else {
+                        alert('Failed to delete course.');
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+
+
+
+</body>
+</html>
+
