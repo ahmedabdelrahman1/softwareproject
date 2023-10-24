@@ -7,9 +7,9 @@ class course {
         $conn=new PDO("mysql:host=localhost;dbname=miu","root","");
         return $conn;
     }
-    public static function insert($name,$instructorID,$detail,$price,$sectionID){
+    public static function insert($name,$instructorID,$preview,$price,$detailsID){
         $add=course::connect()->perpare("INSERT INTO course_table() VALUE(?,?,?,?,?)");
-        $add->execute(array($name,$instructorID,$detail,$price,$sectionID));
+        $add->execute(array($name,$instructorID,$preview,$price,$detailsID));
         if($add){
             course::$alerts[]="Added!";
          }
@@ -22,6 +22,16 @@ class course {
         $list->execute();
         $fetch=$list->fetchALL(PDO::FETCH_ASSOC);
         return $fetch;
+    }
+
+    public static function selectByID($courseID) {
+        $conn = course::connect();
+        $query = "SELECT * FROM course_table WHERE ID = :course_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':course_id', $courseID, PDO::PARAM_INT);
+        $stmt->execute();
+        $course = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $course;
     }
 
     public static function delete($courseID) {
