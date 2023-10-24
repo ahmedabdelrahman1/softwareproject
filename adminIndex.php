@@ -12,9 +12,24 @@
             <?php
             include_once 'adminlayout.php';
             // Database connection code (similar to previous examples)
-
+            
             @include 'config.php';
+            require './classcourse.php';
 
+            if (isset($_POST['course_id'])) {
+                $courseId = $_POST['course_id'];
+            
+                
+            
+                // Call the `delete` function from the classcourse.php file.
+                course::delete($courseId);
+            
+                // Return a success message or response.
+                echo 'success';
+            } else {
+                // Return an error message or response.
+                echo 'error';
+            }
             // Query to fetch data (replace with your actual query)
             $sql = "SELECT COUNT(*) as total_users FROM user";
             $result = $conn->query($sql);
