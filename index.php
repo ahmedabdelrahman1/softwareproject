@@ -5,9 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>7GES - Homepage </title>
+        <title>Section - Homepage </title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/favicon.jpg" />
+        <link rel="icon" type="image/x-icon" href="static/assets/section.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
         <!-- Google fonts-->
@@ -26,8 +26,10 @@
                     <div class="col-xl-6">
                         <div class="text-center text-white">
                             <!-- Page heading-->
-                            <h1 class="mb-3">Welcome to 7G Engineering Services!</h1> 
-                            <p class="lead fw-normal mb-5">A better place to start building yourself.</p>
+                            <h1 class="mb-3">Welcome to
+                                  <br>       
+                                 E-learning hub Services!</h1> 
+                            <p class="lead fw-normal mb-5"> ~ A better place to start building yourself ~</p>
 
                             <div class="col-auto">
                                 <a href="courses.php" class="btn btn-primary btn-lg" type="submit">Get Started</a>
