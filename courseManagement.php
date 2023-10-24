@@ -38,10 +38,10 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Details</th>
+                <th>preview</th>
                 <th>Instructor</th>
                 <th>Price</th>
-                <th>Section_ID</th>
+                <th>detailsID</th>
                 <th>Action</th>
             </tr>
 
@@ -56,13 +56,13 @@
                     echo "<tr>";
                     echo "<td>" . $row["ID"] . "</td>";
                     echo "<td>" . $row["name"] . "</td>";
-                    echo "<td>" . $row["detials"] . "</td>";
+                    echo "<td>" . $row["preview"] . "</td>";
                     echo "<td>" . $row["instructorID"] . "</td>";
                     echo "<td>" . $row["price"] . "</td>";
-                    echo "<td>" . $row["sectionID"] . "</td>";
+                    echo "<td>" . $row["detailsID"] . "</td>";
                     echo '<td>
                     <div class="button-container">
-                        <button class="btn btn-primary edit" data-toggle="modal" data-target="#editModal" data-id="' . $row['ID'] . '" data-name="' . $row['name'] . '" data-detials="' . $row['detials'] . '" data-instructor="' . $row['instructorID'] . '" data-price="' . $row['price'] . '" data-section="' . $row['sectionID'] . '">
+                        <button class="btn btn-primary edit" data-toggle="modal" data-target="#editModal" data-id="' . $row['ID'] . '" data-name="' . $row['name'] . '" data-preview="' . $row['preview'] . '" data-instructor="' . $row['instructorID'] . '" data-price="' . $row['price'] . '" data-details="' . $row['detailsID'] . '">
                             Edit
                         </button>
                         
@@ -104,8 +104,8 @@
                         <input type="text" class="form-control" id="editName" name="editName">
                     </div>
                     <div class="form-group">
-                        <label for="editDetails">Course Details</label>
-                        <input type="text" class="form-control" id="editDetails" name="editDetails">
+                        <label for="editpreview">Course preview</label>
+                        <input type="text" class="form-control" id="editpreview" name="editpreview">
                     </div>
                     <div class="form-group">
                         <label for="editInstructor">Instructor</label>
@@ -116,8 +116,8 @@
                         <input type="text" class="form-control" id="editPrice" name="editPrice">
                     </div>
                     <div class="form-group">
-                        <label for="editSection">Section ID</label>
-                        <input type="text" class="form-control" id="editSection" name="editSection">
+                        <label for="editdetailsID">details ID</label>
+                        <input type="text" class="form-control" id="editdetailsID" name="editdetailsID">
                     </div>
                 </form>
             </div>
@@ -136,17 +136,17 @@ $(document).ready(function() {
     $('.edit').click(function() {
         var id = $(this).data('id');
         var name = $(this).data('name');
-        var details = $(this).data('details');
+        var preview = $(this).data('preview');
         var instructor = $(this).data('instructor');
         var price = $(this).data('price');
-        var section = $(this).data('section');
+        var detailsID = $(this).data('detailsID');
 
         $('#editId').val(id);
         $('#editName').val(name);
-        $('#editDetails').val(details);
+        $('#editpreview').val(preview);
         $('#editInstructor').val(instructor);
         $('#editPrice').val(price);
-        $('#editSection').val(section);
+        $('#editdetailsID').val(detailsID);
 
         $('#editModal').modal('show');
     });
@@ -154,10 +154,10 @@ $(document).ready(function() {
     $('#saveChanges').click(function() {
         var id = $('#editId').val();
         var name = $('#editName').val();
-        var details = $('#editDetails').val();
+        var details = $('#editpreview').val();
         var instructor = $('#editInstructor').val();
         var price = $('#editPrice').val();
-        var section = $('#editSection').val();
+        var detailsID = $('#editdetailsID').val();
 
         $.ajax({
             url: 'edit.php',
@@ -165,10 +165,10 @@ $(document).ready(function() {
             data: {
                 id: id,
                 name: name,
-                details: details,
+                preview: preview,
                 instructor: instructor,
                 price: price,
-                section: section
+                detailsID: detailsID
             },
             success: function(response) {
                 if (response == 'success') {
@@ -188,7 +188,7 @@ $(document).ready(function() {
     $('.delete').click(function() {
         var courseId = $(this).data('id');
         var courseName = $(this).data('name');
-        var sectionId = $(this).data('section');
+        var detailsID = $(this).data('detailsID');
 
         // Display a confirmation dialog
         if (confirm('Are you sure you want to delete course: ' + courseName + '?')) {
