@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_GET['sectionID'])) {
     // Retrieve the course_id from the query parameter
     $sectionId = $_GET['sectionID'];

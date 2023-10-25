@@ -21,6 +21,7 @@ if (isset($_POST['submit'])) {
         $row = mysqli_fetch_array($result);
 
         $_SESSION['user_id'] = $row['id'];
+        $_SESSION['type'] = $row['type'];
         if ($row['type'] == 'admin') {
 
             $_SESSION['admin_name'] = $row['fname'];

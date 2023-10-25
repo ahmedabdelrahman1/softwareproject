@@ -16,8 +16,18 @@
         <link href="static/css/styles.css" rel="stylesheet" />
     </head>
     <body>
-        <?php   
-    include("header.php")
+        <?php  
+        
+         session_start();
+        if(isset($_SESSION['user_id'])) 
+        {
+            include("navbar.php");
+        }
+        else{
+            include("header.php");
+        }
+    
+   
     ?>
         <!-- Masthead-->
         <header class="masthead">

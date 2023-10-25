@@ -20,6 +20,7 @@
     </head>
 <body>
 <?php 
+session_start();
             include("navbar.php")
         ?>
 <div class="container mt-4">
@@ -48,9 +49,14 @@
                 <a href="content.php?pdfID=' . $value['id'] . '&sectionID=' . $sectionId . '" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</a><br>';
             }
         }
-        
+      
+
+if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
+{
+
         echo '<a href="import.php?&sectionID=' . $sectionId . '" class="btn btn-primary ">+</a>';
         echo '<a style=" margin:20px" class="btn btn-primary add-pdf-btn">-</a>';
+}
     } else {
         echo "Section not found.";
     }

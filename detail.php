@@ -18,7 +18,9 @@
     <body>
         <!-- Responsive navbar-->
         <?php 
+        session_start();
             include("navbar.php");
+            include 'config.php';
             require './classdetails.php';
             require './classcourse.php';
 
@@ -29,6 +31,10 @@
                 $Coursedetails = coursedetails::selectByCourseDetailsID($course_id);
                 echo $Coursedetails['ID'];
             }
+
+            
+            ?>
+
         ?>
         <!-- Page content-->
 
@@ -87,6 +93,7 @@
             <div class="btn-group">
                 <!-- Bookmarks Button -->
                 <a href="bookmarks.html" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
+                <a href="" class="btn btn-sm btn-outline-primary">Enrollment</a>
             </div>
         </div>
     </div>

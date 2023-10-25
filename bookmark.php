@@ -18,6 +18,7 @@
     <body>
         <!-- Responsive navbar-->
         <?php 
+        session_start();
             include("navbar.php")
         ?>
         <!-- Page content-->

@@ -17,6 +17,7 @@
     </head>
     <body>
     <?php
+    session_start();
     include("navbar.php");
     ?>
 
@@ -64,6 +65,11 @@
 <?php
 echo '<form method="POST" action="coursecontent.php?course_id=' . $course_id.'" id="addSectionForm" style="display: none;">';
 ?>
+<?php
+
+if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
+{
+?>
         <div class="form-group">
             <label for="sectionName">Section Name:</label>
             <input type="text" class="form-control" id="sectionName" name="sectionName" required>
@@ -80,6 +86,7 @@ echo '<form method="POST" action="coursecontent.php?course_id=' . $course_id.'" 
 </div>
 
 <?php
+}
 if (isset($_POST['sectionName']) && isset($_POST['sectionDetails']) && isset($_POST['course_id'])) {
     $sectionName = $_POST['sectionName'];
     $sectionDetails = $_POST['sectionDetails'];

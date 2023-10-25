@@ -66,5 +66,26 @@ class course {
             course::$alerts[] = "Course not found.";
         }
     }
+    public static function selectByInstructorID($instructorID) {
+    $conn = course::connect();
+    $query = "SELECT * FROM course_table WHERE instructorID = :instructor_id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':instructor_id', $instructorID, PDO::PARAM_INT);
+    $stmt->execute();
+    $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $courses;
+    }
+    public static function selectCoursesByStudentID($studentID) {
+        $conn = course::connect();
+        $query = "SELECT e.ID as enrollmentID, c.* FROM enrollment_table e
+                  JOIN course_table c ON e.courseID = c.ID
+                  WHERE e.studentID = :student_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':student_id', $studentID, PDO::PARAM_INT);
+        $stmt->execute();
+        $enrollments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $enrollments;
+    }
 }
+
 ?>

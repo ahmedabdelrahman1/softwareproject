@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2023 at 06:01 PM
+-- Generation Time: Oct 25, 2023 at 07:34 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -63,6 +63,25 @@ CREATE TABLE `course_table` (
 
 INSERT INTO `course_table` (`ID`, `name`, `preview`, `instructorID`, `price`, `detailsID`) VALUES
 (1, 'c++', 'this is a course that teches you about the c++', 2, 200, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enrollment_table`
+--
+
+CREATE TABLE `enrollment_table` (
+  `ID` int(11) NOT NULL,
+  `studentID` int(100) NOT NULL,
+  `courseID` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `enrollment_table`
+--
+
+INSERT INTO `enrollment_table` (`ID`, `studentID`, `courseID`) VALUES
+(1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -127,7 +146,9 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `fname`, `lname`, `email`, `password`, `type`) VALUES
 (1, 'Bassel', 'AbdelRahim', 'basselshaaban1@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student'),
 (2, 'Ahmed', 'Gaber', 'Ahmed123@gmail', 'd93591bdf7860e1e4ee2fca799911215', 'instructor'),
-(3, 'admin', 'admin', 'admin12@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 'admin');
+(3, 'admin', 'admin', 'admin12@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 'admin'),
+(5, 'lob', 'a', 'Ahmed123@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student'),
+(6, 'omar', 'ddddddddd', 'omar123@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student');
 
 --
 -- Indexes for dumped tables
@@ -143,6 +164,12 @@ ALTER TABLE `coursedetails_table`
 -- Indexes for table `course_table`
 --
 ALTER TABLE `course_table`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `enrollment_table`
+--
+ALTER TABLE `enrollment_table`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -180,6 +207,12 @@ ALTER TABLE `course_table`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `enrollment_table`
+--
+ALTER TABLE `enrollment_table`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `pdf_table`
 --
 ALTER TABLE `pdf_table`
@@ -195,7 +228,7 @@ ALTER TABLE `section_table`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
