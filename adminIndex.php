@@ -11,6 +11,7 @@
         <div class="row">
             <?php
             include_once 'adminlayout.php';
+            session_start();
             // Database connection code (similar to previous examples)
             
             @include 'config.php';

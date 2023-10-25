@@ -19,6 +19,8 @@
     <body>
         <!-- Responsive navbar-->
         <?php 
+        session_start();
+       
             include("navbar.php")
         ?>
         <!-- Page content-->
@@ -33,9 +35,11 @@
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5">
                     <?php
 require './classcourse.php';
+if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
+{
 
-if (count(course::select()) > 0) {
-    $fetch = course::select();
+if (count(course::selectByInstructorID($_SESSION['user_id'])) > 0) {
+    $fetch = course::selectByInstructorID($_SESSION['user_id']);
     foreach ($fetch as $value) {
         echo '<div class="col gallery-item">';
         echo '    <div class="card shadow-sm border-bottom border-5">';
@@ -61,6 +65,39 @@ if (count(course::select()) > 0) {
         echo '        </div>';
         echo '    </div>';
         echo '</div>';
+    }
+}
+}
+else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
+{
+    if (count(course::selectCoursesByStudentID($_SESSION['user_id'])) > 0) {
+        $fetch = course::selectCoursesByStudentID($_SESSION['user_id']);
+        foreach ($fetch as $value) {
+            echo '<div class="col gallery-item">';
+            echo '    <div class="card shadow-sm border-bottom border-5">';
+            echo '        <a href="coursecontent.php?course_id=' . $value['ID'] . '" class="card-img">';
+            echo '            <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/python.jpg">';
+            echo '        </a>';
+            echo '        <div class="card-body">';
+            echo '            <h3 class="card-title h4">';
+            echo '                Introduction to ' . $value['name'];
+            echo '            </h3>';
+            echo '            <p class="card-text text-muted">' . $value['preview'] . '</p>';
+            echo '';
+            echo '            <p class="card-text h6 mb-3">';
+            echo '                <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>';
+            echo '            </p>';
+            echo '';
+            echo '            <div class="d-flex justify-content-between align-items-center">';
+            echo '                <div class="btn-group">';
+            echo '                    <a href="coursecontent.php?course_id=' . $value['ID'] . '" type="button" class="btn btn-sm btn-outline-secondary">View</a>';
+            echo '                    <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>';
+            echo '                </div>';
+            echo '            </div>';
+            echo '        </div>';
+            echo '    </div>';
+            echo '</div>';
+        }
     }
 }
 ?>

@@ -33,7 +33,7 @@
     
             <?php
             @include 'config.php';
-
+            session_start();
             if (isset($_POST['delete_id'])) {
                 $deleteId = $_POST['delete_id'];
 

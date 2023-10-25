@@ -47,7 +47,7 @@
 
             <?php
             include 'config.php';
-           
+            session_start();
             $sql = "SELECT * FROM course_table"; // Replace 'course_table' with your table name
             $result = $conn->query($sql);
 
