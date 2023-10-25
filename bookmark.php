@@ -73,11 +73,55 @@
                                 <td>2 Weeks</td>
                                 <td><a href="bookmarks.html" type="button" class="btn btn-sm btn-outline-primary">Remove</a></td>
                             </tr>
+                            <?php    
+?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div> 
+        <?php
+// Include any necessary configuration or database connection code
+
+// Fetch bookmark data and populate $bookmarks array
+$bookmarks = array(
+    array('courseName' => 'Introduction to Python programming', 'category' => 'Programming', 'status' => 'Free', 'duration' => '2 Weeks'),
+    // Add more bookmark data as needed
+);
+
+?>
+
+<!-- HTML content here -->
+
+<div class="col-md-12 table-responsive">
+    <table class="table table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Courses</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Status</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($bookmarks as $index => $bookmark) { ?>
+            <tr>
+                <th scope="row"><?php echo $index + 1; ?></th>
+                <td><?php echo $bookmark['courseName']; ?></td>
+                <td><?php echo $bookmark['category']; ?></td>
+                <td><?php echo $bookmark['status']; ?></td>
+                <td><?php echo $bookmark['duration']; ?></td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="deleteBookmark(<?php echo $index; ?>)">Remove</button>
+                </td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+
         <!-- Footer-->
         <?php 
             include("footer.php")
