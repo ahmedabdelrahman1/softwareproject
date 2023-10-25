@@ -7,7 +7,11 @@
         <meta name="author" content="" />
         <title>Section - Homepage </title>
         <!-- Favicon-->
+<<<<<<< HEAD
         <link rel="icon" type="image/x-icon" href="static/assets/section.jpg" />
+=======
+        <link rel="icon" type="image/x-icon" href="static/assets/static.ico" />
+>>>>>>> 14f8e4511f4e210ba3550fbe3c293a23cc587e19
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
         <!-- Google fonts-->

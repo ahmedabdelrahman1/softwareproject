@@ -42,6 +42,13 @@ if (isset($_POST['remove_course'])) {
     }
 }
 
+// Handle the checkout process
+if (isset($_POST['checkout'])) {
+    // Redirect to an order confirmation page
+    header('Location: orderConfirmation.php');
+    exit;
+}
+
 // Close your database connection if open
 if (isset($conn)) {
     mysqli_close($conn);
@@ -51,13 +58,13 @@ if (isset($conn)) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>7GES - Cart </title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/favicon.jpg" />
+        <link rel="icon" type="image/x-icon" href="static/assets/section.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
         <!-- Google fonts-->
@@ -94,7 +101,9 @@ if (isset($conn)) {
             </tbody>
         </table>
         <p>Total Price: $<?= $totalPrice; ?></p>
-        <a href="checkout.php" class="btn btn-primary">Proceed to Checkout</a>
+        <form method="post" action="cart.php">
+            <input type="submit" name="checkout" value="Proceed to Checkout" class="btn btn-primary">
+        </form>
     </div>
 </body>
 </html>
