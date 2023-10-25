@@ -30,6 +30,7 @@ if (isset($_POST['submit'])) {
         } elseif ($row['type'] == 'student') {
 
             $_SESSION['user_name'] = $row['fname'];
+            $_SESSION['last_name'] = $row['lname'];
             header('location:profile.php');
 
         } elseif ($row['type'] == 'instructor') {

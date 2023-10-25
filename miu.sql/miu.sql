@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2023 at 07:34 PM
+-- Generation Time: Oct 26, 2023 at 12:08 AM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- PHP Version: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -86,6 +86,27 @@ INSERT INTO `enrollment_table` (`ID`, `studentID`, `courseID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `images`
+--
+
+CREATE TABLE `images` (
+  `img_id` int(11) NOT NULL,
+  `img_url` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `images`
+--
+
+INSERT INTO `images` (`img_id`, `img_url`, `user_id`) VALUES
+(1, 'IMG-65398ef22f7be5.93129921.jpg', 8),
+(2, 'IMG-653987dd2e7fe8.27204121.jpg', 10),
+(3, 'IMG-65398fcb0956a8.83027716.jpg', 11);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pdf_table`
 --
 
@@ -95,14 +116,6 @@ CREATE TABLE `pdf_table` (
   `pdf_file` varchar(100) NOT NULL,
   `sectionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pdf_table`
---
-
-INSERT INTO `pdf_table` (`id`, `name`, `pdf_file`, `sectionID`) VALUES
-(4, 'lab1', 'Fall23_CSC360_Lab 1 Pt. 2.pdf', 1),
-(11, 'co2', 'CO_Assignment2 (1).pdf', 1);
 
 -- --------------------------------------------------------
 
@@ -116,13 +129,6 @@ CREATE TABLE `section_table` (
   `courseID` int(11) NOT NULL,
   `detials` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `section_table`
---
-
-INSERT INTO `section_table` (`ID`, `name`, `courseID`, `detials`) VALUES
-(1, 'Lecture', 1, 'Press to see all the lectures');
 
 -- --------------------------------------------------------
 
@@ -144,11 +150,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `fname`, `lname`, `email`, `password`, `type`) VALUES
-(1, 'Bassel', 'AbdelRahim', 'basselshaaban1@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student'),
 (2, 'Ahmed', 'Gaber', 'Ahmed123@gmail', 'd93591bdf7860e1e4ee2fca799911215', 'instructor'),
 (3, 'admin', 'admin', 'admin12@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 'admin'),
 (5, 'lob', 'a', 'Ahmed123@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student'),
-(6, 'omar', 'ddddddddd', 'omar123@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student');
+(6, 'omar', 'ddddddddd', 'omar123@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student'),
+(7, 'bassel', 'AbdelRahim', 'basselshaaban1@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'admin'),
+(11, '3enaby', 'man', '3enab@yahoo.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student');
 
 --
 -- Indexes for dumped tables
@@ -171,6 +178,12 @@ ALTER TABLE `course_table`
 --
 ALTER TABLE `enrollment_table`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`img_id`);
 
 --
 -- Indexes for table `pdf_table`
@@ -213,6 +226,12 @@ ALTER TABLE `enrollment_table`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `images`
+--
+ALTER TABLE `images`
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `pdf_table`
 --
 ALTER TABLE `pdf_table`
@@ -228,7 +247,7 @@ ALTER TABLE `section_table`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
