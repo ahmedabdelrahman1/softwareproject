@@ -7,7 +7,7 @@
         <meta name="author" content="" />
         <title>Section - Homepage </title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/static.ico" />
+        <link rel="icon" type="image/x-icon" href="static/assets/section.jpg" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
         <!-- Google fonts-->
@@ -36,7 +36,7 @@
                     <div class="col-xl-6">
                         <div class="text-center text-white">
                             <!-- Page heading-->
-                            <h1 class="mb-3">Welcome to 7G Engineering Services!</h1> 
+                            <h1 class="mb-3">Welcome to Section Engineering Services!</h1> 
                             <p class="lead fw-normal mb-5">A better place to start building yourself.</p>
 
                             <div class="col-auto">

@@ -1,8 +1,10 @@
 <html>
     <head>
-        <title>Contact Us </title><br><title> Team of Section are glad to know your feedback </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Section - Contact Us </title>
+                <!-- Favicon-->
+                <link rel="icon" type="image/x-icon" href="static/assets/section.jpg" />
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
         <link href='custom.css' rel='stylesheet' type='text/css'>
@@ -79,7 +81,7 @@
 
                     </form>
             <?php 
-            Class Contact{}
+            // Class Contact{}
             if(isset($_POST['ok'])){
                 include_once 'function.php';
                 $obj=new contact();
