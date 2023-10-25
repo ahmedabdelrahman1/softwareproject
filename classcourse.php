@@ -3,6 +3,7 @@ require './classsection.php';
 class course {
     public static $alerts=[];
     
+    
     public static function connect(){
         $conn=new PDO("mysql:host=localhost;dbname=miu","root","");
         return $conn;
