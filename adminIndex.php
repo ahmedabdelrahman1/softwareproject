@@ -83,6 +83,7 @@
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <h3><?php echo" $courseCount" ?></h3>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        
                     </div>
                 </div>
             </div>

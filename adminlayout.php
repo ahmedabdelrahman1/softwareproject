@@ -78,7 +78,23 @@ session_start();
         <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
         Courses
     </a>
-           
+    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
+        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+       Attendence
+    </a>
+    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
+        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+        Statistics
+    </a>
+    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
+        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+       Assignments
+    </a>
+    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
+        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+        Quizes
+    </a>
+          
           </div>
         </div>
         <div class="sb-sidenav-footer">
