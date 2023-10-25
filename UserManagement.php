@@ -58,10 +58,10 @@
                     echo "<td>" . $row["email"] . "</td>";
                     echo "<td>" . $row["type"] . "</td>";
                     echo "<td>
-                            <form method='POST'>
-                                <input type='hidden' name='delete_id' value='{$row['id']}' />
-                                <button type='submit' class='btn btn-danger' name='delete_button'><i class='fa-solid fa-trash'></i> Delete</button>
-                            </form>
+                    <form method='POST' action='UserManagement.php'> <!-- Replace 'your_script.php' with the actual filename -->
+                    <input type='hidden' name='delete_id' value='{$row['id']}' />
+                    <button type='submit' class='btn btn-danger' name='delete_button'><i class='fa-solid fa-trash'></i> Delete</button>
+                </form>
                           </td>";
                     echo "</tr>";
                 }
