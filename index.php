@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>7GES - Homepage </title>
+        <title>Section - Homepage </title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="static/assets/favicon.jpg" />
         <!-- Bootstrap icons-->
