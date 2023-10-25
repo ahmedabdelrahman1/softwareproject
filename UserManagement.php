@@ -72,7 +72,39 @@
             $conn->close();
             ?>
         </table>
+
     </div>
 </div>
+</script>
+<script>
+$(document).ready(function() {
+    // Delete button click event
+    $('.delete').click(function() {
+        int userId = $(this).data('id');
+        var userfName = $(this).data('fname');
+        var userlname = $(this).data('lname');
+        var useremail=$(this).data('email');
+        var userpassword=$(this).data('password');
+        var usertype=$(this).data('type');
+        // Display a confirmation dialog
+        if (confirm('Are you sure you want to delete course: ' + userdata + '?')) {
+            // Send an AJAX request to delete the course
+            $.ajax({
+                url: 'delete_user.php', // Replace with the URL to your delete course PHP script
+                type: 'POST',
+                data: { user_id: userId },
+                success: function(response) {
+                    if (response == 'success') {
+                        // Reload the page or handle the success as needed
+                        location.reload();
+                    } else {
+                        alert('Failed to delete user data.');
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
 </body>
 </html>
