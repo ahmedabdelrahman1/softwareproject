@@ -7,11 +7,9 @@
 <body>
     <div class="container-fluid px-4">
         <h1 class="mt-4">Dashboard</h1>
-
-        <div class="row">
-            <?php
-            include_once 'adminlayout.php';
-            session_start();
+        <?php
+            // include_once 'adminlayout.php';
+            // session_start();
             // Database connection code (similar to previous examples)
             
             @include 'config.php';
@@ -27,10 +25,7 @@
             
                 // Return a success message or response.
                 echo 'success';
-            } else {
-                // Return an error message or response.
-                echo 'error';
-            }
+            } 
             // Query to fetch data (replace with your actual query)
             $sql = "SELECT COUNT(*) as total_users FROM user";
             $result = $conn->query($sql);
@@ -57,16 +52,17 @@
             $conn->close();
             ?>
 
+        <div class="row">
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-primary text-white mb-4">
                     <div class="card-body">
                         <div class="card-body-icon">
-                            <i class="fa-solid fa-users"></i>
+                            <i class="fas fa-users"></i>
                         </div>
-                        Total users
+                        Total Users
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <h3><?php echo" $userCount" ?></h3>
+                        <h3><?php echo $userCount; ?></h3>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -76,14 +72,13 @@
                 <div class="card bg-secondary text-white mb-4">
                     <div class="card-body">
                         <div class="card-body-icon">
-                            <i class="fa-solid fa-users"></i>
+                            <i class="fas fa-book"></i>
                         </div>
-                        Total courses
+                        Total Courses
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <h3><?php echo" $courseCount" ?></h3>
+                        <h3><?php echo $courseCount; ?></h3>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        
                     </div>
                 </div>
             </div>
