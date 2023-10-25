@@ -79,9 +79,10 @@
 
                     </form>
             <?php 
+            Class Contact{}
             if(isset($_POST['ok'])){
                 include_once 'function.php';
-                $obj=new Contact();
+                $obj=new contact();
                 $res=$obj->contact_us($_POST);
                 if($res==true){
                     echo "<script>alert('Query successfully Submitted.Thank you')</script>";
@@ -89,6 +90,8 @@
                     echo "<script>alert('Something Went wrong!!')</script>";
                 }
             }
+            require_once('function.php'); // Replace 'contact_class.php' with the actual file path
+
             ?>
 
                 </div><!-- /.8 -->
