@@ -55,7 +55,7 @@ if (isset($conn)) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>7GES - Courses </title>
+        <title>7GES - Cart </title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="static/assets/favicon.jpg" />
         <!-- Bootstrap icons-->
