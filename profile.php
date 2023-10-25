@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>7GES - Profile </title>
+        <title>Section - Profile </title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="static/assets/favicon.jpg" />
         <!-- Bootstrap icons-->
@@ -30,7 +30,7 @@
                             <img src="static/assets/img/placeholder.png" alt="..." class="rounded-circle">
                             <h1 class="card-title h5 my-3">Denamse Angono Derkos Tirel</h1>
                             <p class="card-text mb-3">tirelangono@gmail.com</p>
-                            <p class="card-text mb-3">Joined 3y 6m on 7GES</p>
+                            <p class="card-text mb-3">Joined 3y 6m on Section</p>
 
                             <a href="#" type="submit" class="btn btn-primary btn-m">Edit Profile</a>
                         </div>
