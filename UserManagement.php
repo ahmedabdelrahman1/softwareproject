@@ -58,10 +58,10 @@
                     echo "<td>" . $row["email"] . "</td>";
                     echo "<td>" . $row["type"] . "</td>";
                     echo "<td>
-                            <form method='POST'>
-                                <input type='hidden' name='delete_id' value='{$row['id']}' />
-                                <button type='submit' class='btn btn-danger' name='delete_button'><i class='fa-solid fa-trash'></i> Delete</button>
-                            </form>
+                    <form method='POST' action='UserManagement.php'> <!-- Replace 'your_script.php' with the actual filename -->
+                    <input type='hidden' name='delete_id' value='{$row['id']}' />
+                    <button type='submit' class='btn btn-danger' name='delete_button'><i class='fa-solid fa-trash'></i> Delete</button>
+                </form>
                           </td>";
                     echo "</tr>";
                 }
@@ -72,7 +72,63 @@
             $conn->close();
             ?>
         </table>
+
     </div>
 </div>
+ <!-- </script> -->
+<!-- <script> -->
+<!-- $(document).ready(function() { -->
+    <!-- // Delete button click event
+    $('.delete').click(function() {
+        int userId = $(this).data('id');
+        var userfName = $(this).data('fname');
+        var userlname = $(this).data('lname');
+        var useremail=$(this).data('email');
+        var userpassword=$(this).data('password');
+        var usertype=$(this).data('type');
+        // Display a confirmation dialog
+        if (confirm('Are you sure you want to delete course: ' + userdata + '?')) {
+            // Send an AJAX request to delete the course
+            $.ajax({
+                url: 'delete_user.php', // Replace with the URL to your delete course PHP script
+                type: 'POST',
+                data: { user_id: userId },
+                success: function(response) {
+                    if (response == 'success') {
+                        // Reload the page or handle the success as needed
+                        location.reload();
+                    } else {
+                        alert('Failed to delete user data.');
+                    }
+                }
+            });
+        }
+    });
+});
+</script> -->
+<?php
+// Connect to the database
+$conn = new mysqli( 'fname' ,'lname','email','password', 'type','miu.sql');
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// User ID to delete
+$user_id = $_SESSION['user_id']; // Assuming you store user ID in the session
+
+// Delete the user
+$sql = "DELETE FROM users WHERE id = $user_id";
+if ($conn->query($sql) === TRUE) {
+    echo "User deleted successfully";
+} else {
+    echo "Error deleting user: " . $conn->error;
+}
+
+// Close the database connection
+$conn->close();
+?>
+
 </body>
 </html>

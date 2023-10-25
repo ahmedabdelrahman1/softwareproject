@@ -10,7 +10,7 @@ if(isset($_POST['submit'])){
     $passw = md5($_POST['password']);
     $cpassw = md5($_POST['cpassword']);
     $type = $_POST['type'];
-
+    $new_img_name = ' ';
    $select = " SELECT * FROM user WHERE email = '$email' && password = '$passw' ";
 
     $result = mysqli_query($conn, $select);
@@ -26,6 +26,14 @@ if(isset($_POST['submit'])){
         }else{
             $insert = "INSERT INTO user(fname, lname, email, password, type) VALUES('$fname','$lname','$email','$passw','$type')";
             mysqli_query($conn, $insert);
+
+            $user_id = mysqli_insert_id($conn);
+            
+                $sql = $conn->prepare("INSERT INTO images (img_url, user_id) VALUES (?, ?)");
+                $sql->bind_param("si", $new_img_name, $user_id); // Use "si" for string and integer
+                $res = $sql->execute();
+                $sql->close();
+
             header('location:SIGNIN.php');
         }
     }

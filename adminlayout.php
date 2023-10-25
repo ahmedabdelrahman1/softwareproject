@@ -20,6 +20,7 @@
 <body class="sb-nav-fixed">
 <?php
 session_start();
+
 ?>
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
@@ -61,7 +62,7 @@ session_start();
             <div class="sb-sidenav-menu-heading">Core</div>
 
 
-            <a class="nav-link" href="javascript:void(0);" onclick="loadDashboard()">
+            <a class="nav-link" href="adminlayout.php" onclick="loadDashboard()">
               <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
               Dashboard
             </a>
@@ -106,6 +107,9 @@ session_start();
       <main>
       <div id="content-container">
         <!-- Content from UserManagement.php will be loaded here -->
+        <?php 
+        include("adminIndex.php");
+        ?>
     </div>
       </main>
       <footer class="py-4 bg-light mt-auto">
