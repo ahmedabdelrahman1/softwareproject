@@ -96,6 +96,10 @@ session_start();
         <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
         Quizes
     </a>
+    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
+        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+       Location
+    </a>
           
           </div>
         </div>
