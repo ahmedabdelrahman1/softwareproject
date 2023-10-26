@@ -14,10 +14,13 @@
             
             @include 'config.php';
             require './classcourse.php';
+            require './classdetails.php';
 
             if (isset($_POST['course_id'])) {
                 $courseId = $_POST['course_id'];
-            
+                $course=course::selectByID($courseId);
+
+                coursedetails::deleteByID($course['detailsID']);
                 
             
                 // Call the `delete` function from the classcourse.php file.
