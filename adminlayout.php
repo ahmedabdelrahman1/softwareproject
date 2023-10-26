@@ -20,7 +20,21 @@
 
 <body class="sb-nav-fixed">
 <?php
+
+@include 'config.php';
 session_start();
+
+if (isset($_POST['delete_id'])) {
+    $deleteId = $_POST['delete_id'];
+
+    // Perform the SQL DELETE operation
+    $sql = "DELETE FROM user WHERE id = $deleteId";
+    if ($conn->query($sql) === TRUE) {
+        echo "Record deleted successfully.";
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+}
 
 ?>
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
