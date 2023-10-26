@@ -43,10 +43,13 @@
                 echo '    </div>';
 
                 // Show delete button
+                if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
+{
                 echo '    <div class="card-body">';
                 echo '        <a href="coursecontent.php?course_id=' . $course_id . '&delete_section=' . $value['ID'] . '" class="btn btn-danger btn-sm delete-btn">Delete</a>';
                 echo '    </div>';
                 echo '</div>';
+}
             }
         }
         ?>
