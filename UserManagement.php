@@ -108,27 +108,27 @@
 </script> -->
 <?php
 // Connect to the database
-$conn = new mysqli( 'fname' ,'lname','email','password', 'type','miu.sql');
+// include'config.php';
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// // Check connection
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
 
-// User ID to delete
-$user_id = $_SESSION['user_id']; // Assuming you store user ID in the session
+// // User ID to delete
+// $user_id = $_SESSION['id']; // Assuming you store user ID in the session
 
-// Delete the user
-$sql = "DELETE FROM users WHERE id = $user_id";
-if ($conn->query($sql) === TRUE) {
-    echo "User deleted successfully";
-} else {
-    echo "Error deleting user: " . $conn->error;
-}
+// // Delete the user
+// $sql = "DELETE FROM users WHERE id = $user_id";
+// if ($conn->query($sql) === TRUE) {
+//     echo "User deleted successfully";
+// } else {
+//     echo "Error deleting user: " . $conn->error;
+// }
 
-// Close the database connection
-$conn->close();
-?>
+// // Close the database connection
+// $conn->close();
+// ?>
 
 </body>
 </html>
