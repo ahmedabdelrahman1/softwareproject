@@ -28,7 +28,6 @@
         <?php
         if (isset($_GET['course_id'])) {
             $course_id = $_GET['course_id'];
-            echo "Course ID: " . $course_id;
         }
 
         require './classsection.php';

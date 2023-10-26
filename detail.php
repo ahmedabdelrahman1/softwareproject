@@ -26,10 +26,10 @@
 
             if (isset($_GET['course_id'])) {
                 $course_id = $_GET['course_id'];
+                $coursedetials_id = $_GET['detailsID'];
                 echo "Course ID: " . $course_id;
                 $selectedCourse = course::selectByID($course_id);
-                $Coursedetails = coursedetails::selectByCourseDetailsID($course_id);
-                echo $Coursedetails['ID'];
+                $Coursedetails = coursedetails::selectByCourseDetailsID($coursedetials_id);
             }
 
             
