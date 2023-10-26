@@ -1,22 +1,41 @@
 <?php
-include 'config.php';
+ include 'config.php';
+ session_start();
+ require './classcourse.php';
+ require './classdetails.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $details = $_POST['details'];
-    $instructor = $_POST['instructor'];
-    $price = $_POST['price'];
-    $section = $_POST['section'];
 
-    $sql = "UPDATE course_table SET name='$name', details='$details', instructorID='$instructor', price='$price', sectionID='$section' WHERE ID='$id'";
 
-    if ($conn->query($sql) === TRUE) {
-        echo 'success';
+ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    
+    $id = $_POST['course_id'];
+    $name = $_POST['editName'];
+    $coursePreview = $_POST['editpreview'];
+    $instructor = $_POST['editInstructor'];
+    $price = $_POST['editPrice'];
+    $detailsID = $_POST['editdetailsID'];
+    $category = $_POST['editCategory'];
+    $level = $_POST['editLevel'];
+    $duration = $_POST['editDuration'];
+    $courseInfo = $_POST['editCourseInfo'];
+
+    // Update data in the 'course' table
+    $courseUpdateResult = course::update($id, $name, $instructor, $coursePreview, $price, $detailsID);
+
+    // Update data in the 'coursedetails' table
+    $coursedetailsUpdateResult = coursedetails::updateByID($detailsID, $category, $level, $duration, $courseInfo);
+    echo 'Edit form submitted successfully';
+        header("Location: adminlayout.php");
+
+    if ($courseUpdateResult && $coursedetailsUpdateResult) {
+        // Both updates were successful
+        
     } else {
-        echo 'error';
+        // Handle errors if necessary
+        echo 'Edit form submission failed';
     }
-
-    $conn->close();
 }
+
+
 ?>
