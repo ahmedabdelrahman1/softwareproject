@@ -58,7 +58,7 @@
                     echo "<td>" . $row["email"] . "</td>";
                     echo "<td>" . $row["type"] . "</td>";
                     echo "<td>
-                    <form method='POST' action='UserManagement.php'> <!-- Replace 'your_script.php' with the actual filename -->
+                    <form method='POST' action='adminlayout.php'> <!-- Replace 'your_script.php' with the actual filename -->
                     <input type='hidden' name='delete_id' value='{$row['id']}' />
                     <button type='submit' class='btn btn-danger' name='delete_button'><i class='fa-solid fa-trash'></i> Delete</button>
                 </form>
@@ -108,26 +108,10 @@
 </script> -->
 <?php
 // Connect to the database
-$conn = new mysqli( 'fname' ,'lname','email','password', 'type','miu.sql');
+
 
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
-// User ID to delete
-$user_id = $_SESSION['user_id']; // Assuming you store user ID in the session
-
-// Delete the user
-$sql = "DELETE FROM users WHERE id = $user_id";
-if ($conn->query($sql) === TRUE) {
-    echo "User deleted successfully";
-} else {
-    echo "Error deleting user: " . $conn->error;
-}
-
-// Close the database connection
-$conn->close();
 ?>
 
 </body>
