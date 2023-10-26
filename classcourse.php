@@ -8,15 +8,14 @@ class course {
         $conn=new PDO("mysql:host=localhost;dbname=miu","root","");
         return $conn;
     }
-    public static function insert($name,$instructorID,$preview,$price,$detailsID){
-        $add=course::connect()->perpare("INSERT INTO course_table() VALUE(?,?,?,?,?)");
-        $add->execute(array($name,$instructorID,$preview,$price,$detailsID));
-        if($add){
-            course::$alerts[]="Added!";
-         }
-         else{
-            course::$alerts[]="Not added!";
-         }
+    public static function insert($name, $instructorID, $preview, $price, $detailsID) {
+        $add = course::connect()->prepare("INSERT INTO course_table (name, instructorID, preview, price, detailsID) VALUES (?, ?, ?, ?, ?)");
+        $add->execute(array($name, $instructorID, $preview, $price, $detailsID));
+        if ($add) {
+            course::$alerts[] = "Added!";
+        } else {
+            course::$alerts[] = "Not added!";
+        }
     }
     public static function select(){
         $list=course::connect()->prepare("SELECT *FROM course_table");
@@ -86,6 +85,28 @@ class course {
         $stmt->execute();
         $enrollments = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $enrollments;
+    }
+    public static function update($courseID, $name, $instructorID, $preview, $price, $detailsID) {
+        $conn = course::connect();
+    
+        // Check if the course exists
+        $checkQuery = $conn->prepare("SELECT * FROM course_table WHERE ID = ?");
+        $checkQuery->execute(array($courseID));
+    
+        if ($checkQuery->rowCount() > 0) {
+            // Course found, proceed with updating
+    
+            $updateQuery = $conn->prepare("UPDATE course_table SET name = ?, instructorID = ?, preview = ?, price = ?, detailsID = ? WHERE ID = ?");
+            
+            if ($updateQuery->execute(array($name, $instructorID, $preview, $price, $detailsID, $courseID))) {
+                course::$alerts[] = "Course updated successfully.";
+            } else {
+                course::$alerts[] = "Failed to update the course.";
+            }
+        } else {
+            // Course not found
+            course::$alerts[] = "Course not found.";
+        }
     }
 }
 
