@@ -8,6 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Admin panel</title>
+  <link rel="icon" type="image/x-icon" href="static/assets/section.jpg" />
 
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -109,6 +110,10 @@ if (isset($_POST['delete_id'])) {
         <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
         Quizes
     </a>
+    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
+        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+       Location
+    </a>
           
           </div>
         </div>
@@ -129,7 +134,7 @@ if (isset($_POST['delete_id'])) {
       <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
           <div class="d-flex align-items-center justify-content-between small">
-           
+            <div class="text-muted">Copyright &copy; Section 2023</div>
             <div>
               <a href="#">Privacy Policy</a>
               &middot;
