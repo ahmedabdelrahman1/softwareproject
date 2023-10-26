@@ -6,7 +6,7 @@
 -- Generation Time: Feb 04, 2018 at 02:35 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.0.25
-
+-- contact data base
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
