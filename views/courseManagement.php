@@ -47,10 +47,13 @@
             </tr>
 
             <?php
+
+
+
 include 'config.php';
 session_start();
-require './classcourse.php';
-require './classdetails.php';
+require '../models/classcourse.php';
+require '../models/classdetails.php';
 
 $sql = "SELECT * FROM course_table"; // Replace 'course_table' with your table name
 $result = $conn->query($sql);
@@ -80,7 +83,9 @@ if ($result->num_rows > 0) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="editForm" method="post" action="edit.php">
+                        <form id="editForm" method="post" action="../controller/course_controller.php">
+
+                        <input type="hidden" name="action" value="edit">
                             <input type="hidden" name="course_id" value="' . $row2['ID'] . '">
                             <div class="form-group">
                                 <label for="editName">Course Name</label>
@@ -127,7 +132,8 @@ if ($result->num_rows > 0) {
 </div>
 </div>
 </div>
-            <form method="POST" action="adminlayout.php">
+            <form method="POST" action="../controller/course_controller.php">
+            <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="course_id" value="' . $row2['ID'] . '">
                 <button class="btn btn-danger delete" type="submit">
                     <i class="fas fa-trash"></i>
@@ -144,8 +150,7 @@ $conn->close();
 ?>
               
 
-            $conn->close();
-            ?>
+           
         </table>
     </div>
 </div>
@@ -166,7 +171,10 @@ $conn->close();
                 </button>
             </div>
             <div class="modal-body">
-            <form id="createForm" method="post" action="addcourse.php" >
+            <form id="createForm" method="post" action="../controller/course_controller.php" >
+
+            <input type="hidden" name="action" value="create">
+
     <input type="hidden" id="createId" name="createId">
     <div class="form-group">
         <label for="createName">Course Name</label>

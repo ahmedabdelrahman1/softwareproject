@@ -1,5 +1,5 @@
 <?php
-require './classsection.php';
+require '../models/classsection.php';
 class course {
     public static $alerts=[];
     

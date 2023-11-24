@@ -26,27 +26,28 @@ session_start();
 <div class="container mt-4">
 <?php
  @include 'config.php';
- require './classpdf.php';
+ require '../models/classpdf.php';
  if (isset($_GET['title'])) {
     $title = $_GET['title'];
     echo "<h1>$title</h1>";
     echo "<hr>";
 
-    if (isset($_GET['pdfID'])) {
-        $pdfId = $_GET['pdfID'];
-        pdf::delete($pdfId);
-    }
 
     if (isset($_GET['sectionID'])) {
         $sectionId = $_GET['sectionID'];
-
+        echo $sectionId;
         if (count(pdf::selectBySectionID($sectionId)) > 0) {
             $fetch = pdf::selectBySectionID($sectionId);
             foreach ($fetch as $value) {
                 echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4 pdf-link">
                     <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
-                </a>
-                <a href="content.php?pdfID=' . $value['id'] . '&sectionID=' . $sectionId . '" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</a><br>';
+                </a>';
+                echo '<form method="post" action="../controller/pdf_controller.php">';
+                echo '    <input type="hidden" name="action" value="delete">';
+                echo '    <input type="hidden" name="pdfID" value="' . $value['id'] . '">';
+                echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
+                echo '    <button type="submit" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</button>';
+                echo '</form><br>';
             }
         }
       
@@ -68,10 +69,6 @@ else {
        
     
         // Now you can use the $sectionId variable in your code
-    }
-    if (isset($_GET['pdfID'])) {
-        $pdfId = $_GET['pdfID'];
-        pdf::delete($pdfId);
     }
     // Prepare the SQL statement with a question mark as a placeholder
     $sql = "SELECT name FROM section_table WHERE ID = ?";
@@ -100,8 +97,13 @@ else {
         foreach ($fetch as $value) {
             echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4 pdf-link">
             <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
-        </a>
-        <a href="content.php?pdfID=' . $value['id'] . '&sectionID=' . $sectionId . '" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</a><br>';
+        </a>';
+        echo '<form method="post" action="../controller/pdf_controller.php">';
+        echo '    <input type="hidden" name="action" value="delete">';
+        echo '    <input type="hidden" name="pdfID" value="' . $value['id'] . '">';
+        echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
+        echo '    <button type="submit" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</button>';
+        echo '</form><br>';
         }
     }
      else {

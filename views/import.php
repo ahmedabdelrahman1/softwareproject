@@ -3,30 +3,7 @@ session_start();
 if (isset($_GET['sectionID'])) {
     // Retrieve the course_id from the query parameter
     $sectionId = $_GET['sectionID'];
-     
-   
-    // Now you can use the $courseId variable in your code
-}
-   require './classpdf.php';
-     if (isset($_POST['buttonupload'])){
-        $name=$_POST['name'];
-        if(isset($_FILES['file'])){
-            if ($_FILES['file']['type'] == 'application/pdf') {
-                $pdf_file = $_FILES['file']['name'];
-                move_uploaded_file($_FILES['file']['tmp_name'], 'pdf/'.$pdf_file);
-                //echo "PDF uploaded";
-            } else {
-                echo "Please upload a PDF file.";
-                return false;
-            }
-        }
-        if(!empty($name)){
-            pdf::insert($name,$pdf_file,$sectionId);
-        }
-        else{
-            pdf::$alerts[]="Fill the fields";
-        }
-     }
+    require '../models/classpdf.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +70,12 @@ if (isset($_GET['sectionID'])) {
     </div>
    <div class="container mt-5">
         <h2>Drag and Drop File Upload</h2>
-        <form method="post" action="" enctype="multipart/form-data">
+        <form method="post" action="../controller/pdf_controller.php" enctype="multipart/form-data">
+            <?php
+            echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
+}
+            ?>
+        <input type="hidden" name="action" value="create">
     <label id="name">Enter the name of the PDF </label>
     <input type="text" name="name" placeholder="Enter pdf name">
     <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">

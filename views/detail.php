@@ -21,8 +21,8 @@
         session_start();
             include("navbar.php");
             include 'config.php';
-            require './classdetails.php';
-            require './classcourse.php';
+            require '../models/classdetails.php';
+            require '../models/classcourse.php';
 
             if (isset($_GET['course_id'])) {
                 $course_id = $_GET['course_id'];

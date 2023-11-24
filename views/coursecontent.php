@@ -29,8 +29,8 @@
         if (isset($_GET['course_id'])) {
             $course_id = $_GET['course_id'];
         }
-
-        require './classsection.php';
+        
+        require '../models/classsection.php';
         $sections = section::selectByCourse($course_id);
 
         if (count($sections) > 0) {
@@ -45,32 +45,25 @@
                 // Show delete button
                 if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
 {
-                echo '    <div class="card-body">';
-                echo '        <a href="coursecontent.php?course_id=' . $course_id . '&delete_section=' . $value['ID'] . '" class="btn btn-danger btn-sm delete-btn">Delete</a>';
-                echo '    </div>';
+    echo '<form method="post" action="../controller/section_controller.php">';
+    echo '        <div class="card-body">';
+    echo'<input type="hidden" name="action" value="delete">';
+    echo'<input type="hidden" name="course_id" value=" '. $course_id .'">';
+    echo '            <button type="submit" name="delete_section" value="' . $value['ID'] . '" class="btn btn-danger btn-sm delete-btn">Delete</button>';
+    echo '        </div>';
                 echo '</div>';
+                echo '</form>';
 }
             }
         }
         ?>
 
-        <?php
-        if (isset($_GET['delete_section'])) {
-            $section_id_to_delete = $_GET['delete_section'];
-            // Implement the delete function here
-            section::delete($section_id_to_delete);
-
-            // Redirect back to the course content page
-            header('Location: coursecontent.php?course_id=' . $course_id);
-        }
-        ?>
+       
 <?php
-echo '<form method="POST" action="coursecontent.php?course_id=' . $course_id.'" id="addSectionForm" style="display: none;">';
-?>
-<?php
-
 if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
 {
+echo '<form method="POST" action="../controller/section_controller.php?course_id=' . $course_id.'" id="addSectionForm" style="display: none;">';
+echo'<input type="hidden" name="action" value="create">';
 ?>
         <div class="form-group">
             <label for="sectionName">Section Name:</label>
@@ -78,7 +71,7 @@ if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
             <label for="sectionName">Details:</label>
             <input type="text" class="form-control" id="sectionDetails" name="sectionDetails" required>
         </div>
-        <input type="hidden" name="course_id" value="<?php echo $course_id; ?>">
+        <input type="hidden" name="course_id" value="<?php $course_id; ?>">
         <button type="submit" class="btn btn-primary">Add Section</button>
     </form>
 
@@ -88,16 +81,6 @@ if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
 </div>
 
 <?php
-}
-if (isset($_POST['sectionName']) && isset($_POST['sectionDetails']) && isset($_POST['course_id'])) {
-    $sectionName = $_POST['sectionName'];
-    $sectionDetails = $_POST['sectionDetails'];
-    $courseID = $_POST['course_id'];
-
-    section::insert($sectionName, $courseID, $sectionDetails);
-
-    // Redirect back to the page where you added the section
-    header('Location: coursecontent.php?course_id=' . $courseID);
 }
 ?>
 <style>

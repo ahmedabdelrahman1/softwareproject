@@ -13,22 +13,8 @@
             // Database connection code (similar to previous examples)
             
             @include 'config.php';
-            require './classcourse.php';
-            require './classdetails.php';
+            require '../models/classcourse.php';
 
-            if (isset($_POST['course_id'])) {
-                $courseId = $_POST['course_id'];
-                $course=course::selectByID($courseId);
-
-                coursedetails::deleteByID($course['detailsID']);
-                
-            
-                // Call the `delete` function from the classcourse.php file.
-                course::delete($courseId);
-            
-                // Return a success message or response.
-                echo 'success';
-            } 
             // Query to fetch data (replace with your actual query)
             $sql = "SELECT COUNT(*) as total_users FROM user";
             $result = $conn->query($sql);

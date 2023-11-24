@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,8 +6,8 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Section - Courses </title>
-                <!-- Favicon-->
-                <link rel="icon" type="image/x-icon" href="static/assets/section.jpg" />
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="static/assets/section.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
         <!-- Google fonts-->
@@ -19,27 +18,37 @@
     <body>
         <!-- Responsive navbar-->
         <?php 
-        session_start();
-       
-            include("navbar.php")
+            include("navbar.php");
+            session_start();
         ?>
         <!-- Page content-->
-        
+        <div class="container-fluid py-5 bg-body-tertiary">
+            <div class="col-lg-6 mx-auto">
+                <form class="form-group">
+                    <!-- <div class="row"> -->
+                        <!-- <div class="col"> -->
+                            <input class="form-control form-control" type="search" placeholder="Search for courses..."/>
+                        <!-- </div> -->
+                        <!-- <div class="col-auto"><button class="btn btn-primary" type="submit">Search</button></div> -->
+                    <!-- </div> -->
+                </form>
+            </div>
 
             <div class="text-sm-start text-lg-center my-5">
-                <h1>Your Courses </h1>
+                <h1>Courses List</h1>
+                <p class="lead fw-normal text-muted">Explore Our Extensive Catalog of Courses for a World of Learning Opportunities.</p>
             </div>
+
+            <?php
+                    require '../models/classcourse.php';
+?>
 
             <div  d="gallery" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 gallery">
                 <div class="col-md-9">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5">
-                    <?php
-require './classcourse.php';
-if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
-{
-
-if (count(course::selectByInstructorID($_SESSION['user_id'])) > 0) {
-    $fetch = course::selectByInstructorID($_SESSION['user_id']);
+                        <?php
+                       if (count(course::select()) > 0) {
+    $fetch = course::select();
     foreach ($fetch as $value) {
         echo '<div class="col gallery-item">';
         echo '    <div class="card shadow-sm border-bottom border-5">';
@@ -58,7 +67,7 @@ if (count(course::selectByInstructorID($_SESSION['user_id'])) > 0) {
         echo '';
         echo '            <div class="d-flex justify-content-between align-items-center">';
         echo '                <div class="btn-group">';
-        echo '                    <a href="coursecontent.php?course_id=' . $value['ID'] . '" type="button" class="btn btn-sm btn-outline-secondary">View</a>';
+        echo '                    <a href="detail.php?course_id=' . $value['ID'] . '&detailsID=' . $value['detailsID'] . '" type="button" class="btn btn-sm btn-outline-secondary">View</a>';
         echo '                    <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>';
         echo '                </div>';
         echo '            </div>';
@@ -67,44 +76,10 @@ if (count(course::selectByInstructorID($_SESSION['user_id'])) > 0) {
         echo '</div>';
     }
 }
-}
-else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
-{
-    if (count(course::selectCoursesByStudentID($_SESSION['user_id'])) > 0) {
-        $fetch = course::selectCoursesByStudentID($_SESSION['user_id']);
-        foreach ($fetch as $value) {
-            echo '<div class="col gallery-item">';
-            echo '    <div class="card shadow-sm border-bottom border-5">';
-            echo '        <a href="coursecontent.php?course_id=' . $value['ID'] . '" class="card-img">';
-            echo '            <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/python.jpg">';
-            echo '        </a>';
-            echo '        <div class="card-body">';
-            echo '            <h3 class="card-title h4">';
-            echo '                Introduction to ' . $value['name'];
-            echo '            </h3>';
-            echo '            <p class="card-text text-muted">' . $value['preview'] . '</p>';
-            echo '';
-            echo '            <p class="card-text h6 mb-3">';
-            echo '                <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>';
-            echo '            </p>';
-            echo '';
-            echo '            <div class="d-flex justify-content-between align-items-center">';
-            echo '                <div class="btn-group">';
-            echo '                    <a href="coursecontent.php?course_id=' . $value['ID'] . '" type="button" class="btn btn-sm btn-outline-secondary">View</a>';
-            echo '                    <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>';
-            echo '                </div>';
-            echo '            </div>';
-            echo '        </div>';
-            echo '    </div>';
-            echo '</div>';
-        }
-    }
-}
 ?>
-
                         <div class="col gallery-item">
                             <div class="card shadow-sm border-bottom border-5">
-                                <a href="coursecontent.php" class="card-img">
+                                <a href="detail.php" class="card-img">
                                     <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/django.jpg">
                                 </a>
                                 <div class="card-body">
@@ -119,17 +94,18 @@ else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
 
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href="coursecontent.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                            <a href="detail.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
 
                                             <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
                                         </div>
+                                        <small class="badge rounded-pill text-light bg-danger p-2 h6">USD 95.99</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col gallery-item">
                             <div class="card shadow-sm border-bottom border-5">
-                                <a href="coursecontent.php"a class="card-img">
+                                <a href="detail.php"a class="card-img">
                                     <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/css.jpg">
                                 </a>
                                 <div class="card-body">
@@ -144,17 +120,18 @@ else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
 
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href="coursecontent.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                            <a href="detail.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
 
                                             <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
                                         </div>
+                                        <small class="badge rounded-pill text-light bg-success p-2 h6">Free</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col gallery-item">
                             <div class="card shadow-sm border-bottom border-5">
-                                <a href="coursecontent.php" class="card-img">
+                                <a href="detail.php" class="card-img">
                                     <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/excel.jpg">
                                 </a>
                                 <div class="card-body">
@@ -169,17 +146,18 @@ else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
 
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href="coursecontent.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                            <a href="detail.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
 
                                             <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
                                         </div>
+                                        <small class="badge rounded-pill text-light bg-success p-2 h6">Free</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col gallery-item">
                             <div class="card shadow-sm border-bottom border-5">
-                                <a href="coursecontent.php" class="card-img">
+                                <a href="detail.php" class="card-img">
                                     <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/db.jpg">
                                 </a>
                                 <div class="card-body">
@@ -194,10 +172,11 @@ else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
 
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href="coursecontent.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                            <a href="detail.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
 
                                             <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
                                         </div>
+                                        <small class="badge rounded-pill text-light bg-danger p-2 h6">USD 25.50</small>
                                     </div>
                                 </div>
                             </div>
