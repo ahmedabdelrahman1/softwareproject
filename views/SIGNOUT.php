@@ -1,11 +1,9 @@
 <?php
 
 @include 'config.php';
+@include '../models/classSign.php';
 
-session_start();
-session_unset();
-session_destroy();
+Sign::sign_out();
 
-header('location:index.php');
 
 ?>
