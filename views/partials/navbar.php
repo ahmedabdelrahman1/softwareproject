@@ -1,7 +1,10 @@
+<?php
+if(isset($_SESSION['user_id'])) {
+    ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-gradient static-top">
             <div class="container">
                 <a class="navbar-brand fw-bold" href="index.php">
-                    <img class="logo" src="static/assets/section.jpg">Section
+                    <img class="logo" src="../public/assets/section.jpg">Section
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
@@ -64,3 +67,18 @@
                 </div>
             </div>
         </nav>
+       <?php                         
+    }
+    else {
+        ?>
+        <nav class="navbar navbar-light bg-light static-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="index.php">
+                <img class="logo" src="../public/assets/section.jpg">Section</a>
+                <a class="btn btn-primary" href="SIGNIN.php">Sign In/Up</a>
+            </div>
+        </nav>
+        <?php
+    }
+
+?>

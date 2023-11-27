@@ -33,3 +33,28 @@
                 </div>
             </div>
         </footer>
+         <!-- Bootstrap core JS-->
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="../../public/js/scripts.js"></script>
+        <script src="../../public/js/masonry.js"></script>
+        <script type="text/javascript">
+            var elem = document.querySelector('.gallery');
+            var msnry = new Masonry( elem, {
+                // options
+                itemSelector: '.gallery-item',
+                columnWidth: '.gallery-item',
+            });
+
+            // element argument can be a selector string
+            //   for an individual element
+            var msnry = new Masonry( '.gallery', {// options});
+        </script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>

@@ -1,26 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Section - Courses </title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/section.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" /> 
-    </head>
-    <body>
-        <!-- Responsive navbar-->
-        <?php 
-            include("navbar.php");
+    
+<?php   
             session_start();
-        ?>
+            include("partials/head.php");
+           
+    echo'<body>';
+            include("partials/navbar.php");
+    ?>
         <!-- Page content-->
         <div class="container-fluid py-5 bg-body-tertiary">
             <div class="col-lg-6 mx-auto">
@@ -249,31 +236,8 @@
         </div> 
         <!-- Footer-->
         <?php 
-            include("footer.php")
+           include("partials/footer.php")
         ?>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="static/js/scripts.js"></script>
-        <script src="static/js/masonry.js"></script>
-
-        <script type="text/javascript">
-            var elem = document.querySelector('.gallery');
-            var msnry = new Masonry( elem, {
-                // options
-                itemSelector: '.gallery-item',
-                columnWidth: '.gallery-item',
-            });
-
-            // element argument can be a selector string
-            //   for an individual element
-            var msnry = new Masonry( '.gallery', {// options});
-        </script>
-
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+       
     </body>
 </html>

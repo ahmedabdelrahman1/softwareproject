@@ -1,6 +1,5 @@
 <?php
-session_start();
-include("navbar.php"); // Include your navigation bar
+
 
 // Initialize the cart if it doesn't exist
 if (!isset($_SESSION['cart'])) {
@@ -57,21 +56,13 @@ if (isset($conn)) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>7GES - Cart </title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/section.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" /> </head>
-<body>
+<?php   
+            session_start();
+            include("partials/head.php");
+           
+    echo'<body>';
+            include("partials/navbar.php");
+    ?>
     <div class="container py-5">
         <h2>Your Shopping Cart</h2>
         <?php if (isset($_GET['removed']) && $_GET['removed'] == 'true') : ?>
@@ -105,5 +96,8 @@ if (isset($conn)) {
             <input type="submit" name="checkout" value="Proceed to Checkout" class="btn btn-primary">
         </form>
     </div>
+    <?php
+       include("partials/footer.php")
+    ?>
 </body>
 </html>

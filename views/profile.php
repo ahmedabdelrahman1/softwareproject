@@ -1,82 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>7GES - Profile </title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/favicon.jpg" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" />
-
-
-    <style>
-        /* Pop-up styles */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1;
-            align-items: center;
-            justify-content: center;
-        }
+  
+<?php  
         
-        .popup {
-            background: white;
-            width:500px;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        /* Close button */
-        .close-button {
-            position: absolute; 
-            top: 25px; 
-            right: 20px; 
-            cursor: pointer; 
-            font:20px 
-        }
-    </style>
-
-
-        <style>
-        /* Style for the circular images */
-        .circular-image {
-            border-radius: 50%;
-            width: 150px; /* Adjust the size as needed */
-            height: 150px; /* Adjust the size as needed */
-            object-fit: cover;
-        }
-
-        /* Center the images on the page */
-        .center-images {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 20vh;
-        }
-    </style>
-
-    </head>
-    <body>
-        <!-- Responsive navbar-->
-        <?php 
-        include("config.php");
-        session_start();
-            include("navbar.php");
-
+         session_start();
+         include("partials/head.php");
+        
+ echo'<body>';
+         include("partials/navbar.php");
+ ?>
+     <?php   
+            include("config.php");
             
             // Replace $user_id with the actual user ID you want to retrieve
             $user_id = $_SESSION["user_id"];
@@ -164,7 +98,9 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
         </div> 
         <!-- Footer-->
         <?php 
-            include("footer.php")
+             
+             include("partials/footer.php")
+
         ?>
 
 
@@ -222,25 +158,5 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
     });
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="static/js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>
