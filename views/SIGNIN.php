@@ -1,6 +1,6 @@
 <?php
 
-@include 'config.php';
+@include '../db/config.php';
 session_start();
 
 if (isset($_SESSION['user_id'])) {

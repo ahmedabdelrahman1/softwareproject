@@ -1,62 +1,147 @@
 <?php
 require '../models/classsection.php';
-class course {
-    public static $alerts=[];
-    
-    
-    public static function connect(){
-        $conn=new PDO("mysql:host=localhost;dbname=miu","root","");
-        return $conn;
+require_once("Models.php");
+class course extends Model
+{
+
+    private $id;
+    private $name;
+    private $perview;
+    private $instructor;
+    private $price;
+    private $category;
+    private $level;
+    private $courseinfo;
+    private $startdate;
+    private $enddate;
+    public static $alerts = [];
+
+    public function __construct($name = "", $password = "", $age = "", $phone = "", $perview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
+    {
+        $this->db = $this->connect();
+
+        $this->name = $name;
+        $this->perview = $perview;
+        $this->instructor = $instructor;
+        $this->price = $price;
+        $this->category = $category;
+        $this->level = $level;
+        $this->enddate = $enddate;
+        $this->startdate = $startdate;
+        $this->courseinfo = $courseinfo;
     }
-    public static function insert($name, $instructorID, $preview, $price, $detailsID) {
-        $add = course::connect()->prepare("INSERT INTO course_table (name, instructorID, preview, price, detailsID) VALUES (?, ?, ?, ?, ?)");
-        $add->execute(array($name, $instructorID, $preview, $price, $detailsID));
-        if ($add) {
+
+    public function insert($name, $instructorID, $preview, $price, $category, $level, $enddate, $startdate, $courseinfo)
+    {
+        // Format dates before inserting
+        $formattedStartDate = date('Y-m-d', strtotime($startdate));
+        $formattedEndDate = date('Y-m-d', strtotime($enddate));
+
+        $sql = "INSERT INTO course_table (name, instructorID, preview, price, Category, level, enddate, startdate, courseinfo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param('sisisssss', $name, $instructorID, $preview, $price, $category, $level, $formattedEndDate, $formattedStartDate, $courseinfo);
+
+        if ($stmt->execute()) {
             course::$alerts[] = "Added!";
         } else {
             course::$alerts[] = "Not added!";
         }
-    }
-    public static function select(){
-        $list=course::connect()->prepare("SELECT *FROM course_table");
-        $list->execute();
-        $fetch=$list->fetchALL(PDO::FETCH_ASSOC);
-        return $fetch;
+
+        $stmt->close();
     }
 
-    public static function selectByID($courseID) {
-        $conn = course::connect();
-        $query = "SELECT * FROM course_table WHERE ID = :course_id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':course_id', $courseID, PDO::PARAM_INT);
+
+
+    function select()
+    {
+        $sql = "SELECT * FROM course_table";
+        $result = $this->db->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    function selectByID($courseID)
+    {
+        $sql = "SELECT * FROM course_table WHERE ID = :course_id";
+        $db = $this->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':course_id', $courseID);
         $stmt->execute();
         $course = $stmt->fetch(PDO::FETCH_ASSOC);
         return $course;
     }
 
-    public static function delete($courseID) {
+
+
+    public function update($courseID, $name, $instructorID, $preview, $price, $category, $level, $enddate, $startdate, $courseinfo)
+    {
+        $db = $this->connect();
+        $formattedStartDate = date('Y-m-d', strtotime($startdate));
+        $formattedEndDate = date('Y-m-d', strtotime($enddate));
+        // Check if the course with the given ID exists
+        $checkQuery = $db->prepare("SELECT * FROM course_table WHERE ID = ?");
+        $checkQuery->bind_param('i', $courseID);
+        $checkQuery->execute();
+
+        if ($checkQuery->fetch()) {
+            // Close the result set of the first query
+            $checkQuery->close();
+
+            // Update the course
+            $updateQuery = $db->prepare("UPDATE course_table SET name = ?, instructorID = ?, preview = ?, price = ?, Category = ?, level = ?, enddate = ?, startdate = ?, courseinfo = ? WHERE ID = ?");
+            $updateQuery->bind_param('sisisssssi', $name, $instructorID, $preview, $price, $category, $level, $formattedEndDate, $formattedStartDate, $courseinfo, $courseID);
+
+            if ($updateQuery->execute()) {
+                course::$alerts[] = "Course updated successfully.";
+            } else {
+                course::$alerts[] = "Failed to update the course.";
+            }
+
+            $updateQuery->close();
+        } else {
+            // Course not found
+            course::$alerts[] = "Course not found.";
+        }
+    }
+
+
+
+
+
+    function delete($courseID)
+    {
         $conn = course::connect();
 
         // Check if the course exists
         $checkQuery = $conn->prepare("SELECT * FROM course_table WHERE ID = ?");
-        $checkQuery->execute(array($courseID));
+        $checkQuery->bind_param('i', $courseID);
+        $checkQuery->execute();
 
-        if ($checkQuery->rowCount() > 0) {
+        // Fetch the result to determine if the course exists
+        $checkQuery->store_result();
+
+        if ($checkQuery->num_rows > 0) {
             // Course found, proceed with deletion
-            
-            
+
             // Reuse the delete function from the section class
             $sections = section::selectByCourse($courseID);
 
-        if (count($sections) > 0) {
-            foreach ($sections as $value) {
-                section::delete($value['ID']);
+            if (count($sections) > 0) {
+                foreach ($sections as $value) {
+                    section::delete($value['ID']);
+                }
             }
-        }
-            
+
             // Delete the course record from course_table
             $deleteQuery = $conn->prepare("DELETE FROM course_table WHERE ID = ?");
-            if ($deleteQuery->execute(array($courseID))) {
+            $deleteQuery->bind_param('i', $courseID);
+            $deleteQuery->execute();
+
+            if ($deleteQuery->affected_rows > 0) {
                 course::$alerts[] = "Course and related sections deleted successfully.";
             } else {
                 course::$alerts[] = "Failed to delete the course.";
@@ -65,17 +150,27 @@ class course {
             // Course not found
             course::$alerts[] = "Course not found.";
         }
+
+        // Close the result set
+        $checkQuery->close();
     }
-    public static function selectByInstructorID($instructorID) {
-    $conn = course::connect();
-    $query = "SELECT * FROM course_table WHERE instructorID = :instructor_id";
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(':instructor_id', $instructorID, PDO::PARAM_INT);
-    $stmt->execute();
-    $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $courses;
+
+
+
+    function selectByInstructorID($instructorID)
+    {
+        $conn = course::connect();
+        $query = "SELECT * FROM course_table WHERE instructorID = :instructor_id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':instructor_id', $instructorID, PDO::PARAM_INT);
+        $stmt->execute();
+        $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $courses;
     }
-    public static function selectCoursesByStudentID($studentID) {
+
+
+    function selectCoursesByStudentID($studentID)
+    {
         $conn = course::connect();
         $query = "SELECT e.ID as enrollmentID, c.* FROM enrollment_table e
                   JOIN course_table c ON e.courseID = c.ID
@@ -86,28 +181,4 @@ class course {
         $enrollments = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $enrollments;
     }
-    public static function update($courseID, $name, $instructorID, $preview, $price, $detailsID) {
-        $conn = course::connect();
-    
-        // Check if the course exists
-        $checkQuery = $conn->prepare("SELECT * FROM course_table WHERE ID = ?");
-        $checkQuery->execute(array($courseID));
-    
-        if ($checkQuery->rowCount() > 0) {
-            // Course found, proceed with updating
-    
-            $updateQuery = $conn->prepare("UPDATE course_table SET name = ?, instructorID = ?, preview = ?, price = ?, detailsID = ? WHERE ID = ?");
-            
-            if ($updateQuery->execute(array($name, $instructorID, $preview, $price, $detailsID, $courseID))) {
-                course::$alerts[] = "Course updated successfully.";
-            } else {
-                course::$alerts[] = "Failed to update the course.";
-            }
-        } else {
-            // Course not found
-            course::$alerts[] = "Course not found.";
-        }
-    }
 }
-
-?>

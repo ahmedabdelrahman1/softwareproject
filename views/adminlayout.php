@@ -8,37 +8,37 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Admin panel</title>
-  <link rel="icon" type="image/x-icon" href="static/assets/section.jpg" />
+  <link rel="icon" type="image/x-icon" href="../public/assets/section.jpg" />
 
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="static/css/styleA.css" type="text/css">
-  <link href="static/css/admin-styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="../public/css/styleA.css" type="text/css">
+  <link href="../public/css/admin-styles.css" rel="stylesheet">
   <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> -->
   <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="sb-nav-fixed">
-<?php
+  <?php
 
-@include 'config.php';
-session_start();
+  @include 'config.php';
+  session_start();
 
 
 
-if (isset($_POST['delete_id'])) {
+  if (isset($_POST['delete_id'])) {
     $deleteId = $_POST['delete_id'];
 
     // Perform the SQL DELETE operation
     $sql = "DELETE FROM user WHERE id = $deleteId";
     if ($conn->query($sql) === TRUE) {
-        echo "Record deleted successfully.";
+      echo "Record deleted successfully.";
     } else {
-        echo "Error deleting record: " . $conn->error;
+      echo "Error deleting record: " . $conn->error;
     }
-}
+  }
 
-?>
+  ?>
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="/admin">Admin Panel</a>
@@ -62,10 +62,10 @@ if (isset($_POST['delete_id'])) {
             <hr class="dropdown-divider" />
           </li>
           <li>
-            
-          <button class="btn btn-danger" style="margin-left:35px" onclick="location.href='SIGNOUT.php'">Sign-out</button>
 
-            
+            <button class="btn btn-danger" style="margin-left:35px" onclick="location.href='SIGNOUT.php'">Sign-out</button>
+
+
           </li>
         </ul>
       </li>
@@ -86,37 +86,18 @@ if (isset($_POST['delete_id'])) {
             <div class="sb-sidenav-menu-heading">Manage</div>
 
 
-            
+
 
             <a class="nav-link" href="javascript:void(0);" onclick="loadUserManagement()">
-        <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
-        Users
-    </a>
-    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
-        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
-        Courses
-    </a>
-    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
-        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
-       Attendence
-    </a>
-    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
-        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
-        Statistics
-    </a>
-    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
-        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
-       Assignments
-    </a>
-    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
-        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
-        Quizes
-    </a>
-    <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
-        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
-       Location
-    </a>
-          
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+              Users
+            </a>
+            <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+              Courses
+            </a>
+
+
           </div>
         </div>
         <div class="sb-sidenav-footer">
@@ -126,12 +107,12 @@ if (isset($_POST['delete_id'])) {
     </div>
     <div id="layoutSidenav_content">
       <main>
-      <div id="content-container">
-        <!-- Content from UserManagement.php will be loaded here -->
-        <?php 
-        include("adminIndex.php");
-        ?>
-    </div>
+        <div id="content-container">
+          <!-- Content from UserManagement.php will be loaded here -->
+          <?php
+          include("adminIndex.php");
+          ?>
+        </div>
       </main>
       <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
@@ -148,56 +129,56 @@ if (isset($_POST['delete_id'])) {
     </div>
   </div>
 
- 
 
-<script>
-         function loadDashboard() {
-            // Use AJAX to load UserManagement.php into the content-container div
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("content-container").innerHTML = this.responseText;
-                }
-            };
-            xhttp.open("GET", "adminIndex.php", true);
-            xhttp.send();
+
+  <script>
+    function loadDashboard() {
+      // Use AJAX to load UserManagement.php into the content-container div
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("content-container").innerHTML = this.responseText;
         }
-    </script>
+      };
+      xhttp.open("GET", "adminIndex.php", true);
+      xhttp.send();
+    }
+  </script>
 
 
- <script>
-        function loadUserManagement() {
-            // Use AJAX to load UserManagement.php into the content-container div
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("content-container").innerHTML = this.responseText;
-                }
-            };
-            xhttp.open("GET", "UserManagement.php", true);
-            xhttp.send();
+  <script>
+    function loadUserManagement() {
+      // Use AJAX to load UserManagement.php into the content-container div
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("content-container").innerHTML = this.responseText;
         }
-    </script>
+      };
+      xhttp.open("GET", "UserManagement.php", true);
+      xhttp.send();
+    }
+  </script>
 
 
 
-<script>
-         function loadCourseManagement() {
-            // Use AJAX to load UserManagement.php into the content-container div
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("content-container").innerHTML = this.responseText;
-                }
-            };
-            xhttp.open("GET", "courseManagement.php", true);
-            xhttp.send();
+  <script>
+    function loadCourseManagement() {
+      // Use AJAX to load UserManagement.php into the content-container div
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("content-container").innerHTML = this.responseText;
         }
-    </script>
+      };
+      xhttp.open("GET", "courseManagement.php", true);
+      xhttp.send();
+    }
+  </script>
 
-  <script src="static/js/jquery-3.3.1.min.js"></script>
+  <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <script src="static/js/admin-scripts.js"></script>
+  <script src="../public/js/admin-scripts.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
