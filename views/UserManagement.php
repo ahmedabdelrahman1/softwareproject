@@ -32,21 +32,29 @@
             </tr>
     
             <?php
-            @include 'config.php';
+            @include '../db/config.php';
+            @include '../models/classUser.php';
             session_start();
+
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
             if (isset($_POST['delete_id'])) {
                 $deleteId = $_POST['delete_id'];
 
-                // Perform the SQL DELETE operation
-                $sql = "DELETE FROM user WHERE id = $deleteId";
-                if ($conn->query($sql) === TRUE) {
-                    echo "Record deleted successfully.";
-                } else {
-                    echo "Error deleting record: " . $conn->error;
-                }
+                User::deleteUser($deleteId);
+
+                // // Perform the SQL DELETE operation
+                // $sql = "DELETE FROM user WHERE id = $deleteId";
+                // if ($conn->query($sql) === TRUE) {
+                //     echo "Record deleted successfully.";
+                // } else {
+                //     echo "Error deleting record: " . $conn->error;
+                // }
             }
 
-            $sql = "SELECT * FROM user"; // Replace 'user' with your table name
+            $sql = "SELECT * FROM user"; 
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {

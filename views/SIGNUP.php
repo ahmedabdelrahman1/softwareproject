@@ -1,6 +1,6 @@
 <?php
 
-@include 'config.php';
+@include '../db/config.php';
 
 if(isset($_POST['submit'])){
 
@@ -51,7 +51,7 @@ if(isset($_POST['submit'])){
     <link rel="icon" type="image/x-icon" href="static/assets/section.jpg" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/sign.css">
+    <link rel="stylesheet" href="../public/css/sign.css">
 </head>
 <body>
     <div class="form-container">

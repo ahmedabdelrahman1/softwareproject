@@ -21,7 +21,9 @@
 <body class="sb-nav-fixed">
   <?php
 
-  @include 'config.php';
+  @include '../db/config.php';
+  @include '../models/classUser.php';
+
   session_start();
 
 
@@ -29,13 +31,16 @@
   if (isset($_POST['delete_id'])) {
     $deleteId = $_POST['delete_id'];
 
-    // Perform the SQL DELETE operation
-    $sql = "DELETE FROM user WHERE id = $deleteId";
-    if ($conn->query($sql) === TRUE) {
-      echo "Record deleted successfully.";
-    } else {
-      echo "Error deleting record: " . $conn->error;
-    }
+    User::deleteUser($deleteId);
+    User::deleteImageByID($deleteId);
+
+    // // Perform the SQL DELETE operation
+    // $sql = "DELETE FROM user WHERE id = $deleteId";
+    // if ($conn->query($sql) === TRUE) {
+    //   echo "Record deleted successfully.";
+    // } else {
+    //   echo "Error deleting record: " . $conn->error;
+    // }
   }
 
   ?>
