@@ -14,12 +14,14 @@ class course extends Model
     private $courseinfo;
     private $startdate;
     private $enddate;
+    private $courses;
     public static $alerts = [];
 
-    public function __construct($name = "", $password = "", $age = "", $phone = "", $perview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
+    public function __construct($id = "", $name = "", $perview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
     {
         $this->db = $this->connect();
 
+        $this->id = $id;
         $this->name = $name;
         $this->perview = $perview;
         $this->instructor = $instructor;
@@ -51,29 +53,88 @@ class course extends Model
         $stmt->close();
     }
 
-
-
-    function select()
+    public function fetchCourses()
     {
-        $sql = "SELECT * FROM course_table";
-        $result = $this->db->query($sql);
-        if ($result->num_rows > 0) {
-            return $result;
-        } else {
-            return false;
+        $this->courses = array();
+        $this->db = $this->connect();
+        $result = $this->readCourses(); // Assuming you have a readCourses method
+
+        while ($row = $result->fetch_assoc()) {
+            // Print out the fetched row
+
+
+            // Adjust the class instantiation based on your User class structure
+            array_push(
+                $this->courses,
+                new Course(
+                    $row["ID"],
+                    $row["name"],
+                    $row["preview"],
+                    $row["instructorID"],
+                    $row["price"],
+                    $row["Category"],
+                    $row["level"],
+                    $row["enddate"],
+                    $row["startdate"],
+                    $row["courseinfo"]
+                )
+            );
         }
+    }
+
+
+    private function readCourses()
+    {
+        $sql = "SELECT * FROM course_table"; // Replace with your actual table name
+        $result = $this->db->query($sql);
+        return $result;
     }
 
     function selectByID($courseID)
     {
-        $sql = "SELECT * FROM course_table WHERE ID = :course_id";
+        $sql = "SELECT * FROM course_table WHERE ID = ?";
         $db = $this->connect();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':course_id', $courseID);
-        $stmt->execute();
-        $course = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $course;
+    
+        if ($stmt) {
+            $stmt->bind_param('i', $courseID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+    
+            if ($result) {
+                $courseData = $result->fetch_assoc();
+                
+                if ($courseData) {
+                    // Instantiate a Course object with the fetched data
+                    $course = new Course(
+                        $courseData["ID"],
+                        $courseData["name"],
+                        $courseData["preview"],
+                        $courseData["instructorID"],
+                        $courseData["price"],
+                        $courseData["Category"],
+                        $courseData["level"],
+                        $courseData["enddate"],
+                        $courseData["startdate"],
+                        $courseData["courseinfo"]
+                    );
+                    
+                    return $course;
+                } else {
+                    // Handle error if necessary
+                    return false;
+                }
+            } else {
+                // Handle error if necessary
+                return false;
+            }
+        } else {
+            // Handle error if necessary
+            return false;
+        }
     }
+    
+
 
 
 
@@ -126,6 +187,7 @@ class course extends Model
 
         if ($checkQuery->num_rows > 0) {
             // Course found, proceed with deletion
+
 
             // Reuse the delete function from the section class
             $sections = section::selectByCourse($courseID);
@@ -180,5 +242,112 @@ class course extends Model
         $stmt->execute();
         $enrollments = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $enrollments;
+    }
+
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function setPerview($perview)
+    {
+        $this->perview = $perview;
+    }
+
+    public function setInstructor($instructor)
+    {
+        $this->instructor = $instructor;
+    }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
+    public function setCourseinfo($courseinfo)
+    {
+        $this->courseinfo = $courseinfo;
+    }
+
+    public function setStartdate($startdate)
+    {
+        $this->startdate = $startdate;
+    }
+
+    public function setEnddate($enddate)
+    {
+        $this->enddate = $enddate;
+    }
+
+    // Getter methods
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getPerview()
+    {
+        return $this->perview;
+    }
+
+    public function getInstructor()
+    {
+        return $this->instructor;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    public function getCourseinfo()
+    {
+        return $this->courseinfo;
+    }
+
+    public function getStartdate()
+    {
+        return $this->startdate;
+    }
+
+    public function getEnddate()
+    {
+        return $this->enddate;
+    }
+
+    public function getCourses()
+    {
+        return $this->courses;
     }
 }

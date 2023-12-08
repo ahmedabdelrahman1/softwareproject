@@ -58,47 +58,47 @@
                 <?php
 
 
-               // include("adminlayout.php");
+                // include("adminlayout.php");
                 include '../db/config.php';
                 session_start();
                 require '../models/classcourse.php';
-                require '../models/classdetails.php';
 
-                $sql = "SELECT * FROM course_table"; // Replace 'course_table' with your table name
-                $result = $conn->query($sql);
+                $courseObject = new Course();
+                $courseObject->fetchCourses();
 
-                if ($result->num_rows > 0) {
-                    while ($row2 = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $row2["ID"] . "</td>";
-                        echo "<td>" . $row2["name"] . "</td>";
-                        echo "<td>" . $row2["preview"] . "</td>";
-                        echo "<td>" . $row2["instructorID"] . "</td>";
-                        echo "<td>" . $row2["price"] . "</td>";
-                        echo "<td>" . $row2["Category"] . "</td>";
-                        echo "<td>" . $row2["level"] . "</td>";
-                        if ($row2["startdate"] != '0000-00-00') {
-                            $formattedStartDate = date('Y-m-d', strtotime($row2["startdate"]));
-                            echo "<td>" . $formattedStartDate . "</td>";
-                        } else {
-                            echo "<td>Not available</td>";
-                        }
-                        
-                        // Check if the enddate is not '0000-00-00'
-                        if ($row2["enddate"] != '0000-00-00') {
-                            $formattedEndDate = date('Y-m-d', strtotime($row2["enddate"]));
-                            echo "<td>" . $formattedEndDate . "</td>";
-                        } else {
-                            echo "<td>Not available</td>";
-                        }
-                        echo "<td>" . $row2["courseinfo"] . "</td>";
-                        echo '<td>
+
+                //  if ($courses->num_rows > 0) {
+                foreach ($courseObject->getCourses() as $course) {
+                    echo "<tr>";
+                    echo "<td>" . $course->getId() . "</td>";
+                    echo "<td>" . $course->getName() . "</td>";
+                    echo "<td>" . $course->getPerview() . "</td>";
+                    echo "<td>" . $course->getInstructor() . "</td>";
+                    echo "<td>" . $course->getPrice() . "</td>";
+                    echo "<td>" . $course->getCategory() . "</td>";
+                    echo "<td>" . $course->getLevel() . "</td>";
+                    if ($course->getStartdate() != '0000-00-00') {
+                        $formattedStartDate = date('Y-m-d', strtotime($course->getStartdate()));
+                        echo "<td>" . $formattedStartDate . "</td>";
+                    } else {
+                        echo "<td>Not available</td>";
+                    }
+
+                    // Check if the enddate is not '0000-00-00'
+                    if ($course->getEnddate() != '0000-00-00') {
+                        $formattedEndDate = date('Y-m-d', strtotime($course->getEnddate()));
+                        echo "<td>" . $formattedEndDate . "</td>";
+                    } else {
+                        echo "<td>Not available</td>";
+                    }
+                    echo "<td>" . $course->getCourseinfo() . "</td>";
+                    echo '<td>
             <div class="button-container">
-                <button class="btn btn-primary edit" data-toggle="modal" data-target="#editModal' . $row2['ID'] . '" type="button">
+                <button class="btn btn-primary edit" data-toggle="modal" data-target="#editModal' . $course->getId() . '" type="button">
                     Edit
                 </button>
             </div>
-            <div class="modal fade" id="editModal' . $row2['ID'] . '" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal fade" id="editModal' . $course->getId() . '" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -111,42 +111,42 @@
                         <form id="editForm" method="post" action="../controller/course_controller.php">
 
                         <input type="hidden" name="action" value="edit">
-                            <input type="hidden" name="course_id" value="' . $row2['ID'] . '">
+                            <input type="hidden" name="course_id" value="' . $course->getId() . '">
                             <div class="form-group">
                                 <label for="editName">Course Name</label>
-                                <input type="text" class="form-control" id="editName" name="editName" value="' . $row2["name"] . '">
+                                <input type="text" class="form-control" id="editName" name="editName" value="' . $course->getName() . '">
                             </div>
                     <div class="form-group">
                         <label for="editpreview">Course preview</label>
-                        <input type="text" class="form-control" id="editpreview" name="editpreview" value="' . $row2["preview"] . '">
+                        <input type="text" class="form-control" id="editpreview" name="editpreview" value="' . $course->getPerview() . '">
                     </div>
                     <div class="form-group">
                         <label for="editInstructor">Instructor</label>
-                        <input type="text" class="form-control" id="editInstructor" name="editInstructor" value="' . $row2['instructorID'] . '">
+                        <input type="text" class="form-control" id="editInstructor" name="editInstructor" value="' . $course->getInstructor() . '">
                     </div>
                     <div class="form-group">
                         <label for="editPrice">Price</label>
-                        <input type="text" class="form-control" id="editPrice" name="editPrice" value="' . $row2["price"] . '">
+                        <input type="text" class="form-control" id="editPrice" name="editPrice" value="' . $course->getPrice() . '">
                     </div>
                     <div class="form-group">
                         <label for="editCategory">Category</label>
-                        <input type="text" class="form-control" id="editCategory" name="editCategory" value="' . $row2["Category"] . '">
+                        <input type="text" class="form-control" id="editCategory" name="editCategory" value="' . $course->getCategory() . '">
                     </div>
                     <div class="form-group">
                         <label for="editLevel">Level</label>
-                        <input type="text" class="form-control" id="editLevel" name="editLevel" value="' . $row2["level"] . '">
+                        <input type="text" class="form-control" id="editLevel" name="editLevel" value="' . $course->getLevel() . '">
                     </div>
                     <div class="form-group">
                         <label for="startDuration">Start Duration</label>
-                        <input type="date" class="form-control" id="editstart" name="editstart" value="' . $row2["startdate"] . '">
+                        <input type="date" class="form-control" id="editstart" name="editstart" value="' . $course->getStartdate() . '">
                     </div>
                     <div class="form-group">
                         <label for="EndDuration">End Duration</label>
-                        <input type="date" class="form-control" id="editend" name="editend" value="' . $row2["enddate"] . '">
+                        <input type="date" class="form-control" id="editend" name="editend" value="' . $course->getEnddate() . '">
                     </div>
                     <div class="form-group">
                         <label for="editCourseInfo">Course Info</label>
-                        <textarea type="text" class="form-control" id="editCourseInfo" name="editCourseInfo" >' . $row2["courseinfo"] . '</textarea>
+                        <textarea type="text" class="form-control" id="editCourseInfo" name="editCourseInfo" >' . $course->getCourseinfo() . '</textarea>
                     </div>  
                     <button type="submit" class="btn btn-primary" >Save Changes</button>
                     </form>
@@ -159,14 +159,14 @@
         </div>
             <form method="POST" action="../controller/course_controller.php">
             <input type="hidden" name="action" value="delete">
-                <input type="hidden" name="course_id" value="' . $row2['ID'] . '">
+                <input type="hidden" name="course_id" value="' . $course->getId() . '">
                 <button class="btn btn-danger delete" type="submit">
                     <i class="fas fa-trash"></i>
                 </button>
             </form>';
-                        echo '</td></tr>';
-                    }
+                    echo '</td></tr>';
                 }
+                // }
 
 
 
