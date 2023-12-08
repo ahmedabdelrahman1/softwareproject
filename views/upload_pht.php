@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_POST['submit']) && isset($_FILES['myimage'])) {
-    include "config.php"; // Assuming you have your database connection in "config.php"
+    include "../db/config.php"; // Assuming you have your database connection in "config.php"
 
     $tmp_name = $_FILES['myimage']['tmp_name'];
     $error = $_FILES['myimage']['error'];
