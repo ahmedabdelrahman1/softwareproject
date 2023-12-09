@@ -1,12 +1,12 @@
 <?php
-require '../models/classsection.php';
-require_once("Models.php");
-class course extends Model
-{
+require_once '../models/classsection.php';
+require_once 'Models.php';
 
+class Course extends Model
+{
     private $id;
     private $name;
-    private $perview;
+    private $preview;
     private $instructor;
     private $price;
     private $category;
@@ -15,15 +15,16 @@ class course extends Model
     private $startdate;
     private $enddate;
     private $courses;
+
     public static $alerts = [];
 
-    public function __construct($id = "", $name = "", $perview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
+    public function __construct($id = "", $name = "", $preview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
     {
-        $this->db = $this->connect();
+        parent::__construct(); // Connect to the database
 
         $this->id = $id;
         $this->name = $name;
-        $this->perview = $perview;
+        $this->preview = $preview;
         $this->instructor = $instructor;
         $this->price = $price;
         $this->category = $category;
@@ -45,12 +46,51 @@ class course extends Model
         $stmt->bind_param('sisisssss', $name, $instructorID, $preview, $price, $category, $level, $formattedEndDate, $formattedStartDate, $courseinfo);
 
         if ($stmt->execute()) {
-            course::$alerts[] = "Added!";
+            self::$alerts[] = "Added!";
+            // Enroll the student in the created course
+            $enrollResult = $this->enrollStudent($_SESSION['user_id'], $this->getId());
+
+            if ($enrollResult) {
+                // Redirect to the payment page or any other page
+                header("Location:../views/payment.php");
+                exit();
+            } else {
+                echo 'Failed to enroll in the course.';
+                // Handle enrollment failure
+            }
         } else {
-            course::$alerts[] = "Not added!";
+            self::$alerts[] = "Not added!";
+            echo 'Error submitting Create form';
+            // Handle course creation failure
         }
 
         $stmt->close();
+    }
+
+    // Enrollment logic: Check if the student is already enrolled in the course
+    public function enrollStudent($studentID, $courseID)
+    {
+        $enrollmentCheckQuery = $this->db->prepare("SELECT * FROM enrollment_table WHERE studentID = ? AND courseID = ?");
+        $enrollmentCheckQuery->bind_param('ii', $studentID, $courseID);
+        $enrollmentCheckQuery->execute();
+
+        if ($enrollmentCheckQuery->fetch()) {
+            // Student is already enrolled
+            self::$alerts[] = "Already enrolled in the course.";
+            return false;
+        } else {
+            // Enroll the student
+            $enrollmentInsertQuery = $this->db->prepare("INSERT INTO enrollment_table (studentID, courseID) VALUES (?, ?)");
+            $enrollmentInsertQuery->bind_param('ii', $studentID, $courseID);
+
+            if ($enrollmentInsertQuery->execute()) {
+                self::$alerts[] = "Enrolled successfully.";
+                return true;
+            } else {
+                self::$alerts[] = "Failed to enroll in the course.";
+                return false;
+            }
+        }
     }
 
     public function fetchCourses()
@@ -351,3 +391,10 @@ class course extends Model
         return $this->courses;
     }
 }
+
+
+  
+
+    // Other existing methods...
+}
+?>
