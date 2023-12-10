@@ -2,12 +2,13 @@
 require '../models/classsection.php';
 require_once("Models.php");
 require "req_class.php";
-class course extends Model
-{
 
+
+class Course extends Model
+{
     private $id;
     private $name;
-    private $perview;
+    private $preview;
     private $instructor;
     private $price;
     private $category;
@@ -19,13 +20,12 @@ class course extends Model
     public $requirement;
     public static $alerts = [];
 
-    public function __construct($id = "", $name = "", $perview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
+    public function __construct($id = "", $name = "", $preview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
     {
-        $this->db = $this->connect();
 
         $this->id = $id;
         $this->name = $name;
-        $this->perview = $perview;
+        $this->preview = $preview;
         $this->instructor = $instructor;
         $this->price = $price;
         $this->category = $category;
@@ -99,6 +99,32 @@ class course extends Model
 
 
 
+
+    // Enrollment logic: Check if the student is already enrolled in the course
+    public function enrollStudent($studentID, $courseID)
+    {
+        $enrollmentCheckQuery = $this->db->prepare("SELECT * FROM enrollment_table WHERE studentID = ? AND courseID = ?");
+        $enrollmentCheckQuery->bind_param('ii', $studentID, $courseID);
+        $enrollmentCheckQuery->execute();
+
+        if ($enrollmentCheckQuery->fetch()) {
+            // Student is already enrolled
+            self::$alerts[] = "Already enrolled in the course.";
+            return false;
+        } else {
+            // Enroll the student
+            $enrollmentInsertQuery = $this->db->prepare("INSERT INTO enrollment_table (studentID, courseID) VALUES (?, ?)");
+            $enrollmentInsertQuery->bind_param('ii', $studentID, $courseID);
+
+            if ($enrollmentInsertQuery->execute()) {
+                self::$alerts[] = "Enrolled successfully.";
+                return true;
+            } else {
+                self::$alerts[] = "Failed to enroll in the course.";
+                return false;
+            }
+        }
+    }
 
     public function fetchCourses()
     {
@@ -335,7 +361,7 @@ class course extends Model
 
     public function setPerview($perview)
     {
-        $this->perview = $perview;
+        $this->preview = $perview;
     }
 
     public function setInstructor($instructor)
@@ -386,7 +412,7 @@ class course extends Model
 
     public function getPerview()
     {
-        return $this->perview;
+        return $this->preview;
     }
 
     public function getInstructor()
@@ -427,15 +453,5 @@ class course extends Model
     public function getCourses()
     {
         return $this->courses;
-    }
-
-    public function setRequirements($requirement)
-    {
-        $this->requirement = $requirement;
-    }
-
-    public function getRequirements()
-    {
-        return $this->requirement;
     }
 }
