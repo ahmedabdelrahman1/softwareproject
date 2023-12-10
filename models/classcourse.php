@@ -22,6 +22,7 @@ class Course extends Model
 
     public function __construct($id = "", $name = "", $preview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
     {
+        $this->db = $this->connect();
 
         $this->id = $id;
         $this->name = $name;
@@ -97,34 +98,6 @@ class Course extends Model
     return $requirements;
 }
 
-
-
-
-    // Enrollment logic: Check if the student is already enrolled in the course
-    public function enrollStudent($studentID, $courseID)
-    {
-        $enrollmentCheckQuery = $this->db->prepare("SELECT * FROM enrollment_table WHERE studentID = ? AND courseID = ?");
-        $enrollmentCheckQuery->bind_param('ii', $studentID, $courseID);
-        $enrollmentCheckQuery->execute();
-
-        if ($enrollmentCheckQuery->fetch()) {
-            // Student is already enrolled
-            self::$alerts[] = "Already enrolled in the course.";
-            return false;
-        } else {
-            // Enroll the student
-            $enrollmentInsertQuery = $this->db->prepare("INSERT INTO enrollment_table (studentID, courseID) VALUES (?, ?)");
-            $enrollmentInsertQuery->bind_param('ii', $studentID, $courseID);
-
-            if ($enrollmentInsertQuery->execute()) {
-                self::$alerts[] = "Enrolled successfully.";
-                return true;
-            } else {
-                self::$alerts[] = "Failed to enroll in the course.";
-                return false;
-            }
-        }
-    }
 
     public function fetchCourses()
     {

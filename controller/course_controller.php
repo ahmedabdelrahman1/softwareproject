@@ -8,9 +8,6 @@ include '../db/config.php';
 session_start();
 require '../models/classcourse.php';
 
-
-
-
 ?>
 
 <?php
@@ -25,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if the 'action' parameter is set in the POST data
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
-        $courseObject = new Course();
+       
 
         // Switch statement to handle different actions
         switch ($action) {
@@ -68,26 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Insert data into the 'course' and 'coursedetails' tables
                 $courseInsertResult = $courseObject->insert($courseName, $instructor, $coursePreview, $price, $category, $level, $end, $start, $courseInfo, $dynamicRequirements);
                 echo 'Create form submitted successfully';
-                header("Location:../views/adminlayout.php");
 
                 // Check if course creation was successful
-                if ($courseInsertResult) {
-                    // Enroll the student in the created course
-                    $enrollResult = $courseObject->enrollStudent($_SESSION['user_id'], $courseObject->getId());
-
-                    // Check if enrollment was successful
-                    if ($enrollResult) {
-                        // Redirect to the payment page or any other page
-                        header("Location:../views/payment.php");
-                        exit();
-                    } else {
-                        echo 'Failed to enroll in the course.';
-                        // Handle enrollment failure
-                    }
-                } else {
-                    echo 'Error submitting Create form';
-                    // Handle course creation failure
-                }
 
                 // Redirect to admin layout page
                 header("Location:../views/adminlayout.php");
@@ -154,24 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $coursedelet = $courseObject->delete($id);
 
-                // Check if course deletion was successful
-                if ($courseDeleteResult) {
-                    echo 'Course deleted successfully';
-                } else {
-                    // Handle deletion failure
-                    echo 'Failed to delete the course.';
-                }
-
                 // Redirect to admin layout page
                 header("Location:../views/adminlayout.php");
                 break;
 
-            // Add more cases if needed for other actions
-
-            default:
-                // Handle unexpected actions
-                echo 'Invalid action';
-                break;
         }
     }
 }
