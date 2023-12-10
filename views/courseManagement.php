@@ -31,6 +31,7 @@
         }
     </style>
 
+
 </head>
 
 <body>
@@ -95,8 +96,8 @@
                     echo '<td>
             <div class="button-container">
                 <button class="btn btn-primary edit" data-toggle="modal" data-target="#editModal' . $course->getId() . '" type="button">
-                    Edit
-                </button>
+    <i class="fas fa-edit"></i> <!-- Assuming you are using Font Awesome for icons -->
+</button>
             </div>
             <div class="modal fade" id="editModal' . $course->getId() . '" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -148,15 +149,41 @@
                         <label for="editCourseInfo">Course Info</label>
                         <textarea type="text" class="form-control" id="editCourseInfo" name="editCourseInfo" >' . $course->getCourseinfo() . '</textarea>
                     </div>  
-                    <button type="submit" class="btn btn-primary" >Save Changes</button>
-                    </form>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+
+                    <!-- Requirements Section -->
+                    <div class="form-group">
+                        <h4>Requirements</h4>'; ?>
+
+                <?php
+                    // Assuming $requirements is an array containing existing requirements for the course
+                    $requirements = $course->getRequirementsByCourseID($course->getId());
+                    foreach ($requirements as $req) {
+                        echo '<div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" class="form-check-input" name="selectedRequirements[]" value="' . $req->getreq_id() . '" >
+                    <i class="fas fa-trash text-danger delete-requirement" data-toggle="checkbox"></i>
                 </div>
             </div>
-        </div>
+            <input type="text" class="form-control" name="existingRequirements[]" value="' . $req->getreq() . '" readonly>
+            <input type="text" class="form-control" name="existingValues[]" value="' . $req->getReqValue() . '" readonly>
+          </div>';
+                    }
+                    echo '<button onclick="addRequirement(' . $course->getId() . ')" type="button" class="btn btn-secondary" id="addRequirementBtn_' . $course->getId() . '">Add Requirement</button>
+                  <div id="dynamicRequirementsContent_' . $course->getId() . '"></div>';
+                    echo ' 
+               </div>
+           </div>
+       
+           <button type="submit" class="btn btn-primary" >Save Changes</button>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
             <form method="POST" action="../controller/course_controller.php">
             <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="course_id" value="' . $course->getId() . '">
@@ -167,14 +194,8 @@
                     echo '</td></tr>';
                 }
                 // }
-
-
-
-
                 $conn->close();
                 ?>
-
-
 
             </table>
         </div>
@@ -237,6 +258,12 @@
                             <label for="createCourseInfo">Course Info</label>
                             <textarea type="text" class="form-control" id="createCourseInfo" name="createCourseInfo"></textarea>
                         </div>
+                        <div class="form-group">
+                            <?php
+                            echo '<button onclick="addRequirement(' . "" . ')" type="button" class="btn btn-secondary" id="addRequirementBtn_' . $course->getId() . '">Add Requirement</button>
+                               <div id="dynamicRequirementsContent_' . "" . '"></div>';
+                            ?>
+                        </div>
                         <button type="submit" class="btn btn-primary" id="saveChanges">Save Changes</button>
                     </form>
                 </div>
@@ -250,8 +277,6 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.create').click(function() {
@@ -280,8 +305,7 @@
     <!-- Edit Course Modal -->
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('.edit').click(function() {
@@ -335,6 +359,20 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-requirement');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const checkbox = button.parentElement.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                });
+            });
+        });
+    </script>
+
 
 
 

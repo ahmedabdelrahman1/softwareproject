@@ -1,6 +1,7 @@
 <?php
 require '../models/classsection.php';
 require_once("Models.php");
+require "req_class.php";
 class course extends Model
 {
 
@@ -15,6 +16,7 @@ class course extends Model
     private $startdate;
     private $enddate;
     private $courses;
+    public $requirement;
     public static $alerts = [];
 
     public function __construct($id = "", $name = "", $perview = "", $instructor = "", $price = "", $category = "", $level = "", $enddate = "", $startdate = "", $courseinfo = "")
@@ -33,25 +35,70 @@ class course extends Model
         $this->courseinfo = $courseinfo;
     }
 
-    public function insert($name, $instructorID, $preview, $price, $category, $level, $enddate, $startdate, $courseinfo)
-    {
-        // Format dates before inserting
-        $formattedStartDate = date('Y-m-d', strtotime($startdate));
-        $formattedEndDate = date('Y-m-d', strtotime($enddate));
+    public function insert($name, $instructorID, $preview, $price, $category, $level, $enddate, $startdate, $courseinfo, $requirements)
+{
+    // Format dates before inserting
+    $formattedStartDate = date('Y-m-d', strtotime($startdate));
+    $formattedEndDate = date('Y-m-d', strtotime($enddate));
 
-        $sql = "INSERT INTO course_table (name, instructorID, preview, price, Category, level, enddate, startdate, courseinfo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO course_table (name, instructorID, preview, price, Category, level, enddate, startdate, courseinfo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    // Insert course details
+    $stmt = $this->db->prepare($sql);
+    $stmt->bind_param('sisisssss', $name, $instructorID, $preview, $price, $category, $level, $formattedEndDate, $formattedStartDate, $courseinfo);
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param('sisisssss', $name, $instructorID, $preview, $price, $category, $level, $formattedEndDate, $formattedStartDate, $courseinfo);
+    if ($stmt->execute()) {
+        // Get the ID of the inserted course
+        $courseID = $stmt->insert_id;
 
-        if ($stmt->execute()) {
-            course::$alerts[] = "Added!";
-        } else {
-            course::$alerts[] = "Not added!";
+        // Insert course requirements
+        foreach ($requirements as $req) {
+            // Insert requirement if not exists
+            $reqObj = new Req();
+            $reqObj->insert_req($req['name']);
+
+            // Get the ID of the inserted or existing requirement
+            $courseReqID = $reqObj->getReqIDByName($req['name']);
+
+            // Insert the requirement value for the course
+            $reqObj->insert_req_value($courseID, $courseReqID, $req['value']);
         }
 
-        $stmt->close();
+        course::$alerts[] = "Added!";
+    } else {
+        course::$alerts[] = "Not added!";
     }
+
+    $stmt->close();
+}
+
+
+    public function getRequirementsByCourseID($courseID)
+{
+    $sql = "SELECT cr.req, crv.value
+            FROM course_req_value crv
+            JOIN course_req cr ON crv.course_req_ID = cr.ID
+            WHERE crv.course_ID = ?";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->bind_param('i', $courseID);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $requirements = array();
+
+    while ($row = $result->fetch_assoc()) {
+        // Instantiate Req objects and add them to the $requirements array
+        $requirements[] = new req("",$row['req'], $row['value']);
+    }
+
+    $stmt->close();
+
+    return $requirements;
+}
+
+
+
 
     public function fetchCourses()
     {
@@ -59,11 +106,9 @@ class course extends Model
         $this->db = $this->connect();
         $result = $this->readCourses(); // Assuming you have a readCourses method
 
+
         while ($row = $result->fetch_assoc()) {
-            // Print out the fetched row
-
-
-            // Adjust the class instantiation based on your User class structure
+            $req_result = $this->getRequirementsByCourseID($row["ID"]);
             array_push(
                 $this->courses,
                 new Course(
@@ -76,9 +121,23 @@ class course extends Model
                     $row["level"],
                     $row["enddate"],
                     $row["startdate"],
-                    $row["courseinfo"]
-                )
-            );
+                    $row["courseinfo"],
+                $req_result
+                ));
+
+            
+
+            // Create an instance of req
+            /*  $requirementsInstance = new req();
+            
+            // Get requirements for the course
+            $courseID = $course->getId();
+            $requirements = $requirementsInstance->getRequirementsByCourseID($courseID);
+    
+            // Set the requirements for the course
+            $course->setRequirements($requirements);
+    
+            array_push($this->courses, $course);*/
         }
     }
 
@@ -95,15 +154,16 @@ class course extends Model
         $sql = "SELECT * FROM course_table WHERE ID = ?";
         $db = $this->connect();
         $stmt = $db->prepare($sql);
-    
+
         if ($stmt) {
             $stmt->bind_param('i', $courseID);
             $stmt->execute();
             $result = $stmt->get_result();
-    
+
             if ($result) {
                 $courseData = $result->fetch_assoc();
-                
+                $req_result = $this->getRequirementsByCourseID($courseID);
+
                 if ($courseData) {
                     // Instantiate a Course object with the fetched data
                     $course = new Course(
@@ -116,9 +176,20 @@ class course extends Model
                         $courseData["level"],
                         $courseData["enddate"],
                         $courseData["startdate"],
-                        $courseData["courseinfo"]
+                        $courseData["courseinfo"],
+                        $req_result
                     );
-                    
+
+                    // Create an instance of req
+                    /*   $requirementsInstance = new req();
+
+                // Get requirements for the course
+                $courseID = $course->getId();
+                $requirements = $requirementsInstance->getRequirementsByCourseID($courseID);
+
+                // Set the requirements for the course
+                $course->setRequirements($requirements);*/
+
                     return $course;
                 } else {
                     // Handle error if necessary
@@ -133,42 +204,49 @@ class course extends Model
             return false;
         }
     }
-    
 
 
 
 
-    public function update($courseID, $name, $instructorID, $preview, $price, $category, $level, $enddate, $startdate, $courseinfo)
+    public function update($courseID, $name, $instructorID, $preview, $price, $category, $level, $enddate, $startdate, $courseinfo, $requirements)
     {
-        $db = $this->connect();
         $formattedStartDate = date('Y-m-d', strtotime($startdate));
         $formattedEndDate = date('Y-m-d', strtotime($enddate));
+    
         // Check if the course with the given ID exists
-        $checkQuery = $db->prepare("SELECT * FROM course_table WHERE ID = ?");
+        $checkQuery = $this->db->prepare("SELECT * FROM course_table WHERE ID = ?");
         $checkQuery->bind_param('i', $courseID);
         $checkQuery->execute();
-
+    
         if ($checkQuery->fetch()) {
             // Close the result set of the first query
             $checkQuery->close();
-
+    
             // Update the course
-            $updateQuery = $db->prepare("UPDATE course_table SET name = ?, instructorID = ?, preview = ?, price = ?, Category = ?, level = ?, enddate = ?, startdate = ?, courseinfo = ? WHERE ID = ?");
+            $updateQuery = $this->db->prepare("UPDATE course_table SET name = ?, instructorID = ?, preview = ?, price = ?, Category = ?, level = ?, enddate = ?, startdate = ?, courseinfo = ? WHERE ID = ?");
             $updateQuery->bind_param('sisisssssi', $name, $instructorID, $preview, $price, $category, $level, $formattedEndDate, $formattedStartDate, $courseinfo, $courseID);
-
+    
             if ($updateQuery->execute()) {
+                // Update course requirements
+                foreach ($requirements as $req) {
+                    $reqObj = new Req();
+                    $reqObj->insert_req($req['name']);
+                    $courseReqID = $reqObj->getReqIDByName($req['name']);
+                    $reqObj->insert_req_value($courseID, $courseReqID, $req['value']);
+                }
+    
                 course::$alerts[] = "Course updated successfully.";
             } else {
                 course::$alerts[] = "Failed to update the course.";
             }
-
+    
             $updateQuery->close();
         } else {
             // Course not found
             course::$alerts[] = "Course not found.";
         }
     }
-
+    
 
 
 
@@ -349,5 +427,15 @@ class course extends Model
     public function getCourses()
     {
         return $this->courses;
+    }
+
+    public function setRequirements($requirement)
+    {
+        $this->requirement = $requirement;
+    }
+
+    public function getRequirements()
+    {
+        return $this->requirement;
     }
 }

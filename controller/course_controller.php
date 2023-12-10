@@ -10,6 +10,7 @@ include '../db/config.php';
 session_start();
 require '../models/classcourse.php';
 
+
 ?>
 
 <?php
@@ -36,11 +37,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $start = $_POST['start'];
                 $end = $_POST['end'];
                 $courseInfo = $_POST['createCourseInfo'];
+                $dynamicRequirements = array();
+
+                // Loop through the POST data and identify dynamic requirements based on the field names
+                foreach ($_POST as $key => $value) {
+                    // Check if the field is a dynamic requirement
+                    if (strpos($key, 'newRequirementName') === 0) {
+                        // Extract the count from the field name
+                        $count = substr($key, strlen('newRequirementName'));
+
+                        // Use the count to get the corresponding value
+                        $requirementName = $_POST['newRequirementName' . $count];
+                        $requirementValue = $_POST['newRequirementValue' . $count];
+
+                        // Add the dynamic requirement to the array
+                        $dynamicRequirements[] = array(
+                            'name' => $requirementName,
+                            'value' => $requirementValue
+                        );
+                    }
+                }
+
 
                 $courseObject = new Course($courseName, $instructor, $coursePreview, $price, $category, $level, $courseInfo, $start, $end);
 
                 // Insert data into the 'course' and 'coursedetails' tables
-                $courseInsertResult = $courseObject->insert($courseName, $instructor, $coursePreview, $price, $category, $level, $end, $start, $courseInfo);
+                $courseInsertResult = $courseObject->insert($courseName, $instructor, $coursePreview, $price, $category, $level, $end, $start, $courseInfo, $dynamicRequirements);
                 echo 'Create form submitted successfully';
                 header("Location:../views/adminlayout.php");
 
@@ -71,9 +93,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $start = $_POST['editstart'];
                 $end = $_POST['editend'];
                 $courseInfo = $_POST['editCourseInfo'];
+                $requirementID = isset($_POST['selectedRequirements']) ? $_POST['selectedRequirements'] : [];
+                $courseInfo = $_POST['createCourseInfo'];
+                $dynamicRequirements = array();
+
+                // Loop through the POST data and identify dynamic requirements based on the field names
+                foreach ($_POST as $key => $value) {
+                    // Check if the field is a dynamic requirement
+                    if (strpos($key, 'newRequirementName') === 0) {
+                        // Extract the count from the field name
+                        $count = substr($key, strlen('newRequirementName'));
+
+                        // Use the count to get the corresponding value
+                        $requirementName = $_POST['newRequirementName' . $count];
+                        $requirementValue = $_POST['newRequirementValue' . $count];
+
+                        // Add the dynamic requirement to the array
+                        $dynamicRequirements[] = array(
+                            'name' => $requirementName,
+                            'value' => $requirementValue
+                        );
+                    }
+                }
                 $courseObject = new Course($courseName, $instructor, $coursePreview, $price, $category, $level, $courseInfo, $start, $end);
                 // Update data in the 'course' table
-                $courseUpdateResult = $courseObject->update($id, $courseName, $instructor, $coursePreview, $price, $category, $level, $end, $start, $courseInfo);
+                $reqobject = new req();
+                $req_delet = $reqobject->deleteRequirement($id, $requirementID);
+                $courseUpdateResult = $courseObject->update($id, $courseName, $instructor, $coursePreview, $price, $category, $level, $end, $start, $courseInfo,$dynamicRequirements);
 
                 echo 'Edit form submitted successfully';
                 header("Location: ../views/adminlayout.php");
@@ -96,7 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 'delete':
 
                 $id = $_POST['course_id'];
+
                 $courseObject = new Course();
+
                 $coursedelet = $courseObject->delete($id);
 
                 // Return a success message or response.

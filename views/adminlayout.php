@@ -180,6 +180,50 @@
       xhttp.send();
     }
   </script>
+   <script>
+        let count = 1;
+
+        function addRequirement(courseId="") {
+    console.log('Button clicked!');
+    count += 1;
+
+    let container = document.getElementById('dynamicRequirementsContent_' + courseId);
+
+    let div = document.createElement('div');
+    div.className = 'mb-3';
+
+    let labelName = document.createElement('label');
+    labelName.htmlFor = 'requirementName' + count;
+    labelName.textContent = 'Requirement Name';
+
+    let inputName = document.createElement('input');
+    inputName.type = 'text';
+    inputName.className = 'form-control';
+    inputName.id = 'requirementName' + count + '_' + courseId;
+    inputName.name = 'newRequirementName' + count + '_' + courseId;
+
+    let labelValue = document.createElement('label');
+    labelValue.htmlFor = 'requirementValue' + count;
+    labelValue.textContent = 'Requirement Value';
+
+    let inputValue = document.createElement('input');
+    inputValue.type = 'text';
+    inputValue.className = 'form-control';
+    inputValue.id = 'requirementValue' + count + '_' + courseId;
+    inputValue.name = 'newRequirementValue' + count + '_' + courseId;
+
+    div.appendChild(labelName);
+    div.appendChild(inputName);
+    container.appendChild(div);
+
+    div = document.createElement('div');
+    div.className = 'mb-3';
+    div.appendChild(labelValue);
+    div.appendChild(inputValue);
+    container.appendChild(div);
+}
+
+    </script>
 
   <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
