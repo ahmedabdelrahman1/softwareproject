@@ -76,7 +76,7 @@ class Course extends Model
 
     public function getRequirementsByCourseID($courseID)
 {
-    $sql = "SELECT cr.req, crv.value
+    $sql = "SELECT cr.req, crv.value,cr.ID
             FROM course_req_value crv
             JOIN course_req cr ON crv.course_req_ID = cr.ID
             WHERE crv.course_ID = ?";
@@ -90,7 +90,7 @@ class Course extends Model
 
     while ($row = $result->fetch_assoc()) {
         // Instantiate Req objects and add them to the $requirements array
-        $requirements[] = new req("",$row['req'], $row['value']);
+        $requirements[] = new req($row['ID'],$row['req'], $row['value']);
     }
 
     $stmt->close();

@@ -77,10 +77,10 @@ public function getReqIDByName($name)
 }
 
 
-   /* public function getRequirementsByCourseID($courseID)
+   /*public function getRequirementsByCourseID($courseID)
     {
-        $sql = "SELECT a.req, ca.value FROM course_attributes ca
-            JOIN req a ON ca.course_req_ID = a.id
+        $sql = "SELECT a.req, ca.value FROM course_req_value ca
+            JOIN course_req a ON ca.course_req_ID = a.id
             WHERE ca.course_ID = ?";
 
         $stmt = $this->db->prepare($sql);
@@ -107,7 +107,7 @@ public function getReqIDByName($name)
     }
 
     public function getreq_id() {
-        return $this->req;
+        return $this->id;
     }
 
     public function getReqValue()

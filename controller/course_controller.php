@@ -130,7 +130,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id = $_POST['course_id'];
 
                 $courseObject = new Course();
+                $reqObject = new req();
 
+                $requirements= $courseObject->getRequirementsByCourseID($id);
+                foreach ($requirements as $req) {
+                print_r($req) ;
+                echo $req->getreq_id();
+                $reqObject->deleteRequirement($id,$req->getreq_id());
+                }
                 $coursedelet = $courseObject->delete($id);
 
                 // Redirect to admin layout page

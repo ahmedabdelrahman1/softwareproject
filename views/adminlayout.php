@@ -224,7 +224,102 @@
 }
 
     </script>
+    <script>
+        $(document).ready(function() {
+            $('.create').click(function() {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var preview = $(this).data('preview');
+                var instructor = $(this).data('instructor');
+                var price = $(this).data('price');
+                var detailsID = $(this).data('detailsID');
 
+                $('#createId').val(id);
+                $('#createName').val(name);
+                $('#createpreview').val(preview);
+                $('#createInstructor').val(instructor);
+                $('#createPrice').val(price);
+                $('#createdetailsID').val(detailsID);
+
+                $('#createModal').modal('show');
+            });
+
+
+
+        });
+    </script>
+
+    <!-- Edit Course Modal -->
+
+
+
+    <script>
+        $(document).ready(function() {
+            $('.edit').click(function() {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var preview = $(this).data('preview');
+                var instructor = $(this).data('instructor');
+                var price = $(this).data('price');
+                var detailsID = $(this).data('detailsID');
+
+                $('#editId').val(id);
+                $('#editName').val(name);
+                $('#editpreview').val(preview);
+                $('#editInstructor').val(instructor);
+                $('#editPrice').val(price);
+                $('#editdetailsID').val(detailsID);
+
+                $('#editModal').modal('show');
+            });
+
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Delete button click event
+            $('.delete').click(function() {
+                var courseId = $(this).data('id');
+                var courseName = $(this).data('name');
+                var detailsID = $(this).data('detailsID');
+
+                // Display a confirmation dialog
+                if (confirm('Are you sure you want to delete course: ' + courseName + '?')) {
+                    // Send an AJAX request to delete the course
+                    $.ajax({
+                        url: 'delete_course.php', // Replace with the URL to your delete course PHP script
+                        type: 'POST',
+                        data: {
+                            course_id: courseId
+                        },
+                        success: function(response) {
+                            if (response == 'success') {
+                                // Reload the page or handle the success as needed
+                                location.reload();
+                            } else {
+                                alert('Failed to delete course.');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-requirement');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const checkbox = button.parentElement.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                });
+            });
+        });
+    </script>
+    
   <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="../public/js/admin-scripts.js"></script>

@@ -109,7 +109,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="editForm" method="post" action="../controller/course_controller.php">
+                        <form id="editForm" method="post" action="../course_controller.php">
 
                         <input type="hidden" name="action" value="edit">
                             <input type="hidden" name="course_id" value="' . $course->getId() . '">
@@ -156,7 +156,7 @@
 
                 <?php
                     // Assuming $requirements is an array containing existing requirements for the course
-                    $requirements = $course->getRequirementsByCourseID($course->getId());
+                   $requirements = $course->getRequirementsByCourseID($course->getId());
                     foreach ($requirements as $req) {
                         echo '<div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -169,13 +169,13 @@
             <input type="text" class="form-control" name="existingValues[]" value="' . $req->getReqValue() . '" readonly>
           </div>';
                     }
-                    echo '<button onclick="addRequirement(' . $course->getId() . ')" type="button" class="btn btn-secondary" id="addRequirementBtn_' . $course->getId() . '">Add Requirement</button>
+                   echo '<button onclick="addRequirement(' . $course->getId() . ')" type="button" class="btn btn-secondary" id="addRequirementBtn_' . $course->getId() . '">Add Requirement</button>
                   <div id="dynamicRequirementsContent_' . $course->getId() . '"></div>';
                     echo ' 
                </div>
            </div>
        
-           <button type="submit" class="btn btn-primary" >Save Changes</button>
+           <button type="submit" class="btn btn-primary" id="submitButton1">Submit</button>
     </form>
 </div>
 <div class="modal-footer">
@@ -275,103 +275,19 @@
         </div>
     </div>
 
-
-
     <script>
-        $(document).ready(function() {
-            $('.create').click(function() {
-                var id = $(this).data('id');
-                var name = $(this).data('name');
-                var preview = $(this).data('preview');
-                var instructor = $(this).data('instructor');
-                var price = $(this).data('price');
-                var detailsID = $(this).data('detailsID');
+    document.getElementById('editForm').addEventListener('submit', function (event) {
+        // Log a message to the console
+        console.log('Submit button clicked!');
 
-                $('#createId').val(id);
-                $('#createName').val(name);
-                $('#createpreview').val(preview);
-                $('#createInstructor').val(instructor);
-                $('#createPrice').val(price);
-                $('#createdetailsID').val(detailsID);
-
-                $('#createModal').modal('show');
-            });
+        // Uncomment the following line after adding your logic
+        // this.submit();
+    });
+</script>
 
 
 
-        });
-    </script>
-
-    <!-- Edit Course Modal -->
-
-
-
-    <script>
-        $(document).ready(function() {
-            $('.edit').click(function() {
-                var id = $(this).data('id');
-                var name = $(this).data('name');
-                var preview = $(this).data('preview');
-                var instructor = $(this).data('instructor');
-                var price = $(this).data('price');
-                var detailsID = $(this).data('detailsID');
-
-                $('#editId').val(id);
-                $('#editName').val(name);
-                $('#editpreview').val(preview);
-                $('#editInstructor').val(instructor);
-                $('#editPrice').val(price);
-                $('#editdetailsID').val(detailsID);
-
-                $('#editModal').modal('show');
-            });
-
-
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Delete button click event
-            $('.delete').click(function() {
-                var courseId = $(this).data('id');
-                var courseName = $(this).data('name');
-                var detailsID = $(this).data('detailsID');
-
-                // Display a confirmation dialog
-                if (confirm('Are you sure you want to delete course: ' + courseName + '?')) {
-                    // Send an AJAX request to delete the course
-                    $.ajax({
-                        url: 'delete_course.php', // Replace with the URL to your delete course PHP script
-                        type: 'POST',
-                        data: {
-                            course_id: courseId
-                        },
-                        success: function(response) {
-                            if (response == 'success') {
-                                // Reload the page or handle the success as needed
-                                location.reload();
-                            } else {
-                                alert('Failed to delete course.');
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const deleteButtons = document.querySelectorAll('.delete-requirement');
-
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const checkbox = button.parentElement.querySelector('input[type="checkbox"]');
-                    checkbox.checked = !checkbox.checked;
-                });
-            });
-        });
-    </script>
+    
 
 
 
