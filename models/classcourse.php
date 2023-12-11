@@ -252,10 +252,10 @@ class Course extends Model
 
     function delete($courseID)
     {
-        $conn = course::connect();
+        
 
         // Check if the course exists
-        $checkQuery = $conn->prepare("SELECT * FROM course_table WHERE ID = ?");
+        $checkQuery =$this->db->prepare("SELECT * FROM course_table WHERE ID = ?");
         $checkQuery->bind_param('i', $courseID);
         $checkQuery->execute();
 
@@ -276,7 +276,7 @@ class Course extends Model
             }
 
             // Delete the course record from course_table
-            $deleteQuery = $conn->prepare("DELETE FROM course_table WHERE ID = ?");
+            $deleteQuery = $this->db->prepare("DELETE FROM course_table WHERE ID = ?");
             $deleteQuery->bind_param('i', $courseID);
             $deleteQuery->execute();
 
@@ -298,27 +298,41 @@ class Course extends Model
 
     function selectByInstructorID($instructorID)
     {
-        $conn = course::connect();
-        $query = "SELECT * FROM course_table WHERE instructorID = :instructor_id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':instructor_id', $instructorID, PDO::PARAM_INT);
+        $query = "SELECT * FROM course_table WHERE instructorID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $instructorID); // 'i' represents integer type, adjust if needed
         $stmt->execute();
-        $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        // Get the result set from the prepared statement
+        $result = $stmt->get_result();
+    
+        // Fetch the rows from the result set
+        $courses = $result->fetch_all(MYSQLI_ASSOC);
+    
+        // Close the statement
+        $stmt->close();
+    
         return $courses;
     }
 
-
     function selectCoursesByStudentID($studentID)
     {
-        $conn = course::connect();
+       
         $query = "SELECT e.ID as enrollmentID, c.* FROM enrollment_table e
                   JOIN course_table c ON e.courseID = c.ID
-                  WHERE e.studentID = :student_id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':student_id', $studentID, PDO::PARAM_INT);
+                  WHERE e.studentID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam('i', $studentID);
         $stmt->execute();
-        $enrollments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $enrollments;
+        $result = $stmt->get_result();
+    
+        // Fetch the rows from the result set
+        $courses = $result->fetch_all(MYSQLI_ASSOC);
+    
+        // Close the statement
+        $stmt->close();
+    
+        return $courses;
     }
 
 

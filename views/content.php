@@ -9,22 +9,23 @@
            
     echo'<body>';
             include("partials/navbar.php");
+            @include '../db/config.php';
+            require '../models/classpdf.php';
     ?>
 <div class="container mt-4">
 <?php
- @include 'config.php';
- require '../models/classpdf.php';
+ 
  if (isset($_GET['title'])) {
     $title = $_GET['title'];
     echo "<h1>$title</h1>";
     echo "<hr>";
 
-
+    $pdfObject=new pdf();
     if (isset($_GET['sectionID'])) {
         $sectionId = $_GET['sectionID'];
         echo $sectionId;
-        if (count(pdf::selectBySectionID($sectionId)) > 0) {
-            $fetch = pdf::selectBySectionID($sectionId);
+        if (count($pdfObject->selectBySectionID($sectionId)) > 0) {
+            $fetch = $pdfObject->selectBySectionID($sectionId);
             foreach ($fetch as $value) {
                 echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4 pdf-link">
                     <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
@@ -78,9 +79,9 @@ else {
         echo "<hr>";
     }
     
-    // Rest of your code to retrieve and display PDFs
-    if (count(pdf::selectBySectionID($sectionId)) > 0) {
-        $fetch = pdf::selectBySectionID($sectionId);
+    $pdfObject=new pdf();
+    if (count($pdfObject->selectBySectionID($sectionId)) > 0) {
+        $fetch = $pdfObject->selectBySectionID($sectionId);
         foreach ($fetch as $value) {
             echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4 pdf-link">
             <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '

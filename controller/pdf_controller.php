@@ -3,7 +3,7 @@
 //include the config and the classes required
 
 session_start();
- include '../views/config.php';
+ include '../db/config.php';
  require '../models/classpdf.php';
 
 
@@ -23,16 +23,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
     // deletes the pdf using the pdfID 
 
           case "delete":
+            $pdfObject=new pdf();
             if (isset($_POST['pdfID'])) {
                 $pdfId = $_POST['pdfID'];
                 $sectionId=$_POST['sectionID'];
-                pdf::delete($pdfId);
+                $pdfObject->delete($pdfId);
                 header('Location: ../views/content.php?sectionID=' .  $sectionId.'');
             }
         break;
 
         case "create":
-            
+            $pdfObject=new pdf();
             if (isset($_POST['buttonupload'])){
                 $name=$_POST['name'];
                 $sectionId=$_POST['sectionID'];
@@ -47,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     }
                 }
                 if(!empty($name)){
-                    pdf::insert($name,$pdf_file,$sectionId);
+                    $pdfObject->insert($name,$pdf_file,$sectionId);
                     header('Location: ../views/content.php?sectionID=' .  $sectionId.'');
                 }
                 else{

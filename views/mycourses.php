@@ -20,11 +20,12 @@
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5">
                     <?php
 require '../models/classcourse.php';
+$courseObject = new Course();
 if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
 {
 
-if (count(course::selectByInstructorID($_SESSION['user_id'])) > 0) {
-    $fetch = course::selectByInstructorID($_SESSION['user_id']);
+if (count($courseObject->selectByInstructorID($_SESSION['user_id'])) > 0) {
+    $fetch = $courseObject->selectByInstructorID($_SESSION['user_id']);
     foreach ($fetch as $value) {
         echo '<div class="col gallery-item">';
         echo '    <div class="card shadow-sm border-bottom border-5">';
@@ -55,8 +56,8 @@ if (count(course::selectByInstructorID($_SESSION['user_id'])) > 0) {
 }
 else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
 {
-    if (count(course::selectCoursesByStudentID($_SESSION['user_id'])) > 0) {
-        $fetch = course::selectCoursesByStudentID($_SESSION['user_id']);
+    if (count($courseObject->selectCoursesByStudentID($_SESSION['user_id'])) > 0) {
+        $fetch = $courseObject->selectCoursesByStudentID($_SESSION['user_id']);
         foreach ($fetch as $value) {
             echo '<div class="col gallery-item">';
             echo '    <div class="card shadow-sm border-bottom border-5">';
