@@ -10,7 +10,7 @@
     echo'<body>';
             include("partials/navbar.php");
             @include '../db/config.php';
-            require '../models/classpdf.php';
+            require '../models/classcourse_matrial.php';
     ?>
 <div class="container mt-4">
 <?php
@@ -20,19 +20,19 @@
     echo "<h1>$title</h1>";
     echo "<hr>";
 
-    $pdfObject=new pdf();
+    $course_matrialObject=new course_matrial();
     if (isset($_GET['sectionID'])) {
         $sectionId = $_GET['sectionID'];
         echo $sectionId;
-        if (count($pdfObject->selectBySectionID($sectionId)) > 0) {
-            $fetch = $pdfObject->selectBySectionID($sectionId);
+        if (count($course_matrialObject->selectBySectionID($sectionId)) > 0) {
+            $fetch = $course_matrialObject->selectBySectionID($sectionId);
             foreach ($fetch as $value) {
-                echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4 pdf-link">
-                    <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
+                echo '<a href="course_matrial/' . $value['file'] . '" download="' . $value['file'] . '" class="text-primary fs-4 course_matrial-link">
+                    <i class="bi bi-file-earmark fs-4"></i>' . $value['name'] . '
                 </a>';
-                echo '<form method="post" action="../controller/pdf_controller.php">';
+                echo '<form method="post" action="../controller/course_matrial_controller.php">';
                 echo '    <input type="hidden" name="action" value="delete">';
-                echo '    <input type="hidden" name="pdfID" value="' . $value['id'] . '">';
+                echo '    <input type="hidden" name="course_matrialID" value="' . $value['id'] . '">';
                 echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
                 echo '    <button type="submit" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</button>';
                 echo '</form><br>';
@@ -44,7 +44,7 @@ if(isset($_SESSION['type']) && $_SESSION['type'] == 'instructor')
 {
 
         echo '<a href="import.php?&sectionID=' . $sectionId . '" class="btn btn-primary ">+</a>';
-        echo '<a style=" margin:20px" class="btn btn-primary add-pdf-btn">-</a>';
+        echo '<a style=" margin:20px" class="btn btn-primary add-course_matrial-btn">-</a>';
 }
     } else {
         echo "Section not found.";
@@ -79,16 +79,16 @@ else {
         echo "<hr>";
     }
     
-    $pdfObject=new pdf();
-    if (count($pdfObject->selectBySectionID($sectionId)) > 0) {
-        $fetch = $pdfObject->selectBySectionID($sectionId);
+    $course_matrialObject=new course_matrial();
+    if (count($course_matrialObject->selectBySectionID($sectionId)) > 0) {
+        $fetch = $course_matrialObject->selectBySectionID($sectionId);
         foreach ($fetch as $value) {
-            echo '<a href="pdf/' . $value['pdf_file'] . '" download="' . $value['pdf_file'] . '" class="text-primary fs-4 pdf-link">
-            <i class="bi bi-file-earmark-pdf fs-4"></i>' . $value['name'] . '
+            echo '<a href="course_matrial/' . $value['file'] . '" download="' . $value['file'] . '" class="text-primary fs-4 course_matrial-link">
+            <i class="bi bi-file-earmark fs-4"></i>' . $value['name'] . '
         </a>';
-        echo '<form method="post" action="../controller/pdf_controller.php">';
+        echo '<form method="post" action="../controller/course_matrial_controller.php">';
         echo '    <input type="hidden" name="action" value="delete">';
-        echo '    <input type="hidden" name="pdfID" value="' . $value['id'] . '">';
+        echo '    <input type="hidden" name="course_matrialID" value="' . $value['id'] . '">';
         echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
         echo '    <button type="submit" class="btn btn-danger btn-sm delete-btn" style="display: none">Delete</button>';
         echo '</form><br>';
@@ -98,7 +98,7 @@ else {
         echo "Section not found.";
     }
     echo '<a href="import.php?&sectionID=' . $sectionId .' " class="btn btn-primary">+</a>';
-    echo '<a style=" margin:20px"  class="btn btn-primary add-pdf-btn">-</a>';
+    echo '<a style=" margin:20px"  class="btn btn-primary add-course_matrial-btn">-</a>';
 }
    
 
@@ -117,7 +117,7 @@ else {
     }
 
     // Add an event listener to the button that triggers the visibility toggle
-    const addButton = document.querySelector('.add-pdf-btn');
+    const addButton = document.querySelector('.add-course_matrial-btn');
     addButton.addEventListener('click', toggleDeleteAnchors);
 </script>
 <?php 

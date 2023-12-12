@@ -307,18 +307,7 @@
         });
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const deleteButtons = document.querySelectorAll('.delete-requirement');
-
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const checkbox = button.parentElement.querySelector('input[type="checkbox"]');
-                    checkbox.checked = !checkbox.checked;
-                });
-            });
-        });
-    </script>
+   
     
   <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

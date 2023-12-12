@@ -3,7 +3,7 @@ session_start();
 if (isset($_GET['sectionID'])) {
     // Retrieve the course_id from the query parameter
     $sectionId = $_GET['sectionID'];
-    require '../models/classpdf.php';
+    require '../models/classcourse_matrial.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +16,8 @@ if (isset($_GET['sectionID'])) {
     ?>
         <div>
             <?php
-              if(count(pdf::$alerts)>0){
-                $alert=pdf::$alerts;
+              if(count(course_matrial::$alerts)>0){
+                $alert=course_matrial::$alerts;
                 foreach($alert as $value)
                 {
                     echo $value;
@@ -28,16 +28,16 @@ if (isset($_GET['sectionID'])) {
     </div>
    <div class="container mt-5">
         <h2>Drag and Drop File Upload</h2>
-        <form method="post" action="../controller/pdf_controller.php" enctype="multipart/form-data">
+        <form method="post" action="../controller/course_matrial_controller.php" enctype="multipart/form-data">
             <?php
             echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
 }
             ?>
         <input type="hidden" name="action" value="create">
-    <label id="name">Enter the name of the PDF </label>
-    <input type="text" name="name" placeholder="Enter pdf name">
+    <label id="name">Enter the name of the course matrial </label>
+    <input type="text" name="name" placeholder="Enter document name">
     <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">
-    <input type="file" id="fileInput" name="file" accept="application/pdf" />
+    <input type="file" id="fileInput" name="file"  />
     <label for="fileInput" id="file-label">
         Drag & Drop files here or click to browse
     </label>
@@ -80,41 +80,35 @@ if (isset($_GET['sectionID'])) {
     });
 
     function handleFile(file) {
-    if (file.type === 'application/pdf') {
-        fileName.textContent = file.name;// Add styling for the inner border
-        // Remove the outer border
-        // You can add additional logic here, such as displaying an icon for PDF.
-    }
+        fileName.textContent = file.name;
+        // Add styling for the inner border if needed
+        // Remove the outer border if needed
+        // You can add additional logic here based on your requirements
 }
 </script>
-    <script type="text/javascript">
-            const dropArea = document.getElementById('drop-area');
-            const fileInput = document.getElementById('fileInput');
-            const fileDisplay = document.getElementById('file-display');
-            const fileName = document.getElementById('file-name');
+<script type="text/javascript">
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('fileInput');
+    const fileDisplay = document.getElementById('file-display');
+    const fileName = document.getElementById('file-name');
 
-            fileInput.addEventListener('change', () => {
-                const file = fileInput.files[0];
-                if (file) {
-                    if (file.type === 'application/pdf') {
-                        fileDisplay.innerHTML = ''; // Clear previous content
-                        const pdfIcon = document.createElement('i');
-                        pdfIcon.className = 'bi bi-file-pdf';
-                        fileName.textContent = file.name;
-                        fileDisplay.appendChild(pdfIcon);
-                        fileDisplay.appendChild(fileName);
-                    } else {
-                        alert('Please upload a PDF file.');
-                        fileInput.value = ''; // Reset the input
-                    }
-                } else {
-                    fileDisplay.innerHTML = '<i class="bi bi-file-pdf"></i><span id="file-name">No file selected</span>';
-                }
-            });
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (file) {
+            fileDisplay.innerHTML = ''; // Clear previous content
+            const fileIcon = document.createElement('i');
+            fileIcon.className = 'bi bi-file'; // Use a generic file icon
+            fileName.textContent = file.name;
+            fileDisplay.appendChild(fileIcon);
+            fileDisplay.appendChild(fileName);
+        } else {
+            fileDisplay.innerHTML = '<i class="bi bi-file"></i><span id="file-name">No file selected</span>';
+        }
+    });
 
-            // Rest of your JavaScript code
-            // ...
-        </script>
+    // Rest of your JavaScript code
+    // ...
+</script>
 
 
 

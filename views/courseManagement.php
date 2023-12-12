@@ -109,7 +109,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="editForm" method="post" action="../course_controller.php">
+                        <form id="editForm" method="post" action="../controller/course_controller.php">
 
                         <input type="hidden" name="action" value="edit">
                             <input type="hidden" name="course_id" value="' . $course->getId() . '">
@@ -149,6 +149,7 @@
                         <label for="editCourseInfo">Course Info</label>
                         <textarea type="text" class="form-control" id="editCourseInfo" name="editCourseInfo" >' . $course->getCourseinfo() . '</textarea>
                     </div>  
+                    
 
                     <!-- Requirements Section -->
                     <div class="form-group">
@@ -173,9 +174,8 @@
                   <div id="dynamicRequirementsContent_' . $course->getId() . '"></div>';
                     echo ' 
                </div>
-           </div>
-       
-           <button type="submit" class="btn btn-primary" id="submitButton1">Submit</button>
+          
+           <button type="submit" class="btn btn-primary" >Submit</button>
     </form>
 </div>
 <div class="modal-footer">
@@ -275,16 +275,19 @@
         </div>
     </div>
 
-    <script>
-    document.getElementById('editForm').addEventListener('submit', function (event) {
-        // Log a message to the console
-        console.log('Submit button clicked!');
+   
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-requirement');
 
-        // Uncomment the following line after adding your logic
-        // this.submit();
-    });
-</script>
-
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const checkbox = button.parentElement.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                });
+            });
+        });
+    </script>
 
 
     

@@ -85,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $end = $_POST['editend'];
                 $courseInfo = $_POST['editCourseInfo'];
                 $requirementID = isset($_POST['selectedRequirements']) ? $_POST['selectedRequirements'] : [];
-                $courseInfo = $_POST['createCourseInfo'];
                 $dynamicRequirements = array();
 
                 // Loop through the POST data and identify dynamic requirements based on the field names
@@ -110,19 +109,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Update data in the 'course' table
                 $reqobject = new req();
-                $req_delet = $reqobject->deleteRequirement($id, $requirementID);
+                foreach($requirementID as $reqID)
+                {
+                $req_delet = $reqobject->deleteRequirement($id,  $reqID[0]);
+                }
                 $courseUpdateResult = $courseObject->update($id, $courseName, $instructor, $coursePreview, $price, $category, $level, $end, $start, $courseInfo,$dynamicRequirements);
 
                 // Check if course editing was successful
-                if ($courseUpdateResult) {
+                if (!$courseUpdateResult) {
                     echo 'Edit form submitted successfully';
                 } else {
                     // Handle update failure
                     echo 'Edit form submission failed';
                 }
-
+                 
                 // Redirect to admin layout page
-                header("Location: ../views/adminlayout.php");
+             header("Location: ../views/adminlayout.php");
                 break;
 
             case 'delete':
