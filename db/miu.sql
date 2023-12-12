@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 10:07 PM
+-- Generation Time: Dec 12, 2023 at 07:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `miu`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course_matrial_table`
+--
+
+CREATE TABLE `course_matrial_table` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `file` varchar(200) NOT NULL,
+  `sectionID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `course_matrial_table`
+--
+
+INSERT INTO `course_matrial_table` (`id`, `name`, `file`, `sectionID`) VALUES
+(2, 'lob a', '../files/Phase2 Evaluation-F23.docx', 136);
 
 -- --------------------------------------------------------
 
@@ -54,15 +74,6 @@ CREATE TABLE `course_req_value` (
   `value` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `course_req_value`
---
-
-INSERT INTO `course_req_value` (`ID`, `course_ID`, `course_req_ID`, `value`) VALUES
-(2, 24, 2, 'rrrr'),
-(3, 24, 3, 'iiiii'),
-(4, 25, 2, 'pppppppppp');
-
 -- --------------------------------------------------------
 
 --
@@ -89,8 +100,7 @@ CREATE TABLE `course_table` (
 INSERT INTO `course_table` (`ID`, `name`, `preview`, `instructorID`, `price`, `Category`, `level`, `startdate`, `enddate`, `courseinfo`) VALUES
 (19, 'python', 'this course teaches you all you need to know about python', 2, 8000, 'programming', 'beginner', '2023-12-07', '2024-02-21', 'ppppppppp'),
 (20, 'java', 'this course teaches you all you need to know about Java', 2, 8000, 'programming', 'beginner', '2023-12-15', '2024-02-15', 'llllllllllllllllllllllllllllllllllllllll'),
-(24, 'c++ ', 'this course teaches you all you need to know about c++', 2, 8000, 'programming', 'beginner', '2023-12-22', '2023-12-27', '[[[[[[[[[[[[[[[[[[[[[[[[['),
-(25, 'c#', 'this course teaches you all you need to know about c#', 2, 8000, 'programming', 'beginner', '2023-12-06', '2024-04-25', 'iiiiiiiiiiiiiiiiiiiiiii');
+(24, 'c++ ', 'this course teaches you all you need to know about c++', 2, 8000, 'programming', 'beginner', '2023-12-22', '2023-12-27', '');
 
 -- --------------------------------------------------------
 
@@ -142,28 +152,6 @@ INSERT INTO `images` (`img_id`, `img_url`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pdf_table`
---
-
-CREATE TABLE `pdf_table` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `pdf_file` varchar(100) NOT NULL,
-  `sectionID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pdf_table`
---
-
-INSERT INTO `pdf_table` (`id`, `name`, `pdf_file`, `sectionID`) VALUES
-(19, 'lab1', 'Software_Requirement_Specification (1).pdf', 125),
-(24, 'lab3', 'Sheet3_ModelAnswer (1).pdf', 135),
-(27, 'lob a', 'Midterm Spring 2022 (1).pdf', 135);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `section_table`
 --
 
@@ -179,9 +167,7 @@ CREATE TABLE `section_table` (
 --
 
 INSERT INTO `section_table` (`ID`, `name`, `courseID`, `detials`) VALUES
-(125, 'Lecture', 11, 'Press to see all the lectures'),
-(134, 'Lecture', 0, 'Press to see all the lectures'),
-(135, 'Lecture', 1, 'Press to see all the lectures');
+(136, 'Lecture', 19, 'Press to see all the lectures');
 
 -- --------------------------------------------------------
 
@@ -215,6 +201,12 @@ INSERT INTO `user` (`id`, `fname`, `lname`, `email`, `password`, `type`) VALUES
 --
 
 --
+-- Indexes for table `course_matrial_table`
+--
+ALTER TABLE `course_matrial_table`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `course_req`
 --
 ALTER TABLE `course_req`
@@ -245,12 +237,6 @@ ALTER TABLE `images`
   ADD PRIMARY KEY (`img_id`);
 
 --
--- Indexes for table `pdf_table`
---
-ALTER TABLE `pdf_table`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `section_table`
 --
 ALTER TABLE `section_table`
@@ -267,6 +253,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `course_matrial_table`
+--
+ALTER TABLE `course_matrial_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `course_req`
 --
 ALTER TABLE `course_req`
@@ -276,13 +268,13 @@ ALTER TABLE `course_req`
 -- AUTO_INCREMENT for table `course_req_value`
 --
 ALTER TABLE `course_req_value`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `course_table`
 --
 ALTER TABLE `course_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `enrollment_table`
@@ -297,16 +289,10 @@ ALTER TABLE `images`
   MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `pdf_table`
---
-ALTER TABLE `pdf_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
 -- AUTO_INCREMENT for table `section_table`
 --
 ALTER TABLE `section_table`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `user`
