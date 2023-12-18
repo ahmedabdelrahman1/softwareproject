@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 
 // Initialize the cart if it doesn't exist
@@ -19,7 +19,7 @@ if (!empty($_SESSION['cart'])) {
     $courseIds = implode(',', $_SESSION['cart']); // Convert array of course IDs to a comma-separated string
 
     $query = "SELECT * FROM courses WHERE ID IN ($courseIds)";
-    $result = mysqli_query($conn, $query);
+    $result = mysqli_query($conn, $query); -->
 
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -97,7 +97,7 @@ if (isset($conn)) {
         </form>
     </div>
     <?php
-       include("partials/footer.php")
-    ?>
-</body>
-</html>
+//        include("partials/footer.php")
+//     ?>
+// </body>
+// </html> -->
