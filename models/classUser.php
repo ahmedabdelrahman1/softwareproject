@@ -41,15 +41,15 @@ class User extends Model {
         $stt->bind_param('si', $imgUrl, $userId);
 
         if ($stmt->execute()) {
-            Sign::$alerts[] = "Added!";
+            User::$alerts[] = "Added!";
         } else {
-            Sign::$alerts[] = "Not added!";
+            User::$alerts[] = "Not added!";
         }
 
         if ($stt->execute()) {
-            Sign::$alerts[] = "photo Added!";
+            User::$alerts[] = "photo Added!";
         } else {
-            Sign::$alerts[] = "photo Not added!";
+            User::$alerts[] = "photo Not added!";
         }
 
         $stmt->close();
@@ -108,7 +108,7 @@ class User extends Model {
 
         // Check if the user with the given ID exists
         $checkQuery = $this->db->prepare("SELECT * FROM user WHERE id = ?");
-        $checkQuery->bind_param('i', $userID);
+        $checkQuery->bind_param('i', $userId);
         $checkQuery->execute();
 
         if ($checkQuery->fetch()) {
@@ -200,7 +200,7 @@ class User extends Model {
 
         try {
             $checkQuery =$this->db->prepare("SELECT * FROM images WHERE img_id = ?");
-            $checkQuery->bind_param('i', $img_id);
+            $checkQuery->bind_param('i', $imgId);
             $checkQuery->execute();
 
             // Fetch the result to determine if the course exists
@@ -406,6 +406,7 @@ class User extends Model {
             echo "Error: " . $e->getMessage();
         }
     }
+
 
 }
 ?>

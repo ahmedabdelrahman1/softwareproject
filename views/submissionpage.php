@@ -1,132 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php   
-          session_start();
-            include("partials/head.php");
-           
-    echo'<body>';
-            include("partials/navbar.php");
-
-    ?>
- <body>
 <?php
- if (isset($_GET['title'])) {
-    $value = unserialize(urldecode($_GET['title']));
-    $title=$value['name'];
-    $sectionId=$value['sectionID'];
-    echo "<h1>$title</h1>";
-    echo "<hr>";
- }
-    ?>
+session_start();
+include("partials/head.php");
 
-<form method="post" action="../controller/course_matrial_controller.php" enctype="multipart/form-data">
-            <?php
-            echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
+echo '<body>';
+include("partials/navbar.php");
 
-            ?>
-    <label id="name">Enter the name of the course matrial </label>
-    <input type="text" name="name" placeholder="Enter document name">
-    <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">
-    <input type="file" id="fileInput" name="file"  />
-    <label for="fileInput" id="file-label">
-        Drag & Drop files here or click to browse
-    </label>
-        <div id="file-display">
-            <i class="bi bi-file-pdf"></i>
-            <span id="file-name">No file selected</span>
-        </div>
-    </div>
-    <button type="submit" name="buttonupload" value="Register" class="btn btn-primary mt-2">Upload</button>
-</form>
+?>
+<div class="container mt-4">
+        <?php
+        if (isset($_GET['title'])) {
+                $value = unserialize(urldecode($_GET['title']));
+                $title = $value['name'];
+                $sectionId = $value['sectionID'];
+                $file = $value['file'];
+                $fileID = $value['id'];
+                echo "<h1>$title</h1>";
+                echo "<hr>";
+        }
 
+        if ($_SESSION['type'] == 'student') {
 
-<?php 
-           include("partials/footer.php")
+                echo '<h5> Click to download </h5><br>';
+                echo '<a href="course_matrial/' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
+                    <i class="bi bi-file-earmark fs-4"></i>' . $title . '
+                </a>';
         ?>
-        
-    
- </body>
 
- <script>
+                <form method="post" action="../controller/student_controller.php" enctype="multipart/form-data">
+                        <?php
+                        echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
+                        echo '    <input type="hidden" name="cm_id" value="' . $fileID . '">';
+                        echo '    <input type="hidden" name="studentID" value="' . $_SESSION["user_id"] . '">';
+                        echo '    <input type="hidden" name="name" value="' . $title . 'assignment' . '">';
+                        ?>
+                        <input type="hidden" name="action" value="submit">
+                        <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">
+                                <input type="file" id="fileInput" name="file" />
+                                <label for="fileInput" id="file-label">
+                                        Drag & Drop files here or click to browse
+                                </label>
+                                <div id="file-display">
+                                        <i class="bi bi-file-pdf"></i>
+                                        <span id="file-name">No file selected</span>
+                                </div>
+                        </div>
+                        <button type="submit" name="buttonupload" value="Register" class="btn btn-primary mt-2">Upload</button>
+                </form>
+
+</div>
+
+<?php
+                include("partials/footer.php")
+?>
+<script>
         const dropArea = document.getElementById('drop-area');
 
         dropArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropArea.style.border = '2px dashed #000';
+                e.preventDefault();
+                dropArea.style.border = '2px dashed #000';
         });
 
         dropArea.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            dropArea.style.border = '2px dashed #ccc';
+                e.preventDefault();
+                dropArea.style.border = '2px dashed #ccc';
         });
 
         dropArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropArea.style.border = '2px dashed #ccc';
-            const fileInput = document.getElementById('fileInput');
-            const file = e.dataTransfer.files[0];
-            fileInput.files = e.dataTransfer.files;
-            handleFile(file);
+                e.preventDefault();
+                dropArea.style.border = '2px dashed #ccc';
+                const fileInput = document.getElementById('fileInput');
+                const file = e.dataTransfer.files[0];
+                fileInput.files = e.dataTransfer.files;
+                handleFile(file);
         });
-    </script>
+</script>
 
 <script>
-    const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('fileInput');
-    const fileDisplay = document.getElementById('file-display');
-    const fileName = document.getElementById('file-name');
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('fileInput');
+        const fileDisplay = document.getElementById('file-display');
+        const fileName = document.getElementById('file-name');
 
-    dropArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropArea.style.border = '2px dashed #000';
-    });
+        dropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropArea.style.border = '2px dashed #000';
+        });
 
-    dropArea.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        dropArea.style.border = '2px dashed #ccc';
-    });
+        dropArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropArea.style.border = '2px dashed #ccc';
+        });
 
-    dropArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropArea.style.border = '2px dashed #ccc';
-        const file = e.dataTransfer.files[0];
-        fileInput.files = e.dataTransfer.files;
-        handleFile(file);
-    });
+        dropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropArea.style.border = '2px dashed #ccc';
+                const file = e.dataTransfer.files[0];
+                fileInput.files = e.dataTransfer.files;
+                handleFile(file);
+        });
 
-    fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        handleFile(file);
-    });
+        fileInput.addEventListener('change', () => {
+                const file = fileInput.files[0];
+                handleFile(file);
+        });
 
-    function handleFile(file) {
-        fileName.textContent = file.name;
-        // Add styling for the inner border if needed
-        // Remove the outer border if needed
-        // You can add additional logic here based on your requirements
-}
+        function handleFile(file) {
+                fileName.textContent = file.name;
+                // Add styling for the inner border if needed
+                // Remove the outer border if needed
+                // You can add additional logic here based on your requirements
+        }
 </script>
 <script type="text/javascript">
-    const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('fileInput');
-    const fileDisplay = document.getElementById('file-display');
-    const fileName = document.getElementById('file-name');
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('fileInput');
+        const fileDisplay = document.getElementById('file-display');
+        const fileName = document.getElementById('file-name');
 
-    fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        if (file) {
-            fileDisplay.innerHTML = ''; // Clear previous content
-            const fileIcon = document.createElement('i');
-            fileIcon.className = 'bi bi-file'; // Use a generic file icon
-            fileName.textContent = file.name;
-            fileDisplay.appendChild(fileIcon);
-            fileDisplay.appendChild(fileName);
-        } else {
-            fileDisplay.innerHTML = '<i class="bi bi-file"></i><span id="file-name">No file selected</span>';
-        }
-    });
-
-    // Rest of your JavaScript code
-    // ...
+        fileInput.addEventListener('change', () => {
+                const file = fileInput.files[0];
+                if (file) {
+                        fileDisplay.innerHTML = ''; // Clear previous content
+                        const fileIcon = document.createElement('i');
+                        fileIcon.className = 'bi bi-file'; // Use a generic file icon
+                        fileName.textContent = file.name;
+                        fileDisplay.appendChild(fileIcon);
+                        fileDisplay.appendChild(fileName);
+                } else {
+                        fileDisplay.innerHTML = '<i class="bi bi-file"></i><span id="file-name">No file selected</span>';
+                }
+        });
 </script>
+<?php
+        } else {
+?>
+
+<?php
+        }
+?>
+</body>
+
+
 </html>
