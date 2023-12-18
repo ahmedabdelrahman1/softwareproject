@@ -3,6 +3,7 @@
 <?php
 session_start();
 include("partials/head.php");
+require_once("../models/assignment_class.php");
 
 echo '<body>';
 include("partials/navbar.php");
@@ -18,7 +19,7 @@ include("partials/navbar.php");
                 $fileID = $value['id'];
                 echo "<h1>$title</h1>";
                 echo "<hr>";
-        }
+      
 
         if ($_SESSION['type'] == 'student') {
 
@@ -135,10 +136,45 @@ include("partials/navbar.php");
 </script>
 <?php
         } else {
+                echo '<h5> Click to download </h5><br>';
+                echo '<a href="course_matrial/' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
+                    <i class="bi bi-file-earmark fs-4"></i>' . $title . '
+                </a>';
+
+                $objectassignment= new assignment($fileID,$title,$file,NULL);
+               
+
+                echo '
+                <div class="container mt-5">
+                  <h2>Grade Table</h2>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Assignment</th>
+                        <th scope="col">Grade</th>
+                      </tr>
+                    </thead>
+                    <tbody>';
+
+                    $fetch=$objectassignment->selecrbycm_id();
+                    
+                    foreach( $fetch as $assignment )
+                    
+                    echo ' <tr>
+                        <td><a href="assignment/' . $assignment['file'] . '" download="' . $assignment['file'] . '" class="text-primary fs-4 course_matrial-link">
+                        <i class="bi bi-file-earmark fs-4"></i>' . $assignment['name'] . '
+                        </a></td>
+                        <td><input type="text" class="form-control" placeholder="Grade" value="'.$assignment['grade'].'"></td>
+                      </tr>';
+
+                   echo' </tbody>
+                  </table>
+                </div>';
 ?>
 
 <?php
         }
+}
 ?>
 </body>
 
