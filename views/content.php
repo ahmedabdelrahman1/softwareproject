@@ -27,7 +27,12 @@
         if (count($course_matrialObject->selectBySectionID($sectionId)) > 0) {
             $fetch = $course_matrialObject->selectBySectionID($sectionId);
             foreach ($fetch as $value) {
-                echo '<a href="course_matrial/' . $value['file'] . '" download="' . $value['file'] . '" class="text-primary fs-4 course_matrial-link">
+                if($value['submission']==NULL)
+                echo '<a href="submissionpage.php?title=' . urlencode(serialize($value)) . '" class="text-primary fs-4 course_material-link">Link Text</a>
+                    <i class="bi bi-file-earmark fs-4"></i>' . $value['name'] . '
+                </a>';
+                else if($value['submission']==1)
+                echo '<a href="submissionpage.php?title=' .urlencode(serialize($value)). '&sectioID='.$sectionId.' class="text-primary fs-4 course_matrial-link">
                     <i class="bi bi-file-earmark fs-4"></i>' . $value['name'] . '
                 </a>';
                 echo '<form method="post" action="../controller/course_matrial_controller.php">';

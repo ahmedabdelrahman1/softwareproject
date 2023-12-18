@@ -35,10 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
         case "create":
             
             $course_matrialObject = new course_matrial();
+            if(isset($_POST['submit']))
+            $submission=$_POST['submit'];
             
             if (isset($_POST['buttonupload'])) {
                 $name = $_POST['name'];
                 $sectionId = $_POST['sectionID'];
+                
             
                 if (isset($_FILES['file'])) {
                     $course_matrial_file = $_FILES['file']['name'];
@@ -50,10 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
                         // You can perform additional logic here if needed
             
                         if (!empty($name)) {
-                            print_r($_FILES);
-                            $course_matrialObject->insert($name, $_FILES, $sectionId);
-                            echo "ttttttt";
-                            print_r(course_matrial::$alerts) ;
+                            if(isset($_POST['submit']))
+                            $course_matrialObject->insert($name, $_FILES, $sectionId,$submission);
+                        else
+                        $course_matrialObject->insert($name, $_FILES, $sectionId);
+                            echo $submission;
                             
                           //  header('Location: ../views/content.php?sectionID=' . $sectionId);
                           //  exit(); // Make sure to exit after a header redirect

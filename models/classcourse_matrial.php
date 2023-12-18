@@ -9,6 +9,7 @@ class course_matrial extends Model
     private $name;
     private $File;
     private $sectionid;
+    private $submitvalue;
     public static $alerts = [];
 
     public function __construct($id = "", $name = "", $File = "", $sectionid = "")
@@ -21,9 +22,10 @@ class course_matrial extends Model
         $this->sectionid = $sectionid;
     }
 
-    public function insert($name, $file, $sectionID)
+    public function insert($name, $file, $sectionID,$submitvalue=NULL)
     {
         $allowedExtensions = ['pdf', 'doc', 'docx', 'txt'];
+        $this->submitvalue=$submitvalue;
     
         if (!isset($file['file']['name']) || !isset($file['file']['type']) || !isset($file['file']['tmp_name']) || !isset($file['file']['error']) || !isset($file['file']['size'])) {
             course_matrial::$alerts[] = "Invalid file provided.";
@@ -45,12 +47,12 @@ class course_matrial extends Model
         }*/
     
         if (!move_uploaded_file($file['file']['tmp_name'], $uploadedFile)) {
-            $sql = "INSERT INTO course_matrial_table(name,file, sectionID) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO course_matrial_table(name,file, sectionID,submission) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($sql);
-            $stmt->bind_param("ssi", $name, $uploadedFile, $sectionID);
-    
+            $stmt->bind_param("ssii", $name, $uploadedFile, $sectionID,$submitvalue);
+            echo $submitvalue;
             if ($stmt->execute()) {
-                header("Location: ../views/content.php?sectionID=$sectionID");
+              header("Location: ../views/content.php?sectionID=$sectionID");
                 exit();
             } else {
                 course_matrial::$alerts[] = "Not added!";
@@ -105,5 +107,9 @@ class course_matrial extends Model
             // Handle course_matrial record not found
             course_matrial::$alerts[] = "course_matrial record not found.";
         }
+    }
+
+    public function getsubmitvalue(){
+            return $this->submitvalue;
     }
 }

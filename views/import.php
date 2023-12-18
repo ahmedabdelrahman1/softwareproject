@@ -34,6 +34,10 @@ if (isset($_GET['sectionID'])) {
 }
             ?>
         <input type="hidden" name="action" value="create">
+        <button onclick="submitiondate()" type="button" class="btn btn-secondary" id="submitdatebutton">Add submitdate</button>
+        <div class="form-group" id="submitdate">
+            
+        </div>
     <label id="name">Enter the name of the course matrial </label>
     <input type="text" name="name" placeholder="Enter document name">
     <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">
@@ -138,6 +142,63 @@ if (isset($_GET['sectionID'])) {
             handleFile(file);
         });
     </script>
+
+<script>
+       
+    function submitiondate() {
+    console.log('Button clicked!');
+
+    let container = document.getElementById('submitdate');
+
+    let div = document.createElement('div');
+    div.className = 'mb-3';
+
+    let labelName = document.createElement('label');
+    labelName.htmlFor = 'startdate:';
+    labelName.textContent = 'Start Date';
+
+    let inputName = document.createElement('input');
+    inputName.type = 'date';
+    inputName.className = 'form-control';
+    inputName.id = 'submitStartdate' ;
+    inputName.name = 'submitStartdate' ;
+
+    let labelValue = document.createElement('label');
+    labelValue.htmlFor = 'enddate' ;
+    labelValue.textContent = 'End date';
+
+    let inputValue = document.createElement('input');
+    inputValue.type = 'date';
+    inputValue.className = 'form-control';
+    inputValue.id = 'submitenddate' ;
+    inputValue.name = 'submitenddate' ;
+
+    let inputsubmissionValue = document.createElement('input');
+    inputsubmissionValue.type = 'hidden';
+    inputsubmissionValue.name = 'submit' ;
+    inputsubmissionValue.value='1';
+
+   
+    
+
+    div.appendChild(labelName);
+    div.appendChild(inputName);
+    container.appendChild(div);
+
+    div = document.createElement('div');
+    div.className = 'mb-3';
+    div.appendChild(labelValue);
+    div.appendChild(inputValue);
+    container.appendChild(div);
+
+    div.appendChild(inputsubmissionValue);
+    container.appendChild(div);
+    
+    let dispper = document.getElementById('submitdatebutton');
+    dispper.style.display='none';
+
+}
+</script>
     
 </body>
 </html>
