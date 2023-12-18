@@ -1,22 +1,20 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate form data
     $senderName = filter_input(INPUT_POST, 'sender_name', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
 
-    // Check if any of the inputs are empty or invalid
+
     if (empty($senderName) || !$email || empty($message)) {
         // Redirect to the form page with an error parameter
-        header("Location: contact_form.php?error=true");
+        header("Location: chat.php?error=true");
         exit();
     }
 
     // Database configuration
     $dbHost = "your_database_host";
     $dbUser = "your_database_user";
-    $dbPassword = "your_database_password";
-    $dbName = "your_database_name";
+    $dbName = "miu";
 
 
     $conn = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
@@ -46,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mail($adminEmail, $adminSubject, $adminMessage, $adminHeaders);
 
     // Redirect to the form page with a success parameter
-    header("Location: contact_form.php?success=true");
+    header("Location: chat.php?success=true");
     exit();
 } else {
     // If the form is not submitted, redirect to the form page
