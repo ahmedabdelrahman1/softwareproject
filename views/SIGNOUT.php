@@ -1,9 +1,10 @@
 <?php
 
 @include 'config.php';
-@include '../models/classSign.php';
+@include '../models/classUser.php';
 
-Sign::sign_out();
+$userObject = new User();
+$userObject->sign_out();
 
 
 ?>
