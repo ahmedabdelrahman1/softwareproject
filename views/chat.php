@@ -21,25 +21,55 @@
         <input type="submit" value="Submit">
     </form>
     <?php
+<?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $senderName = $_POST["sender_name"];
-    $email = $_POST["email"];
-    $message = $_POST["message"];
+    // Validate form data
+    $senderName = filter_input(INPUT_POST, 'sender_name', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
 
-    // Additional validation can be added here
+    // Check if any of the inputs are empty or invalid
+    if (empty($senderName) || !$email || empty($message)) {
+        // Redirect to the form page with an error parameter
+        header("Location: contact_form.php?error=true");
+        exit();
+    }
 
-    $adminEmail = "admin@example.com"; // Change this to the admin's email address
-    $subject = "New Message from $senderName";
-    $headers = "From: $email";
+    // Additional validation and processing can be added here
 
-    $emailMessage = "New message from $senderName:\n\n$message";
+    // Database configuration
+    $dbHost = "your_database_host";
+    $dbUser = "your_database_user";
+    $dbPassword = "your_database_password";
+    $dbName = "your_database_name";
 
-    mail($adminEmail, $subject, $emailMessage, $headers);
+    // Create a database connection
+    $conn = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
 
-    // Optionally, you can store the message in a database for future reference
-    // Database insertion code can be added here
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-    // Redirect to the form page with a success parameter
+    // Insert data into the database
+    $sql = "INSERT INTO messages (sender_name, email, message) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $senderName, $email, $message);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
+
+    // Send email notification to the admin
+    $adminEmail = "arwaa2110478@miuegypt.edu.eg; 
+    $adminSubject = "New Form Submission";
+    $adminHeaders = "From: $adminEmail";
+
+    $adminMessage = "New form submission:\n\n";
+    $adminMessage .= "Sender Name: $senderName\n";
+    $adminMessage .= "Email: $email\n";
+    $adminMessage .= "Message:\n$message";
+
+    mail($adminEmail, $adminSubject, $adminMessage, $adminHeaders);
     header("Location: contact_form.php?success=true");
     exit();
 } else {
@@ -48,5 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 ?>
+
+
 </body>
 </html>
