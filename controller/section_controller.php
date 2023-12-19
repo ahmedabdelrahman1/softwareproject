@@ -3,7 +3,7 @@
 //include the config and the classes required
 
 
- include '../views/config.php';
+ include '../db/config.php';
  session_start();
  require '../models/classsection.php';
 

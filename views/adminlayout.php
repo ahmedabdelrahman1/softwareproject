@@ -109,6 +109,10 @@
               <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
               Messages
             </a>
+            <a class="nav-link" href="javascript:void(0);" onclick="loadpermission()">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+            Page permisson
+            </a>
 
           </div>
         </div>
@@ -153,6 +157,20 @@
         }
       };
       xhttp.open("GET", "adminIndex.php", true);
+      xhttp.send();
+    }
+  </script>
+
+<script>
+    function loadpermission() {
+      // Use AJAX to load UserManagement.php into the content-container div
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("content-container").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "adminpermission.php", true);
       xhttp.send();
     }
   </script>
@@ -313,6 +331,19 @@
             });
         });
     </script>
+     <script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on('click', '#btnLeft', function () {
+            var selectedItem = $("#rightValues option:selected");
+            $("#leftValues").append(selectedItem);
+        });
+
+        $(document).on('click', '#btnRight', function () {
+            var selectedItem = $("#leftValues option:selected");
+            $("#rightValues").append(selectedItem);
+        });
+    });
+</script>
 
    
     

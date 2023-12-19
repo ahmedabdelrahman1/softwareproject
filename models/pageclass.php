@@ -19,21 +19,9 @@ class pages extends Model
 
     public function getallpages()
     {
-
-
-        $pages = array();
-
         $sql = "SELECT * FROM pages";
         $result = $this->db->query($sql);
-
-        if ($result) {
-            while ($row = $result->fetch_assoc()) {
-                $pages[] = $row;
-            }
-            $result->free();
-        }
-
-        return $pages;
+        return $result ;
     }
 
     public function setId($id)

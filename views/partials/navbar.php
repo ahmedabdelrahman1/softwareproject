@@ -1,4 +1,5 @@
 <?php
+@include '../models/usertypesclass.php';
 if(isset($_SESSION['user_id'])) {
     ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-gradient static-top">
@@ -10,11 +11,21 @@ if(isset($_SESSION['user_id'])) {
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="mycourses.php">My Courses</a></li>
-                        <li class="nav-item"><a class="nav-link" href="cart.php">Cart</a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-primary fw-bold" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+                            <a class="nav-link dropdown-toggle text-primary fw-bold" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
                             <?php
+                            $objectpages=new usertype();
+                            $usertypeid=$objectpages->getusertypeidbyname($_SESSION['type']);
+                            $objectpages->selectbyusertype($usertypeid[0]['ID']);
+                            $pages=$objectpages->getArraypages();
+                             echo "<ul class='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdown'>";
+                             foreach ($pages as $page){
+                             echo    ' <li><a class="dropdown-item" href="'.$page['linkaddress'].'">'.$page['name'].'</a></li>';
+                             }
+                             echo      "<li><a class='dropdown-item text-danger' href='SIGNOUT.php'>Sign-out</a></li>";
+                                  
+                             echo  "</ul>";
+                            /*
                            $current_page = $_SERVER['PHP_SELF'];
                             if($current_page == "/projexct2/courses.php"){
                            echo "<ul class='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdown'>";
@@ -59,6 +70,7 @@ if(isset($_SESSION['user_id'])) {
                                          
                                     echo  "</ul>";
                                     }
+                                    */
                             ?>
 
 

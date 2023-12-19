@@ -17,7 +17,7 @@ class usertype extends Model
 
     public function insert($usertype_id, $page_id)
     {
-        $sql = "INSERT INTO usertype_pages (usertype_id, page_id) VALUES (?, ?)";
+        $sql = "INSERT INTO usertypes_pages (usertype_id, page_id) VALUES (?, ?)";
         $stmt = $this->db->prepare($sql);
 
         if ($stmt) {
@@ -42,26 +42,34 @@ class usertype extends Model
     public function selectbyusertype($usertype_id)
     {
         $pages = array();
-    
+
         // Assuming you have a "pages" table with columns ID, name, and linkaddress
         $sql = "SELECT p.* FROM pages p
-                INNER JOIN usertype_pages up ON p.ID = up.page_id
+                INNER JOIN usertypes_pages up ON p.ID = up.page_id
                 WHERE up.usertype_id = ?";
         $stmt = $this->db->prepare($sql);
-    
+
         if ($stmt) {
             $stmt->bind_param('i', $usertype_id);
             $stmt->execute();
             $result = $stmt->get_result();
-    
+
             while ($row = $result->fetch_assoc()) {
                 $pages[] = $row;
             }
-    
+
             $stmt->close();
         }
-    
+        
+
         $this->setArraypages($pages);
+    }
+
+    public function getallusertypes()
+    {
+        $sql = "SELECT * FROM usertypes";
+        $result = $this->db->query($sql);
+        return $result;
     }
 
     public function setArraypages($arraypages)
@@ -72,5 +80,18 @@ class usertype extends Model
     public function getArraypages()
     {
         return $this->ArrayOfPages;
+    }
+
+    public function getusertypeidbyname($name)
+    {
+        $query = "SELECT * FROM usertypes WHERE name = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $name); // 'i' represents integer type, adjust if needed
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usertype_id = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $usertype_id;
+
     }
 }
