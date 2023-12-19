@@ -34,7 +34,7 @@ include("partials/navbar.php");
                         echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
                         echo '    <input type="hidden" name="cm_id" value="' . $fileID . '">';
                         echo '    <input type="hidden" name="studentID" value="' . $_SESSION["user_id"] . '">';
-                        echo '    <input type="hidden" name="name" value="' . $title . 'assignment' . '">';
+                        echo '    <input type="hidden" name="name" value="' . $_SESSION['user_name'] . ' assignment' . '">';
                         ?>
                         <input type="hidden" name="action" value="submit">
                         <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">
@@ -52,9 +52,7 @@ include("partials/navbar.php");
 
 </div>
 
-<?php
-                include("partials/footer.php")
-?>
+
 <script>
         const dropArea = document.getElementById('drop-area');
 
@@ -152,29 +150,43 @@ include("partials/navbar.php");
                       <tr>
                         <th scope="col">Assignment</th>
                         <th scope="col">Grade</th>
+                        <th scope="col"></th>
                       </tr>
                     </thead>
-                    <tbody>';
+                    <tbody>
+                    <form method="post" action="../controller/instructor_controller.php">';
 
                     $fetch=$objectassignment->selecrbycm_id();
                     
                     foreach( $fetch as $assignment )
+                    {
+                    echo ' 
                     
-                    echo ' <tr>
+                    <input type="hidden" name="action" value="addgrade">
+                    <input type="hidden" name="file" value="' . urlencode(serialize($value)) .  '">
+                    <input type="hidden" name="assignmentId" value="' . $assignment['ID'] .  '">
+                    <tr>
                         <td><a href="assignment/' . $assignment['file'] . '" download="' . $assignment['file'] . '" class="text-primary fs-4 course_matrial-link">
                         <i class="bi bi-file-earmark fs-4"></i>' . $assignment['name'] . '
                         </a></td>
-                        <td><input type="text" class="form-control" placeholder="Grade" value="'.$assignment['grade'].'"></td>
-                      </tr>';
+                        <td><input type="text" class="form-control" name="grade"  value="'.$assignment['grade'].'"></td>
+                       
+                      </tr>
+                    ';
+                    }
 
-                   echo' </tbody>
+                   echo'  
+                   </tbody>
                   </table>
+                <input type="submit" class="form-control"></form> 
                 </div>';
 ?>
 
 <?php
         }
 }
+
+include("partials/footer.php")
 ?>
 </body>
 

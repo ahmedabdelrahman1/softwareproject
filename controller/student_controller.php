@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $temp_file = $_FILES['file']['tmp_name'];
 
                         // Check if the file was successfully uploaded
-                        if (move_uploaded_file($temp_file, '../files/' . $Student_file)) {
+                        if (move_uploaded_file($temp_file, '../assignments/' . $Student_file)) {
                             // File uploaded successfully
                             // You can perform additional logic here if needed
 

@@ -7,14 +7,13 @@ class assignment extends Model
     private $name;
     private $grade;
 
-    public function __construct($cm_id, $name, $file, $grade = NULL,$id = "")
+    public function __construct($cm_id = "", $name = "", $file = "", $grade = NULL, $id = "")
     {
         $this->db = $this->connect();
 
-        $this->cm_ID=$cm_id;
-        $this->name=$name;
-        $this->file=$file;
-       
+        $this->cm_ID = $cm_id;
+        $this->name = $name;
+        $this->file = $file;
     }
 
     public function submit($studentID, $sectionID)
@@ -66,27 +65,19 @@ class assignment extends Model
         return $fetch;
     }
 
-    public function grade($id,$grade)
+    public function grade($id, $grade)
     {
-        $query = "UPDATE assignment SET grade = :newGrade WHERE ID = :assignmentID";
-
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':newGrade', $grade);
-            $stmt->bindParam(':assignmentID', $id);
+        $sql = "UPDATE assignment SET grade = ? WHERE ID = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("ii", $grade, $id);
             $stmt->execute();
 
             // Check if any rows were affected
-            if ($stmt->rowCount() > 0) {
+            if ($stmt->affected_rows > 0) {
                 return true; // Update successful
             } else {
                 return false; // No rows were updated
             }
-        } catch (PDOException $e) {
-            // Handle the exception, e.g., log or display an error message
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
+
     }
 }
-?>
