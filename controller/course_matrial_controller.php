@@ -35,8 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
         case "create":
             
             $course_matrialObject = new course_matrial();
-            if(isset($_POST['submit']))
+            if(isset($_POST['submit'])){
             $submission=$_POST['submit'];
+            $deadline=$_POST['submitdeadline'];
+            }
             
             if (isset($_POST['buttonupload'])) {
                 $name = $_POST['name'];
@@ -54,7 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
             
                         if (!empty($name)) {
                             if(isset($_POST['submit']))
-                            $course_matrialObject->insert($name, $_FILES, $sectionId,$submission);
+                            $course_matrialObject->insert($name, $_FILES, $sectionId,$submission,$deadline);
+                       
                         else
                         $course_matrialObject->insert($name, $_FILES, $sectionId);
                             echo $submission;

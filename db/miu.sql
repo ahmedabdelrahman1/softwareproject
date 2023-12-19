@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2023 at 07:23 PM
+-- Generation Time: Dec 19, 2023 at 12:20 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,6 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `assignment`
+--
+
+CREATE TABLE `assignment` (
+  `ID` int(11) NOT NULL,
+  `sectionID` int(11) NOT NULL,
+  `cm_ID` int(11) NOT NULL,
+  `studentID` int(11) NOT NULL,
+  `grade` int(11) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `file` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assignment`
+--
+
+INSERT INTO `assignment` (`ID`, `sectionID`, `cm_ID`, `studentID`, `grade`, `name`, `file`) VALUES
+(3, 136, 9, 14, 10, 'omar assignment', '../assignments/Sheet 5 - Cache Memory.pdf');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `course_matrial_table`
 --
 
@@ -31,15 +54,19 @@ CREATE TABLE `course_matrial_table` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `file` varchar(200) NOT NULL,
-  `sectionID` int(11) NOT NULL
+  `sectionID` int(11) NOT NULL,
+  `submission` tinyint(1) DEFAULT NULL,
+  `deadline` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `course_matrial_table`
 --
 
-INSERT INTO `course_matrial_table` (`id`, `name`, `file`, `sectionID`) VALUES
-(2, 'lob a', '../files/Phase2 Evaluation-F23.docx', 136);
+INSERT INTO `course_matrial_table` (`id`, `name`, `file`, `sectionID`, `submission`, `deadline`) VALUES
+(2, 'lob a', '../files/Phase2 Evaluation-F23.docx', 136, NULL, NULL),
+(9, 'lab 4', '../files/CSC360 Study Case Assignment.pdf', 136, 1, '2023-12-12 11:01:00'),
+(10, 'lab3', '../files/Sheet 5 - Answers - Cache Memory.pdf', 136, 1, '2023-12-11 11:20:00');
 
 -- --------------------------------------------------------
 
@@ -119,9 +146,9 @@ CREATE TABLE `enrollment_table` (
 --
 
 INSERT INTO `enrollment_table` (`ID`, `studentID`, `courseID`) VALUES
-(1, 13, 1),
-(2, 14, 11),
-(3, 13, 12);
+(1, 13, 20),
+(2, 14, 19),
+(3, 13, 21);
 
 -- --------------------------------------------------------
 
@@ -201,6 +228,12 @@ INSERT INTO `user` (`id`, `fname`, `lname`, `email`, `password`, `type`) VALUES
 --
 
 --
+-- Indexes for table `assignment`
+--
+ALTER TABLE `assignment`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `course_matrial_table`
 --
 ALTER TABLE `course_matrial_table`
@@ -253,10 +286,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `assignment`
+--
+ALTER TABLE `assignment`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `course_matrial_table`
 --
 ALTER TABLE `course_matrial_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `course_req`
