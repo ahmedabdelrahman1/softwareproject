@@ -36,18 +36,16 @@ if (isset($_POST['submit'])) {
         } elseif ($row['type'] == 'instructor') {
 
             $_SESSION['user_name'] = $row['fname'];
-            header('location:profile.php');
+            header('location:courses.php');
 
         }
     } else {
-        $error[] = 'incorrect email or password!';
+        $error = array(); // Initialize $error as an empty array
+        $error[] = 'Incorrect email or password!';
     }
-
 }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,27 +57,34 @@ if (isset($_POST['submit'])) {
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/sign.css">
+    <script>
+        function validateForm() {
+            var email = document.forms["signInForm"]["email"].value;
+            var password = document.forms["signInForm"]["password"].value;
+
+            if (email === "" || password === "") {
+                alert("Email and password must be filled out");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="form-container">
-        <form action="" method="post">
-        <h3>Sign-In </h3>
-        <?php
-        if (isset($error)) {
-            foreach ($error as $error) {
-                echo '<span class="err-msg">' . $error . '</span>';
+        <form action="" method="post" name="signInForm" onsubmit="return validateForm()">
+            <h3>Sign-In</h3>
+            <?php
+            if (isset($error)) {
+                foreach ($error as $error) {
+                    echo '<span class="err-msg">' . $error . '</span>';
+                }
             }
-            ;
-        }
-        ;
-        ?>
-<input type="email" name=" email" required placeholder="Enter your email">
-<input type="password" name="password" required placeholder="Enter your password" minlength="4">
-<input type="submit" name="submit" value="Submit" class="form-btn">
-<p>Have no account? <a href="SIGNUP.php">Register</a></p>
+            ?>
+            <input type="email" name="email" required placeholder="Enter your email">
+            <input type="password" name="password" required placeholder="Enter your password" minlength="4">
+            <input type="submit" name="submit" value="Submit" class="form-btn">
+            <p>Have no account? <a href="SIGNUP.php">Register</a></p>
         </form>
     </div>
-
-
 </body>
 </html>
