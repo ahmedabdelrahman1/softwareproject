@@ -101,7 +101,14 @@
               <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
               Courses
             </a>
-
+            <a class="nav-link" href="javascript:void(0);" onclick="">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+            Attendence
+            </a>
+            <a class="nav-link" href="javascript:void(0);" onclick="loadchat">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+              Messages
+            </a>
 
           </div>
         </div>
