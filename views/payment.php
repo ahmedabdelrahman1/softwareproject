@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <input type="hidden" name="sectionID" value="<?php echo $_GET['sectionID']; ?>">
+        <input type="hidden" name="courseID" value="<?php echo $_GET['courseID']; ?>">
         <input type="hidden" name="studentID" value="<?php echo $_GET['studentID']; ?>">
 
         <input type="submit" value="Proceed to Checkout" class="submit-btn">
