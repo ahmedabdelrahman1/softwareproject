@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2023 at 12:20 PM
+-- Generation Time: Dec 19, 2023 at 10:27 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -179,6 +179,31 @@ INSERT INTO `images` (`img_id`, `img_url`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pages`
+--
+
+CREATE TABLE `pages` (
+  `ID` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `linkaddress` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`ID`, `name`, `linkaddress`) VALUES
+(1, 'mycourses', 'mycourses.php'),
+(2, 'profile', 'profile.php'),
+(3, 'about', 'about.php'),
+(4, 'attendence', 'attendence.php'),
+(5, 'book mark', 'bookmark.php'),
+(6, 'courses', 'courses.php'),
+(7, '', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `section_table`
 --
 
@@ -222,6 +247,53 @@ INSERT INTO `user` (`id`, `fname`, `lname`, `email`, `password`, `type`) VALUES
 (14, 'omar', 'ahmed', 'omar123@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'student'),
 (15, 'kamel', 'aref', 'kamel123@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'instructor'),
 (16, 'moj', 'nm', 'bassel2119@gmail', '827ccb0eea8a706c4c34a16891f84e7b', 'student');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usertypes`
+--
+
+CREATE TABLE `usertypes` (
+  `ID` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usertypes`
+--
+
+INSERT INTO `usertypes` (`ID`, `name`) VALUES
+(1, 'admin'),
+(2, 'student'),
+(3, 'instructor'),
+(4, 'vistor');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usertypes_pages`
+--
+
+CREATE TABLE `usertypes_pages` (
+  `ID` int(11) NOT NULL,
+  `usertype_id` int(11) NOT NULL,
+  `page_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usertypes_pages`
+--
+
+INSERT INTO `usertypes_pages` (`ID`, `usertype_id`, `page_id`) VALUES
+(2, 3, 1),
+(3, 3, 2),
+(4, 3, 4),
+(5, 2, 1),
+(6, 2, 2),
+(7, 2, 3),
+(8, 2, 5),
+(9, 2, 6);
 
 --
 -- Indexes for dumped tables
@@ -270,6 +342,12 @@ ALTER TABLE `images`
   ADD PRIMARY KEY (`img_id`);
 
 --
+-- Indexes for table `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `section_table`
 --
 ALTER TABLE `section_table`
@@ -280,6 +358,18 @@ ALTER TABLE `section_table`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `usertypes`
+--
+ALTER TABLE `usertypes`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `usertypes_pages`
+--
+ALTER TABLE `usertypes_pages`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -328,6 +418,12 @@ ALTER TABLE `images`
   MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `section_table`
 --
 ALTER TABLE `section_table`
@@ -338,6 +434,18 @@ ALTER TABLE `section_table`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `usertypes`
+--
+ALTER TABLE `usertypes`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `usertypes_pages`
+--
+ALTER TABLE `usertypes_pages`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

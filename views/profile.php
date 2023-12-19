@@ -10,7 +10,7 @@
          include("../views/partials/navbar.php");
  ?>
      <?php   
-            include("../db/config.php");
+           
             
             // Replace $user_id with the actual user ID you want to retrieve
             $user_id = $_SESSION["user_id"];
