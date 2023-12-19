@@ -104,6 +104,8 @@ class User extends Model {
         $result = $this->db->query($getAllUsers);
         return $result;
     }
+
+    
     public function editUser($fname, $lname, $email,$userId) {
 
         // Check if the user with the given ID exists
@@ -207,7 +209,7 @@ class User extends Model {
             $checkQuery->store_result();
 
             if ($checkQuery->num_rows > 0) {
-                // Course found, proceed with deletion
+                // image found, proceed with deletion
 
             $delete_image = $this->db->prepare("DELETE FROM images WHERE img_id = ?");
             $delete_image->bind_param('i',$imgId);
