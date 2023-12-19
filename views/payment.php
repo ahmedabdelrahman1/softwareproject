@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
-<?php   
+//<?php   
             session_start();
             include("partials/head.php");
            
@@ -100,4 +100,4 @@
 ?> 
     
 </body>
-</html>
+</html> -->
