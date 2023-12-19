@@ -24,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $studentObject = new Student();
                 if (isset($_POST['StudentID'])) {
                     $StudentId = $_POST['StudentID'];
-                    $sectionId = $_POST['sectionID'];
+                    $courseId = $_POST['courseID'];
                     //$studentObject->delete($StudentId);
-                    header('Location: ../views/content.php?sectionID=' .  $sectionId . '');
+                    header('Location: ../views/content.php?courseID=' .  $courseId . '');
                 }
                 break;
 
@@ -35,20 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $studentObject = new Student();
                     if (isset($_POST['StudentID'])) {
                         $StudentId = $_POST['StudentID'];
-                        $sectionId = $_POST['sectionID'];
+                        $courseId = $_POST['courseID'];
     
-                        // Example: Check if the student is not already enrolled in the section
-                        if (!$studentObject->isEnrolled($StudentId, $sectionId)) {
-                            $enrollmentSuccess = $studentObject->enrollStudent($StudentId, $sectionId);
+                        // Example: Check if the student is not already enrolled in the course
+                        if (!$studentObject->isEnrolled($StudentId, $courseId)) {
+                            $enrollmentSuccess = $studentObject->enrollStudent($StudentId, $courseId);
     
                             if ($enrollmentSuccess) {
-                                header('Location: payment.php?sectionID=' . $sectionId . '&studentID=' . $StudentId);
+                                header('Location: payment.php?courseID=' . $courseId . '&studentID=' . $StudentId);
                             } else {
                                 echo "Error: Enrollment failed. Please try again later.";
                                 exit();
                             }
                         } else {
-                            echo "Error: Student is already enrolled in the section.";
+                            echo "Error: Student is already enrolled in the course.";
                             exit();                        }
                     }
                     break;
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $name = $_POST['name'];
                     $studentId = $_POST['studentID'];
                     $cm_id = $_POST['cm_id'];
-                    $sectionId = $_POST['sectionID'];
+                    $courseId = $_POST['courseID'];
 
 
                     if (isset($_FILES['file'])) {
@@ -76,10 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             // You can perform additional logic here if needed
 
                             print_r($_FILES);
-                            $studentObject->submitassigment($studentId, $cm_id, $name, $_FILES, $sectionId);
+                            $studentObject->submitassigment($studentId, $cm_id, $name, $_FILES, $courseId);
 
 
-                            // header('Location: ../views/content.php?sectionID=' . $sectionId);
+                            // header('Location: ../views/content.php?courseID=' . $courseId);
                             //  exit(); // Make sure to exit after a header redirect
                         } else {
                             User::$alerts[] = "Fill the fields";
