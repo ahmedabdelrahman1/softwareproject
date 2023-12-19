@@ -66,7 +66,7 @@
 
                             <div class="overlay" id="editImagePopup">
     <div class="popup">
-        <span style="cursor:pointer; marginright:30px font:20px" class="close-button" id="closeEditImagePopup">X</span>
+        <span style="cursor:pointer; margin-right:30px; font:20px;" class="close-button" id="closeEditImagePopup">X</span>
         <h2 class="mb-4">Edit Image</h2>
         <form action="upload_pht.php" method="post" enctype="multipart/form-data">
             <div class="mb-3">
