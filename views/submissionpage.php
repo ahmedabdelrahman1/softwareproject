@@ -34,7 +34,7 @@ include("partials/navbar.php");
                         echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
                         echo '    <input type="hidden" name="cm_id" value="' . $fileID . '">';
                         echo '    <input type="hidden" name="studentID" value="' . $_SESSION["user_id"] . '">';
-                        echo '    <input type="hidden" name="name" value="' . $_SESSION['userName'] . 'assignment' . '">';
+                        echo '    <input type="hidden" name="name" value="' . $_SESSION['user_name'] . ' assignment' . '">';
                         ?>
                         <input type="hidden" name="action" value="submit">
                         <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">
