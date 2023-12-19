@@ -113,6 +113,10 @@
               <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
             Page permisson
             </a>
+            <a class="nav-link" href="javascript:void(0);" onclick="">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+            Quizes
+            </a>
 
           </div>
         </div>
