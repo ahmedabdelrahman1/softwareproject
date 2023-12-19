@@ -6,7 +6,7 @@ class Student extends User
 {
 
     private $studentID;
-
+    private $objectassignment;
     public function __construct($id = "")
     {
         $this->db = $this->connect();
@@ -16,7 +16,13 @@ class Student extends User
 
     public function submitassigment($studentID, $cm_id, $name, $file, $sectionID, $grade = NULL)
     {
-        $objectassignment = new assignment($cm_id,$name,$file,$grade);
-        $objectassignment->submit($studentID, $sectionID);
+        $this-> objectassignment= new assignment($cm_id,$name,$file,$grade);
+        $this->objectassignment->submit($studentID, $sectionID);
+    }
+
+    public function showgrade ()
+    {
+        $this-> objectassignment= new assignment();
+         return $this->objectassignment->selectbystudentid($this->studentID);
     }
 }

@@ -153,25 +153,15 @@ if (isset($_GET['sectionID'])) {
     let div = document.createElement('div');
     div.className = 'mb-3';
 
-    let labelName = document.createElement('label');
-    labelName.htmlFor = 'startdate:';
-    labelName.textContent = 'Start Date';
-
-    let inputName = document.createElement('input');
-    inputName.type = 'date';
-    inputName.className = 'form-control';
-    inputName.id = 'submitStartdate' ;
-    inputName.name = 'submitStartdate' ;
-
     let labelValue = document.createElement('label');
     labelValue.htmlFor = 'enddate' ;
-    labelValue.textContent = 'End date';
+    labelValue.textContent = 'Dead line';
 
     let inputValue = document.createElement('input');
-    inputValue.type = 'date';
+    inputValue.type = 'datetime-local';
     inputValue.className = 'form-control';
     inputValue.id = 'submitenddate' ;
-    inputValue.name = 'submitenddate' ;
+    inputValue.name = 'submitdeadline' ;
 
     let inputsubmissionValue = document.createElement('input');
     inputsubmissionValue.type = 'hidden';
@@ -181,9 +171,7 @@ if (isset($_GET['sectionID'])) {
    
     
 
-    div.appendChild(labelName);
-    div.appendChild(inputName);
-    container.appendChild(div);
+
 
     div = document.createElement('div');
     div.className = 'mb-3';

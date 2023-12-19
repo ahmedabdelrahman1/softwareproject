@@ -68,16 +68,26 @@ class assignment extends Model
     public function grade($id, $grade)
     {
         $sql = "UPDATE assignment SET grade = ? WHERE ID = ?";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bind_param("ii", $grade, $id);
-            $stmt->execute();
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("ii", $grade, $id);
+        $stmt->execute();
 
-            // Check if any rows were affected
-            if ($stmt->affected_rows > 0) {
-                return true; // Update successful
-            } else {
-                return false; // No rows were updated
-            }
+        // Check if any rows were affected
+        if ($stmt->affected_rows > 0) {
+            return true; // Update successful
+        } else {
+            return false; // No rows were updated
+        }
+    }
+    public function selectbystudentid($studentid)
+    {
+        $sql = "SELECT * FROM assignment WHERE studentID = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $studentid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $fetch = $result->fetch_all(MYSQLI_ASSOC);
+        return $fetch;
 
     }
 }

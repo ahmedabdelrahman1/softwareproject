@@ -22,7 +22,7 @@ class course_matrial extends Model
         $this->sectionid = $sectionid;
     }
 
-    public function insert($name, $file, $sectionID,$submitvalue=NULL)
+    public function insert($name, $file, $sectionID,$submitvalue=NULL,$submitdeadline=NULL)
     {
         $allowedExtensions = ['pdf', 'doc', 'docx', 'txt'];
         $this->submitvalue=$submitvalue;
@@ -47,10 +47,9 @@ class course_matrial extends Model
         }*/
     
         if (!move_uploaded_file($file['file']['tmp_name'], $uploadedFile)) {
-            $sql = "INSERT INTO course_matrial_table(name,file, sectionID,submission) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO course_matrial_table(name,file, sectionID,submission,deadline) VALUES (?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($sql);
-            $stmt->bind_param("ssii", $name, $uploadedFile, $sectionID,$submitvalue);
-            echo $submitvalue;
+            $stmt->bind_param("ssiis", $name, $uploadedFile, $sectionID,$submitvalue,$submitdeadline);
             if ($stmt->execute()) {
               header("Location: ../views/content.php?sectionID=$sectionID");
                 exit();

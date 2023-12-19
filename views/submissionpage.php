@@ -4,6 +4,7 @@
 session_start();
 include("partials/head.php");
 require_once("../models/assignment_class.php");
+require_once("../models/classStudent.php");
 
 echo '<body>';
 include("partials/navbar.php");
@@ -17,38 +18,66 @@ include("partials/navbar.php");
                 $sectionId = $value['sectionID'];
                 $file = $value['file'];
                 $fileID = $value['id'];
+                $deadline = $value['deadline'];
                 echo "<h1>$title</h1>";
                 echo "<hr>";
-      
 
-        if ($_SESSION['type'] == 'student') {
 
-                echo '<h5> Click to download </h5><br>';
-                echo '<a href="course_matrial/' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
+                if ($_SESSION['type'] == 'student') {
+                        $objectstudent=new Student($_SESSION['user_id']);
+
+                        echo '<h5> Click to download </h5><br>';
+                        echo '<a href="course_matrial/' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
                     <i class="bi bi-file-earmark fs-4"></i>' . $title . '
                 </a>';
+                        echo '<div>Dead line :' . $deadline . '</div>';
+                        $currentDateTime = new DateTime();
+                        $submissionDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $deadline);
+                        if ($submissionDateTime <= $currentDateTime) {
+
+                                $assignment=$objectstudent->showgrade();
+                                echo '   <div class="container mt-5">
+                                      <h2>Student Grade</h2>
+  
+                                      <div class="card">
+                                      <div class="card-body">
+                                      <h5 class="card-title">Your Grade</h5>';
+
+                                      if($assignment[0]['grade']!=NULL)
+                                      echo'<h1 class="display-1 text-center">'.$assignment[0]['grade'].'</h1>';
+                                      else
+                                      echo'<h5 class="display-1 text-center">not graded yet</h5>';
+
+                                    echo'  <!-- You can customize the text based on the grade -->
+                                      </div>
+                                      </div>
+                                      </div>';
+                        } else {
         ?>
 
-                <form method="post" action="../controller/student_controller.php" enctype="multipart/form-data">
+                                <form method="post" action="../controller/student_controller.php" enctype="multipart/form-data">
+                                        <?php
+                                        echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
+                                        echo '    <input type="hidden" name="cm_id" value="' . $fileID . '">';
+                                        echo '    <input type="hidden" name="studentID" value="' . $_SESSION["user_id"] . '">';
+                                        echo '    <input type="hidden" name="name" value="' . $_SESSION['user_name'] . ' assignment' . '">';
+                                        ?>
+                                        <input type="hidden" name="action" value="submit">
+                                        <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">
+                                                <input type="file" id="fileInput" name="file" />
+                                                <label for="fileInput" id="file-label">
+                                                        Drag & Drop files here or click to browse
+                                                </label>
+                                                <div id="file-display">
+                                                        <i class="bi bi-file-pdf"></i>
+                                                        <span id="file-name">No file selected</span>
+                                                </div>
+                                        </div>
+                                        <button type="submit" name="buttonupload" value="Register" class="btn btn-primary mt-2">Upload</button>
+                                </form>
                         <?php
-                        echo '    <input type="hidden" name="sectionID" value="' . $sectionId . '">';
-                        echo '    <input type="hidden" name="cm_id" value="' . $fileID . '">';
-                        echo '    <input type="hidden" name="studentID" value="' . $_SESSION["user_id"] . '">';
-                        echo '    <input type="hidden" name="name" value="' . $_SESSION['user_name'] . ' assignment' . '">';
+                        }
                         ?>
-                        <input type="hidden" name="action" value="submit">
-                        <div id="drop-area" style="border: 2px dashed #ccc; border-radius: 20px; width: 1300px; height: 300px; text-align: center; padding: 15px; cursor: pointer;">
-                                <input type="file" id="fileInput" name="file" />
-                                <label for="fileInput" id="file-label">
-                                        Drag & Drop files here or click to browse
-                                </label>
-                                <div id="file-display">
-                                        <i class="bi bi-file-pdf"></i>
-                                        <span id="file-name">No file selected</span>
-                                </div>
-                        </div>
-                        <button type="submit" name="buttonupload" value="Register" class="btn btn-primary mt-2">Upload</button>
-                </form>
 
 </div>
 
@@ -133,16 +162,17 @@ include("partials/navbar.php");
         });
 </script>
 <?php
-        } else {
-                echo '<h5> Click to download </h5><br>';
-                echo '<a href="course_matrial/' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
+                } else {
+                        echo '<h5> Click to download </h5><br>';
+                        echo '<a href="course_matrial/' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
                     <i class="bi bi-file-earmark fs-4"></i>' . $title . '
                 </a>';
+                        echo '<div>Dead line :' . $deadline . '</div>';
 
-                $objectassignment= new assignment($fileID,$title,$file,NULL);
-               
+                        $objectassignment = new assignment($fileID, $title, $file, NULL);
 
-                echo '
+
+                        echo '
                 <div class="container mt-5">
                   <h2>Grade Table</h2>
                   <table class="table">
@@ -156,11 +186,10 @@ include("partials/navbar.php");
                     <tbody>
                     <form method="post" action="../controller/instructor_controller.php">';
 
-                    $fetch=$objectassignment->selecrbycm_id();
-                    
-                    foreach( $fetch as $assignment )
-                    {
-                    echo ' 
+                        $fetch = $objectassignment->selecrbycm_id();
+
+                        foreach ($fetch as $assignment) {
+                                echo ' 
                     
                     <input type="hidden" name="action" value="addgrade">
                     <input type="hidden" name="file" value="' . urlencode(serialize($value)) .  '">
@@ -169,13 +198,13 @@ include("partials/navbar.php");
                         <td><a href="assignment/' . $assignment['file'] . '" download="' . $assignment['file'] . '" class="text-primary fs-4 course_matrial-link">
                         <i class="bi bi-file-earmark fs-4"></i>' . $assignment['name'] . '
                         </a></td>
-                        <td><input type="text" class="form-control" name="grade"  value="'.$assignment['grade'].'"></td>
+                        <td><input type="text" class="form-control" name="grade"  value="' . $assignment['grade'] . '"></td>
                        
                       </tr>
                     ';
-                    }
+                        }
 
-                   echo'  
+                        echo '  
                    </tbody>
                   </table>
                 <input type="submit" class="form-control"></form> 
@@ -183,10 +212,10 @@ include("partials/navbar.php");
 ?>
 
 <?php
+                }
         }
-}
 
-include("partials/footer.php")
+        include("partials/footer.php")
 ?>
 </body>
 
