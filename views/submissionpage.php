@@ -27,7 +27,7 @@ include("partials/navbar.php");
                         $objectstudent=new Student($_SESSION['user_id']);
 
                         echo '<h5> Click to download </h5><br>';
-                        echo '<a href="course_matrial/' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
+                        echo '<a href="' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
                     <i class="bi bi-file-earmark fs-4"></i>' . $title . '
                 </a>';
                         echo '<div>Dead line :' . $deadline . '</div>';
@@ -164,7 +164,7 @@ include("partials/navbar.php");
 <?php
                 } else {
                         echo '<h5> Click to download </h5><br>';
-                        echo '<a href="course_matrial/' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
+                        echo '<a href="' . $file . '" download="' . $file . '" class="text-primary fs-4 course_matrial-link">
                     <i class="bi bi-file-earmark fs-4"></i>' . $title . '
                 </a>';
                         echo '<div>Dead line :' . $deadline . '</div>';
