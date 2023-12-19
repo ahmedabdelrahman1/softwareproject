@@ -6,9 +6,9 @@
 //include the config and the classes required
 
 
- include '../views/config.php';
+ include '../db/config.php';
  session_start();
- require '../models/classSign.php';
+ require '../models/classUser.php';
 
 
 
@@ -46,7 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if($passw != $cpassw){
                         $error[] = 'password not matched!';
                     }else{
-                        Sign::sign_up($fname, $lname, $email, $passw, $type,$new_img_name, $userId);
+                        $obj = new User();
+                        $obj->sign_up($fname, $lname, $email, $passw, $type,$new_img_name, $userId);
                         
             
                         header('location:SIGNIN.php');
@@ -106,13 +107,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 break;
 
 
-//deletes the course 
-
-
     case 'sign_out':
 
-        Sign::sign_out();
-        header('location:index.php');
+        $obj = new User();
+        $obj->sign_out();
+        header('location:../views/index.php');
 
 break;
             }
