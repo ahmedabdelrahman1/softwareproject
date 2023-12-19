@@ -1,33 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Section - Homepage </title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/section.jpg" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <?php  
-        
-         session_start();
-        if(isset($_SESSION['user_id'])) 
-        {
-            include("navbar.php");
-        }
-        else{
-            include("header.php");
-        }
-    
-   
+<?php   
+            session_start();
+            include("partials/head.php");
+           
+    echo'<body>';
+            include("partials/navbar.php");
     ?>
         <!-- Masthead-->
         <header class="masthead">
@@ -79,21 +57,21 @@
         <section class="showcase">
             <div class="container-fluid p-0">
                 <div class="row g-0">
-                    <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('static/assets/img/bg-showcase-1.jpg')"></div>
+                    <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('../public/assets/img/bg-showcase-1.jpg')"></div>
                     <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                         <h2>Empowering Minds, Enriching Lives</h2>
                         <p class="lead fw-normal text-muted mb-0">Our e-learning platform, Sevenges, is committed to empowering individuals by providing high-quality educational content that enriches their lives. We believe in the transformative power of knowledge.</p>
                     </div>
                 </div>
                 <div class="row g-0">
-                    <div class="col-lg-6 text-white showcase-img" style="background-image: url('static/assets/img/bg-showcase-2.jpg')"></div>
+                    <div class="col-lg-6 text-white showcase-img" style="background-image: url('../public/assets/img/bg-showcase-2.jpg')"></div>
                     <div class="col-lg-6 my-auto showcase-text">
                         <h2>Learn Anytime, Anywhere, at Your Pace</h2>
                         <p class="lead fw-normal text-muted mb-0">Sevenges offers flexibility and accessibility, allowing learners to study at their own pace, on their own terms. Whether it's day or night, from home or on the go, education is just a click away.</p>
                     </div>
                 </div>
                 <div class="row g-0">
-                    <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('static/assets/img/bg-showcase-3.jpg')"></div>
+                    <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('../public/assets/img/bg-showcase-3.jpg')"></div>
                     <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                         <h2>Unlock Your Potential with Sevenges</h2>
                         <p class="lead fw-normal text-muted mb-0">Sevenges is your key to unlocking your full potential. Our diverse courses and supportive community are designed to help you achieve your goals and reach new heights in your personal and professional life.</p>
@@ -108,21 +86,21 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img class="img-fluid rounded-circle mb-3" src="static/assets/img/testimonials-1.jpg" alt="..." />
+                            <img class="img-fluid rounded-circle mb-3" src="../public/assets/img/testimonials-1.jpg" alt="..." />
                             <h5>Margaret E.</h5>
                             <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img class="img-fluid rounded-circle mb-3" src="static/assets/img/testimonials-2.jpg" alt="..." />
+                            <img class="img-fluid rounded-circle mb-3" src="../public/assets/img/testimonials-2.jpg" alt="..." />
                             <h5>Fred S.</h5>
                             <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img class="img-fluid rounded-circle mb-3" src="static/assets/img/testimonials-3.jpg" alt="..." />
+                            <img class="img-fluid rounded-circle mb-3" src="../public/assets/img/testimonials-3.jpg" alt="..." />
                             <h5>Sarah W.</h5>
                             <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
                         </div>
@@ -145,18 +123,73 @@
                 </div>
             </div>
         </section>
+
+        <section class="courses">
+    <?php
+    // Example course data (replace this with your actual course data)
+    $courses = [
+        ['id' => 1, 'name' => 'Course 1', 'description' => 'Description of Course 1'],
+        ['id' => 2, 'name' => 'Course 2', 'description' => 'Description of Course 2'],
+        // Add more courses as needed
+    ];
+
+    // Loop through courses and display them
+    foreach ($courses as $course) {
+        echo '<div class="course">';
+        echo '<h3>' . $course['name'] . '</h3>';
+        echo '<p>' . $course['description'] . '</p>';
+        
+        // Enrollment button with data attributes
+        echo '<button class="enroll-btn" data-course-id="' . $course['id'] . '">Enroll</button>';
+        
+        echo '</div>';
+    }
+    ?>
+</section>
+
+<!-- Other HTML content on your page -->
+
+<!-- Add your AJAX enrollment logic here -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const enrollButtons = document.querySelectorAll('.enroll-btn');
+
+        enrollButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const courseId = this.getAttribute('data-course-id');
+                enrollStudent(courseId);
+            });
+        });
+
+        function enrollStudent(courseId) {
+            // Implement your AJAX logic here
+            // Example using Fetch API:
+            fetch('student_controller.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=enroll&courseId=' + encodeURIComponent(courseId),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data
+                if (data.success) {
+                    alert('Enrollment successful!');
+                } else {
+                    alert('Enrollment failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Enrollment failed due to an error. Please try again later.');
+            });
+        }
+    });
+</script>
         <!-- Footer-->
         <?php 
-            include("footer.php")
+            include("partials/footer.php")
         ?>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="static/js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>
