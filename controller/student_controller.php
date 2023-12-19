@@ -30,6 +30,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 break;
 
+                case "enroll":
+                    $studentObject = new Student();
+                    if (isset($_POST['studentID'])) {
+                        $StudentId = $_POST['studentID'];
+                        $courseId = $_POST['courseID'];
+                        echo$StudentId;
+                        echo$courseId;
+    
+                        // Example: Check if the student is not already enrolled in the course
+                        if (!$studentObject->isenrolled($StudentId, $courseId)) {
+                            $enrollmentSuccess = $studentObject->enroll($StudentId, $courseId);
+    
+                            
+                                header('Location: ../views/mycourses.php');
+                           
+                        } else {
+                            echo "Error: Student is already enrolled in the course.";
+                            exit();                        }
+                    }
+                    break;
+
+
             case "submit":
 
                 $studentObject = new Student();

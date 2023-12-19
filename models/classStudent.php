@@ -25,4 +25,34 @@ class Student extends User
         $this-> objectassignment= new assignment();
          return $this->objectassignment->selectbystudentid($this->studentID);
     }
+
+    public function enroll($studenID,$courseID)
+    {
+        $sql = "INSERT INTO enrollment_table (studentID, courseID) VALUES (?, ?)";
+        $stmt = $this->db->prepare($sql);
+
+        if ($stmt) {
+            $stmt->bind_param('ii', $studenID, $courseID);
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
+
+    public function isenrolled($studentID, $courseID)
+{
+    $sql = "SELECT * FROM enrollment_table WHERE studentID = ? AND courseID = ?";
+    $stmt = $this->db->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param('ii', $studentID, $courseID);
+        $stmt->execute();
+        $stmt->store_result();
+        $count = $stmt->num_rows;
+        $stmt->close();
+
+        return ($count > 0); // Returns true if the student is enrolled, false otherwise
+    }
+
+    return false; // Return false in case of an error
+}
 }

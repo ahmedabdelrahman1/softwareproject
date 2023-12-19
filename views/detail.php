@@ -8,7 +8,7 @@ include("partials/head.php");
 echo '<body>';
 include("partials/navbar.php");
 
-include '../db/config.php';
+
 require '../models/classcourse.php';
 
 if (isset($_GET['course_id'])) {
@@ -40,7 +40,7 @@ if (isset($_GET['course_id'])) {
         <div class="col-md-8">
             <div class="col">
                 <?php echo '<div class="card shadow-sm border-bottom border-5">
-    <img class="img-thumbnail" style="height: 300px;width: 100%;" src="static/assets/img/py.jpg">
+    <img class="img-thumbnail" style="height: 300px;width: 100%;" src="../public/assets/img/py.jpg">
     <div class="card-body bg-light">
         <h3 class="card-title h4 mb-3">
          ' . $selectedCourse->getPerview() . '
@@ -48,31 +48,31 @@ if (isset($_GET['course_id'])) {
         
         <!-- Category -->
         <p class="card-text h6 mb-3">
-            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/category.png">
+            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="../public/assets/img/category.png">
             <span class="text-muted">Category:</span> ' . $selectedCourse->getCategory() . '
         </p>
         
         <!-- Instructor -->
         <p class="card-text h6 mb-3">
-            <img style="height: 24px;width: 24px;" class a="rounded-circle me-1" src="static/assets/img/instructor.png">
+            <img style="height: 24px;width: 24px;" class a="rounded-circle me-1" src="../public/assets/img/instructor.png">
             <span class="text-muted">Instructor:</span> Denamse Derkos
         </p>
         
         <!-- Level -->
         <p class="card-text h6 mb-3">
-            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/level.png">
+            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="../public/assets/img/level.png">
             <span class="text-muted">Level:</span> ' . $selectedCourse->getLevel() . '
         </p>
         
         
         <!-- Duration -->
         <p class="card-text h6 mb-3">
-            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/clock.png">
+            <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="../public/assets/img/clock.png">
             <span class="text-muted">Start Date:</span> ' . $selectedCourse->getStartdate() . '
         </p>
 
         <p class="card-text h6 mb-3">
-        <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="static/assets/img/clock.png">
+        <img style="height: 24px;width: 24px;" class="rounded-circle me-1" src="../public/assets/img/clock.png">
         <span class="text-muted">End Date:</span> ' . $selectedCourse->getEnddate() . '
         </p>
         
@@ -83,7 +83,7 @@ if (isset($_GET['course_id'])) {
             <div class="btn-group">
                 <!-- Bookmarks Button -->
                 <a href="bookmarks.html" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
-                <a href="" class="btn btn-sm btn-outline-primary">Enrollment</a>
+                <a href="payment.php?course_ID='.$selectedCourse->getId().'& student_ID='.$_SESSION['user_id'].'" class="btn btn-sm btn-outline-primary">Enrollment</a>
             </div>
         </div>
     </div>
@@ -99,102 +99,27 @@ if (isset($_GET['course_id'])) {
             </div>
         </div>
 
+       
+
         <div class="col-md-4">
             <div class="card shadow-sm border-bottom border-5">
                 <div class="card-header bg-primary text-light">
-                    <h4 class="card-title">Lessons</h4>
+                    <h4 class="card-title">Pre requirements</h4>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - Overview</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - Installing</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python Syntax</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - Variables</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - Data Types</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - User Input</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - Statements</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - Collections</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - Loops</h6>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <h6 class="mb-0">Python - Functions</h6>
-                    </a>
+                <?php
+        $requirements = $courseObject->getRequirementsByCourseID($selectedCourse->getId());
+      foreach ($requirements as $req) {
+       
+                  echo ' <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" data-bs-toggle="modal" data-bs-target="#../publicBackdrop">
+                        <h6 class="mb-0">'.$req->getreq().': '. $req->getReqValue().'</h6>
+                    </a>';
+      }
+ ?>
                 </div>
             </div>
 
-            <div class="card shadow-sm border-bottom border-5">
-                <div class="card-header bg-primary text-light">
-                    <h4 class="card-title">Categories</h4>
-                </div>
-                <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <h6 class="mb-0">Programming</h6>
-                            <small class="text-muted">10</small>
-                        </div>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <h6 class="mb-0">HTML & CSS</h6>
-                            <small class="text-muted">2</small>
-                        </div>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <h6 class="mb-0">Database</h6>
-                            <small class="text-muted">3</small>
-                        </div>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <h6 class="mb-0">Django</h6>
-                            <small class="text-muted">4</small>
-                        </div>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <h6 class="mb-0">Web Development</h6>
-                            <small class="text-muted">6</small>
-                        </div>
-                    </a>
-
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <h6 class="mb-0">Microsoft Office</h6>
-                            <small class="text-muted">8</small>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>

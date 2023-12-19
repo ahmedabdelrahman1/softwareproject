@@ -1,103 +1,109 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-//<?php   
-            session_start();
-            include("partials/head.php");
-           
-    echo'<body>';
-            include("partials/navbar.php");
+
+<?php
+session_start();
+include("partials/head.php");
+?>
+
+<body>
+
+    <?php
+    include("partials/navbar.php");
     ?>
 
-<div class="container">
+    <div class="container mt-5">
 
-    <form action="">
+        <form action="../controller/student_controller.php" method="post"onsubmit="return validatePaymentInfo();">
+        <input type="hidden" name="action" value="enroll">
 
-        <div class="row">
+            <h3 class="title">Payment Information</h3>
 
-            <div class="col">
-
-                <h3 class="title">Payment</h3>
-
-                <div class="inputBox">
-                    <span>Full name :</span>
-                    <input type="text" placeholder="Enter your name">
-                </div>
-                <div class="inputBox">
-                    <span>email :</span>
-                    <input type="email" placeholder="Enter your email">
-                </div>
-                <div class="inputBox">
-                    <span>address :</span>
-                    <input type="text" placeholder=" Enter your address detailes">
-                </div>
-                <div class="inputBox">
-                    <span>Governorate :</span>
-                    <input type="text" placeholder="Enter your governorate name">
-                </div>
-
-                <div class="flex">
-                    <div class="inputBox">
-                        <span>City :</span>
-                        <input type="text" placeholder="Enter Your city name">
-                    </div>
-                </div>
-                <div class="inputBox">
-                    <span>Telephone number</span>
-                    <input type="number"placeholder="Enter your telephone number">
-                </div>
-                    <div class="inputBox">
-                        <span>Zip code :</span>
-                        <input type="text" placeholder="Enter yor city Zip code">
-                    </div>
-                </div>
-
-           
-
-            <div class="col">
-
-                <h3 class="title">Payment</h3>
-
-                <div class="inputBox">
-                    <span>cards accepted :</span>
-                    <img src="images/card_img.png" alt="">
-                </div>
-                <div class="inputBox">
-                    <span>Card Name  :</span>
-                    <input type="text" placeholder="Enter your card holder name ">
-                </div>
-                <div class="inputBox">
-                    <span>Credit card number :</span>
-                    <input type="number" placeholder="Enter creidt card number">
-                </div>
-                <div class="inputBox">
-                    <span>CVV :</span>
-                    <input type="text" placeholder="Enter Cvv number">
-                </div>
-
-                <div class="flex">
-                    <div class="inputBox">
-                        <span>Expiry year :</span>
-                        <input type="number" placeholder="year">
-                    </div>
-                    <div class="inputBox">
-                        <span>Expiry month :</span>
-                        <input type="text" placeholder="month ">
-                    </div>
-            
-                </div>
-
+            <div class="mb-3">
+                <label for="cardHolderName" class="form-label">Card Holder's Name:</label>
+                <input type="text" class="form-control" name="cardHolderName" placeholder="Enter your card holder name" id="cardHolderName" required>
             </div>
-    
-        </div>
+            <div class="mb-3">
+                <label for="creditCardNumber" class="form-label">Credit Card Number:</label>
+                <input type="text" class="form-control" name="creditCardNumber" placeholder="Enter credit card number" id="creditCardNumber"required>
+            </div>
+            <div class="mb-3">
+                <label for="cvv" class="form-label">CVV:</label>
+                <input type="text" class="form-control" name="cvv" placeholder="Enter CVV number" id="cvv"required>
+            </div>
 
-        <input type="submit" value="proceed to checkout" class="submit-btn">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="expirydate" class="form-label">Expiry Year:</label>
+                        <input type="month" class="form-control" name="expiryYear" placeholder="Enter expiry year" id="expiryYear"required>
+                    </div>
+                </div>
+            </div>
 
-    </form>
+            <input type="hidden" name="courseID" value="<?php echo $_GET['course_ID']; ?>">
+            <input type="hidden" name="studentID" value="<?php echo $_GET['student_ID']; ?>">
 
-</div>   
-<?php
- include("partials/footer.php")
-?> 
-    
+            <input type="submit" value="Proceed to Checkout" class="btn btn-primary">
+
+        </form>
+
+    </div>
+
+    <?php
+    include("partials/footer.php");
+    ?>
+
+<script>
+    function validatePaymentInfo() {
+    // Basic validation example
+    var cardHolderName = document.getElementById('cardHolderName').value;
+    var creditCardNumber = document.getElementById('creditCardNumber').value;
+    var cvv = document.getElementById('cvv').value;
+    var expiryDate = document.getElementById('expiryYear').value;
+
+    // Add your validation logic here
+    if (cardHolderName === '' || creditCardNumber === '' || cvv === '' || expiryDate === '') {
+        alert('Please fill in all payment information fields.');
+        return false;
+    }
+
+    // Check credit card number length (assuming a standard length of 16 digits)
+    if (creditCardNumber.length !== 16) {
+        alert('Invalid credit card number. Please enter a 16-digit number.');
+        return false;
+    }
+
+    // Check CVV length (assuming a standard length of 3 digits)
+    if (cvv.length !== 3) {
+        alert('Invalid CVV. Please enter a 3-digit CVV.');
+        return false;
+    }
+
+    // Check expiry date format (assuming YYYY-MM format)
+    var currentYear = new Date().getFullYear();
+    var currentMonth = new Date().getMonth() + 1; // Months are zero-based
+
+    if (!/^\d{4}-\d{2}$/.test(expiryDate)) {
+        alert('Invalid expiry date. Please enter the date in YYYY-MM format.');
+        return false;
+    }
+
+    var enteredYear = parseInt(expiryDate.substring(0, 4), 10);
+    var enteredMonth = parseInt(expiryDate.substring(5, 7), 10);
+
+    // Check if the expiry date is in the future
+    if (enteredYear < currentYear || (enteredYear === currentYear && enteredMonth < currentMonth)) {
+        alert('Invalid expiry date. Please enter a date in the future.');
+        return false;
+    }
+
+    // If everything is valid, the form will be submitted
+    return true;
+}
+</script>
+
+
 </body>
-</html> -->
+
+</html>
