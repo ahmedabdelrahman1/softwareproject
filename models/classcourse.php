@@ -318,11 +318,12 @@ class Course extends Model
     function selectCoursesByStudentID($studentID)
     {
        
-        $query = "SELECT e.ID as enrollmentID, c.* FROM enrollment_table e
-                  JOIN course_table c ON e.courseID = c.ID
-                  WHERE e.studentID = ?";
+        $query = "SELECT e.ID AS enrollmentID, c.*
+        FROM enrollment_table e
+        JOIN course_table c ON e.courseID = c.ID
+        WHERE e.studentID = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam('i', $studentID);
+        $stmt->bind_param('i', $studentID);
         $stmt->execute();
         $result = $stmt->get_result();
     
