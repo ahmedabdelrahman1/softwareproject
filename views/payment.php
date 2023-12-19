@@ -1,16 +1,70 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="static/css/payment.css">
+//<?php   
+            session_start();
+            include("partials/head.php");
+           
+    echo'<body>';
+            include("partials/navbar.php");
+    ?>
 
-</head>
-<body>
+<div class="container">
 
+    <form action="payment_api.php" method="post">
+
+        <h3 class="title">Payment Information</h3>
+
+        <div class="inputBox">
+            <span>Card Holder's Name:</span>
+            <input type="text" name="cardHolderName" placeholder="Enter your card holder name" required>
+        </div>
+        <div class="inputBox">
+            <span>Credit Card Number:</span>
+            <input type="text" name="creditCardNumber" placeholder="Enter credit card number" required>
+        </div>
+        <div class="inputBox">
+            <span>CVV:</span>
+            <input type="text" name="cvv" placeholder="Enter CVV number" required>
+        </div>
+
+        <div class="flex">
+            <div class="inputBox">
+                <span>Expiry Year:</span>
+                <input type="text" name="expiryYear" placeholder="Enter expiry year" required>
+            </div>
+            <div class="inputBox">
+                <span>Expiry Month:</span>
+                <input type="text" name="expiryMonth" placeholder="Enter expiry month" required>
+            </div>
+        </div>
+
+        <input type="hidden" name="sectionID" value="<?php echo $_GET['sectionID']; ?>">
+        <input type="hidden" name="studentID" value="<?php echo $_GET['studentID']; ?>">
+
+        <input type="submit" value="Proceed to Checkout" class="submit-btn">
+
+    </form>
+
+</div>
+
+<?php
+include("partials/footer.php");
+?>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+<!--
 <div class="container">
 
     <form action="">
@@ -97,7 +151,10 @@
 
     </form>
 
-</div>    
+</div>   
+<?php
+ include("partials/footer.php")
+?> 
     
 </body>
-</html>
+</html> -->
