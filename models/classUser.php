@@ -10,7 +10,7 @@ class User extends Model {
     private $imgId;
     private$imgUrl;
     private $userId;
-    public $alerts=[];
+    private static $alerts;
     
     public function __construct($id = "", $fname = "", $lname = "", $email = "", $passw = "", $type = "",$imgId="",$imgUrl="", $userId="")
     {
