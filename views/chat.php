@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Form</title>
-    <link rel="stylesheet" href="../../public/css/chat.css">
-</head>
+    
+    <link href="../public/css/chat.css" rel="stylesheet"></head>
+
 <body>
 
 
     <!-- Chat Form -->
+    <div class="form-container">
     <form id="chatForm" action="process_contact_form.php" method="post">
+
         <label for="sender_name"><br> Enter Your Name:</label><br>
         <input type="text" name="sender_name" required>
 
@@ -22,7 +25,7 @@
             <br>
         <input type="submit" value="Submit"><br>
     </form>
-
+</div>
     <script src="chat.js"></script>
 </body>
 </html>
