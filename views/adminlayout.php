@@ -26,13 +26,13 @@
 
   session_start();
 
-
+$obj = new User();
 
   if (isset($_POST['delete_id'])) {
     $deleteId = $_POST['delete_id'];
 
-    User::deleteUser($deleteId);
-    User::deleteImageByID($deleteId);
+    $obj->deleteUserByID($deleteId);
+    $obj->deleteImageBy_ID($deleteId);
 
     // // Perform the SQL DELETE operation
     // $sql = "DELETE FROM user WHERE id = $deleteId";
@@ -100,6 +100,10 @@
             <a class="nav-link" href="javascript:void(0);" onclick="loadCourseManagement()">
               <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
               Courses
+            </a>
+            <a class="nav-link" href="javascript:void(0);" onclick="loadcategory()">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+              Category
             </a>
             <a class="nav-link" href="javascript:void(0);" onclick="">
               <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
@@ -179,6 +183,19 @@
     }
   </script>
 
+<script>
+    function loadcategory() {
+      // Use AJAX to load UserManagement.php into the content-container div
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("content-container").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "categoryManagement.php", true);
+      xhttp.send();
+    }
+  </script>
 
   <script>
     function loadUserManagement() {
@@ -193,7 +210,6 @@
       xhttp.send();
     }
   </script>
-
 
 
   <script>
