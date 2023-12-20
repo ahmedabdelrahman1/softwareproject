@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
         } elseif ($row['type'] == 'instructor') {
 
             $_SESSION['user_name'] = $row['fname'];
-            header('location:courses.php');
+            header('location:profile.php');
 
         }
     } else {

@@ -6,7 +6,7 @@ class Category extends Model {
     private $id;
     private $name;
     private static $alerts;
-    public function __construct($id, $name) {
+    public function __construct($name="", $id="") {
         $this->db = $this->connect();
         $this->id = $id;
         $this->name = $name;

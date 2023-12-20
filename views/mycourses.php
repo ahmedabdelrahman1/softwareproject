@@ -30,7 +30,7 @@ if (count($courseObject->selectByInstructorID($_SESSION['user_id'])) > 0) {
         echo '<div class="col gallery-item">';
         echo '    <div class="card shadow-sm border-bottom border-5">';
         echo '        <a href="coursecontent.php?course_id=' . $value['ID'] . '" class="card-img">';
-        echo '            <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/python.jpg">';
+        echo '            <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="../public/assets/img/course-default.png">';
         echo '        </a>';
         echo '        <div class="card-body">';
         echo '            <h3 class="card-title h4">';
@@ -39,13 +39,14 @@ if (count($courseObject->selectByInstructorID($_SESSION['user_id'])) > 0) {
         echo '            <p class="card-text text-muted">' . $value['preview'] . '</p>';
         echo '';
         echo '            <p class="card-text h6 mb-3">';
-        echo '                <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>';
+        echo '                <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="../public/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>';
         echo '            </p>';
         echo '';
         echo '            <div class="d-flex justify-content-between align-items-center">';
         echo '                <div class="btn-group">';
         echo '                    <a href="coursecontent.php?course_id=' . $value['ID'] . '" type="button" class="btn btn-sm btn-outline-secondary">View</a>';
         echo '                    <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>';
+        echo '                    <a href="attendence.php?course_id=' . $value['ID'] . '" type="button" class="btn btn-sm btn-outline-danger"">Attendence</a>';
         echo '                </div>';
         echo '            </div>';
         echo '        </div>';
@@ -62,7 +63,7 @@ else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
             echo '<div class="col gallery-item">';
             echo '    <div class="card shadow-sm border-bottom border-5">';
             echo '        <a href="coursecontent.php?course_id=' . $value['ID'] . '" class="card-img">';
-            echo '            <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/python.jpg">';
+            echo '            <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="../public/assets/img/course-default.png">';
             echo '        </a>';
             echo '        <div class="card-body">';
             echo '            <h3 class="card-title h4">';
@@ -71,7 +72,7 @@ else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
             echo '            <p class="card-text text-muted">' . $value['preview'] . '</p>';
             echo '';
             echo '            <p class="card-text h6 mb-3">';
-            echo '                <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>';
+            echo '                <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="../public/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>';
             echo '            </p>';
             echo '';
             echo '            <div class="d-flex justify-content-between align-items-center">';
@@ -88,119 +89,6 @@ else if (isset($_SESSION['type']) && $_SESSION['type'] == 'student')
 }
 ?>
 
-                        <div class="col gallery-item">
-                            <div class="card shadow-sm border-bottom border-5">
-                                <a href="coursecontent.php" class="card-img">
-                                    <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/django.jpg">
-                                </a>
-                                <div class="card-body">
-                                    <h3 class="card-title h4">
-                                        Django - Beginners to advanced level
-                                    </h3>
-                                    <p class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero et orci fringilla, eu varius neque eleifend.</p>
-
-                                    <p class="card-text h6 mb-3">
-                                        <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="coursecontent.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-
-                                            <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col gallery-item">
-                            <div class="card shadow-sm border-bottom border-5">
-                                <a href="coursecontent.php"a class="card-img">
-                                    <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/css.jpg">
-                                </a>
-                                <div class="card-body">
-                                    <h3 class="card-title h4">
-                                        Introduction to HTML & CSS
-                                    </h3>
-                                    <p class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero et orci fringilla, eu varius neque eleifend.</p>
-
-                                    <p class="card-text h6 mb-3">
-                                        <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="coursecontent.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-
-                                            <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col gallery-item">
-                            <div class="card shadow-sm border-bottom border-5">
-                                <a href="coursecontent.php" class="card-img">
-                                    <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/excel.jpg">
-                                </a>
-                                <div class="card-body">
-                                    <h3 class="card-title h4">
-                                        Microsoft Excel for Data Scientist
-                                    </h3>
-                                    <p class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero et orci fringilla, eu varius neque eleifend.</p>
-
-                                    <p class="card-text h6 mb-3">
-                                        <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="coursecontent.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-
-                                            <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col gallery-item">
-                            <div class="card shadow-sm border-bottom border-5">
-                                <a href="coursecontent.php" class="card-img">
-                                    <img class="bd-placeholder-img card-img-top" style="height: 225px;width: 100%;" src="static/assets/img/db.jpg">
-                                </a>
-                                <div class="card-body">
-                                    <h3 class="card-title h4">
-                                        Introduction to SQL Database
-                                    </h3>
-                                    <p class="card-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero et orci fringilla, eu varius neque eleifend.</p>
-
-                                    <p class="card-text h6 mb-3">
-                                        <img class="rounded-circle me-1" style="height: 24px;width: 24px;" src="static/assets/img/clock.png">2 Hours &dash; <span class="text-primary fw-bold">Programming</span>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="coursecontent.php" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-
-                                            <a href="bookmark.php" type="button" class="btn btn-sm btn-outline-primary">Bookmarks</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pagination -->
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled"><a class="page-link">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
-                </div>
 
                 <!-- <div class="col-md-3">
                     <div class="card shadow-sm border-bottom border-5">

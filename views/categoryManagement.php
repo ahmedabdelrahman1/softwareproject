@@ -21,8 +21,9 @@
         Category Data
     </div>
     <div class="card-body">
-        <form method="POST" action="adminlayout.php">
+        <form method="POST" action="../controller/category_controller.php">
             <div class="form-group">
+            <input type="hidden" name="action" value="create">
                 <label for="categoryName">Category Name:</label>
                 <input type="text" class="form-control" id="categoryName" name="categoryName" required>
             </div>
@@ -68,12 +69,13 @@
                     echo "<tr>";
                     echo "<td>" . $row["id"] . "</td>";
                     echo "<td>" . $row["name"] . "</td>";
-                    echo "<td>
-                        <form method='POST' action='adminlayout.php'> <!-- Replace 'your_script.php' with the actual filename -->
-                            <input type='hidden' name='delete_id' value='{$row['id']}' />
-                            <button type='submit' class='btn btn-danger' name='delete_btn_{$row['id']}'><i class='fa-solid fa-trash'></i> Delete</button>
+                    echo '<td>
+                        <form method="POST" action="../controller/category_controller.php"> <!-- Replace "your_script.php" with the actual filename -->
+                        <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="delete_id" value="'.$row['id'].'" />
+                            <button type="submit" class="btn btn-danger" name="delete_btn_'.$row['id'].'"><i class="fa-solid fa-trash"></i> Delete</button>
                         </form>
-                    </td>";
+                    </td>';
                     echo "</tr>";
                 }
             } else {
