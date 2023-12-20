@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
     
     if(isset($_POST['action'])) {
         $action = $_POST['action'];
+        $sectionobject=section::getInstance();
    
    switch ($action) {
 
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
     $section_id_to_delete = $_POST['delete_section'];
     
     // Implement the delete function here
-    section::delete($section_id_to_delete);
+    $sectionobject->delete($section_id_to_delete);
 
     // Redirect back to the course content page
     header('Location: ../views/coursecontent.php?course_id=' .  $course_id.'');
@@ -47,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
     $sectionName = $_POST['sectionName'];
     $sectionDetails = $_POST['sectionDetails'];
     
-    section::insert($sectionName,  $course_id, $sectionDetails);
+    $sectionobject->insert($sectionName,  $course_id, $sectionDetails);
 
     // Redirect back to the page where you added the section
     header('Location: ../views/coursecontent.php?course_id=' .  $course_id.'');

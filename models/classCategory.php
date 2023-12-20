@@ -52,6 +52,11 @@ class Category extends Model {
         return $stmt->execute();
     }
 
+    public function selectcoursebycategory($name)
+    {
+
+    }
+
     // Setters and getters
     public function getId() {
         return $this->id;

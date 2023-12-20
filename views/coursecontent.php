@@ -19,7 +19,8 @@
         }
         
         require '../models/classsection.php';
-        $sections = section::selectByCourse($course_id);
+        $sectionobject=section::getInstance();
+        $sections = $sectionobject->selectByCourse($course_id);
 
         if (count($sections) > 0) {
             foreach ($sections as $value) {

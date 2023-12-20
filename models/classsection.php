@@ -1,11 +1,22 @@
 <?php
 class section {
-    public static $alerts=[];
-    public static function connect(){
+
+    private static $instance;
+    public  $alerts=[];
+    public  function connect(){
         $conn=new PDO("mysql:host=localhost;dbname=miu","root","");
         return $conn;
     }
-    public static function insert($name, $courseID, $detials) {
+
+    public static function getInstance() {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    public  function insert($name, $courseID, $detials) {
         $add = section::connect()->prepare("INSERT INTO section_table (name, courseID, detials) VALUES (?, ?, ?)");
         $add->execute(array($name, $courseID, $detials));
         if ($add) {
@@ -16,7 +27,7 @@ class section {
     }
     
     
-    public static function selectByCourse($courseID) {
+    public  function selectByCourse($courseID) {
         $conn = section::connect();
         $query = "SELECT * FROM section_table WHERE courseID = ?";
         $list = $conn->prepare($query);
@@ -26,7 +37,7 @@ class section {
     }
     
 
-    public static function delete($sectionID) {
+    public  function delete($sectionID) {
         $conn = section::connect();
     
         // Check if the section exists
