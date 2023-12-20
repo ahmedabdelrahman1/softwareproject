@@ -21,7 +21,6 @@ require '../models/classcourse_matrial.php';
         $course_matrialObject = new course_matrial();
         if (isset($_GET['sectionID'])) {
             $sectionId = $_GET['sectionID'];
-            echo $sectionId;
             if (count($course_matrialObject->selectBySectionID($sectionId)) > 0) {
                 $fetch = $course_matrialObject->selectBySectionID($sectionId);
                 foreach ($fetch as $value) {

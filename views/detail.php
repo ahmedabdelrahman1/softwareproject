@@ -13,7 +13,6 @@ require '../models/classcourse.php';
 
 if (isset($_GET['course_id'])) {
     $course_id = $_GET['course_id'];
-    echo "Course ID: " . $course_id;
     $courseObject = new Course();
     $selectedCourse = $courseObject->selectByID($course_id);
 
@@ -40,7 +39,7 @@ if (isset($_GET['course_id'])) {
         <div class="col-md-8">
             <div class="col">
                 <?php echo '<div class="card shadow-sm border-bottom border-5">
-    <img class="img-thumbnail" style="height: 300px;width: 100%;" src="../public/assets/img/py.jpg">
+    <img class="img-thumbnail" style="height: 300px;width: 100%;" src="../public/assets/img/course-default.png">
     <div class="card-body bg-light">
         <h3 class="card-title h4 mb-3">
          ' . $selectedCourse->getPerview() . '
